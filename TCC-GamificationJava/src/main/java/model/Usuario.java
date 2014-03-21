@@ -8,8 +8,8 @@ public class Usuario {
 	private String nivel;
 	private int pontos;
 
-	public Usuario(String name) {
-		this.nome = name;
+	public Usuario() {
+
 	}
 
 	public String getNome() {

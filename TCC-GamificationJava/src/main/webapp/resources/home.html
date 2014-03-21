@@ -4,6 +4,7 @@
 <title>Home</title>
 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 <script src="js/angular.min.js"></script>
+<script src="js/home.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -28,15 +29,15 @@
 		<div class="content">
 			<div class="row">
 				<div class="span4 offset4">
-					<div>
+					<div ng-controller="Usuario">
 						<h2>Olá {{usuario.nome}}</h2>
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="span3 offset9">
-					<div>
-						<p>Pontos: 0000</p>
+					<div ng-controller="Usuario">
+						<p>Pontos: {{usuario.pontos}}</p>
 						<p>Proximo Nível: 0000</p>
 					</div>
 				</div>
