@@ -2,13 +2,13 @@ package model;
 
 public class Usuario {
 
-	private String nome;
+	private String nome = "Igor Marcelo";
 	private String login;
 	private String senha;
-	private String nivel;
-	private int pontos;
+	private String nivel = "Aprendiz";
+	private int pontos = 100;
 
-	public Usuario() {
+	public Usuario() { 
 
 	}
 
