@@ -1,12 +1,21 @@
 package model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name = "usuario")
 public class Usuario {
 
-	private String nome = "Igor Marcelo";
+	private String nome;
+	
+	@Id
 	private String login;
 	private String senha;
-	private String nivel = "Aprendiz";
-	private int pontos = 100;
+	private String nivel;
+	private int pontos;
 
 	public Usuario() { 
 

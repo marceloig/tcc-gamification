@@ -23,7 +23,7 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.unigranrio.tcc, control, model" />
+	<context:component-scan base-package="com.unigranrio.tcc, control, model, dao, teste" />
 	
 	
 </beans:beans>
