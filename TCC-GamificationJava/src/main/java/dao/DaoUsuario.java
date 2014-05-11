@@ -1,19 +1,33 @@
 package dao;
 
-import java.util.HashMap;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import org.springframework.stereotype.Repository;
 
 import model.Usuario;
 
+@Repository
 public class DaoUsuario {
 
-	private HashMap<String, Usuario> dao = new HashMap<String, Usuario>();
+	public void gravarUsuario(Usuario usuario){
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("usuarios");
+		EntityManager manager = factory.createEntityManager();
+		
+		manager.getTransaction().begin();    
+		manager.persist(usuario);
+		manager.getTransaction().commit();
 
-	public void adicionarUsuario(Usuario usuario) {
-		dao.put(usuario.getLogin(), usuario);
+		manager.close();
 	}
+	
+	public Usuario buscarUsuarioByLogin(){
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("usuarios");
+		EntityManager manager = factory.createEntityManager();
 
-	public Usuario buscarUsuario(String key) {
-		Usuario usuario = dao.get(key);
+		Usuario usuario = manager.find(Usuario.class, "igormarcelo");
+
 		return usuario;
 	}
 }

@@ -1,12 +1,12 @@
 package teste;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
+import dao.DaoUsuario;
 import model.Usuario;
 
 public class Programa {
+
+	private static DaoUsuario dao = new DaoUsuario();
+
 	public static void main(String[] args) {
 		Usuario usuario = new Usuario();
 		usuario.setNome("Igor Marcelo");
@@ -15,30 +15,12 @@ public class Programa {
 		usuario.setNivel("Aprendiz");
 		usuario.setPontos(100);
 		
-		//gravarUsuarioBanco(usuario);
-		
-		buscarUsuarioBanco();
-		
-	}
-	
-	public static void gravarUsuarioBanco(Usuario usuario){
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("usuarios");
-		EntityManager manager = factory.createEntityManager();
-		
-		manager.getTransaction().begin();    
-		manager.persist(usuario);
-		manager.getTransaction().commit();  
+		//dao.gravarUsuario(usuario);
 
-		manager.close();
-	}
-	
-	public static void buscarUsuarioBanco(){
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("usuarios");
-		EntityManager manager = factory.createEntityManager();
+		Usuario usu = dao.buscarUsuarioByLogin();
 
-		Usuario usuarioEncontrado = manager.find(Usuario.class, "igormarcelo");
-
-		System.out.println(usuarioEncontrado.getPontos());
+		System.out.println(usu.getLogin() + "-" + usu.getNome() + "|"
+				+ usu.getNivel() + "|" + usu.getPontos());
 	}
 
 }
