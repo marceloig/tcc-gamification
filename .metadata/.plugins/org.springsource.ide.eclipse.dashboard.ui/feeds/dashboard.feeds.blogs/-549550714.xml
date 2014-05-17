@@ -5,7 +5,136 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2014-05-08T16:38:00Z</updated>
+  <updated>2014-05-13T21:07:08Z</updated>
+  <entry>
+    <title>Spring Batch 3.0.0.RC1 is now available</title>
+    <link rel="alternate" href="https://spring.io/blog/2014/05/13/spring-batch-3-0-0-rc1-is-now-available" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Michael Minella</name>
+    </author>
+    <id>tag:spring.io,2014-05-13:1573</id>
+    <updated>2014-05-13T21:07:08Z</updated>
+    <content type="html">&lt;p&gt;Today we are pleased to announce the release candidate for Spring Batch 3.0.  This release of Spring Batch provides the support for JSR-352 we are committed to providing as well as a number of new features for our existing Spring Batch community.&lt;/p&gt;
+
+&lt;h2&gt;
+&lt;a name="user-content-features-in-release-candidate-1" class="anchor" href="#features-in-release-candidate-1"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;Features in Release Candidate 1&lt;/h2&gt;
+
+&lt;p&gt;The major features for this release include:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;JSR-352 support&lt;/li&gt;
+&lt;li&gt;Promotion of Spring Batch Integration into Spring Batch&lt;/li&gt;
+&lt;li&gt;Complete overhaul of dependencies&lt;/li&gt;
+&lt;li&gt;Support for SQLite&lt;/li&gt;
+&lt;li&gt;Job scope&lt;/li&gt;
+&lt;li&gt;Switch from Maven to Gradle for building Spring Batch&lt;/li&gt;
+&lt;/ul&gt;&lt;h2&gt;
+&lt;a name="user-content-jsr-352-support" class="anchor" href="#jsr-352-support"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;JSR-352 Support&lt;/h2&gt;
+
+&lt;p&gt;JSR-352 is the batch JSR and was released as 1.0 late last year.  As Spring Batch served as the inspiration for much of the programming model of this JSR, Spring is committed to supporting it.  With the 3.0 release, Spring Batch is compliant with JSR-352 passing all TCK tests.  It provides the most production-tested implementation of the JSR.&lt;/p&gt;
+
+&lt;p&gt;Creating batch jobs that comply with the standards of this JSR should feel very familiar to users of Spring Batch.  The XML configuration and interfaces are very similar to the existing Spring Batch.  Below is an example JSR-352 batch job&lt;/p&gt;
+
+&lt;div class="highlight highlight-xml"&gt;&lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;?xml version="1.0" encoding="UTF-8"?&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;job&lt;/span&gt; &lt;span class="na"&gt;id=&lt;/span&gt;&lt;span class="s"&gt;"myJob"&lt;/span&gt; &lt;span class="na"&gt;xmlns=&lt;/span&gt;&lt;span class="s"&gt;"http://xmlns.jcp.org/xml/ns/javaee"&lt;/span&gt; &lt;span class="na"&gt;version=&lt;/span&gt;&lt;span class="s"&gt;"1.0"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;step&lt;/span&gt; &lt;span class="na"&gt;id=&lt;/span&gt;&lt;span class="s"&gt;"step1"&lt;/span&gt; &lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;batchlet&lt;/span&gt; &lt;span class="na"&gt;ref=&lt;/span&gt;&lt;span class="s"&gt;"testBatchlet"&lt;/span&gt; &lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/step&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/job&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Spring Batch's implementation of JSR-352 was developed to allow the most flexibility for existing Spring Batch users.  We allow developers to use existing ItemReader, ItemProcessor, ItemWriters, etc in conjunction with the configuration facilities that JSR-352 provides.  This provides developers a complete library of production-tested components for building robust batch jobs.&lt;/p&gt;
+
+&lt;p&gt;To read more about Spring Batch's implementation of JSR-352, visit our reference documentation here: &lt;a href="http://docs.spring.io/spring-batch/trunk/reference/html/jsr-352.html"&gt;http://docs.spring.io/spring-batch/trunk/reference/html/jsr-352.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;
+&lt;a name="user-content-promote-spring-batch-integration-to-spring-batch" class="anchor" href="#promote-spring-batch-integration-to-spring-batch"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;Promote Spring Batch Integration to Spring Batch&lt;/h2&gt;
+
+&lt;p&gt;The line between when to use Spring Batch or Spring Integration is often a blurry one.  There are many use cases where one works better than the other.  However, there are also many use cases where they can be used together to build robust and scalable data processing systems.  Spring Batch Integration provides a collection of components to use Spring Batch and Spring Integration together.  Use cases that Spring Batch Integration provide for include:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Asynchronous item processing&lt;/li&gt;
+  &lt;li&gt;Remote chunking&lt;/li&gt;
+  &lt;li&gt;Launching batch jobs via messages&lt;/li&gt;
+  &lt;li&gt;Remote partitioning&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;These capabilities take batch processing beyond what JSR-352 provides and allows users to develop batch applications that scale beyond a single JVM.  You can read more about Spring Batch Integration and it's components in the reference documentation here: &lt;a href="http://docs.spring.io/spring-batch/trunk/reference/html/springBatchIntegration.html"&gt;http://docs.spring.io/spring-batch/trunk/reference/html/springBatchIntegration.html&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2&gt;
+&lt;a name="user-content-complete-overhaul-of-dependencies" class="anchor" href="#complete-overhaul-of-dependencies"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;Complete overhaul of dependencies&lt;/h2&gt;
+
+&lt;p&gt;We took this opportunity to review all third party dependencies for Spring Batch and bring them up to date.  As part of this exercise, we also brought them in alignment with the other projects in the Spring portfolio to allow for the easiest experience in adding Spring Batch to an existing application (or adding other projects to a Spring Batch project).&lt;/p&gt;
+
+&lt;h2&gt;
+&lt;a name="user-content-support-for-sqlite" class="anchor" href="#support-for-sqlite"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;Support for SQLite&lt;/h2&gt;
+
+&lt;p&gt;While HSQLDB is useful for many testing scenarios, a file based system like SQLite can also be very useful.  With the 3.0 release we have added the job repository DDL for SQLite to address these use cases.&lt;/p&gt;
+
+&lt;h2&gt;
+&lt;a name="user-content-job-scope" class="anchor" href="#job-scope"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;Job scope&lt;/h2&gt;
+
+&lt;p&gt;Spring Batch's step scope allows developers to delay the creation of objects until a particular step is executed.  This functionality has also exposed the ability to provide late binding of properties in batch artifacts.  With this 3.0 release, Spring Batch introduces a Job scope.  This scope works in the same way as the step scope (delays the creation of objects via proxies), however it delays the creation until the job executes instead of the step.  This can be helpful when defining multiple jobs in a context or when heavy weight initialization processes occur in step level components.  You can read more about the job scope in the reference manual here: &lt;a href="http://docs.spring.io/spring-batch/trunk/reference/html/configureStep.html#job-scope"&gt;http://docs.spring.io/spring-batch/trunk/reference/html/configureStep.html#job-scope&lt;/a&gt;.
+&lt;/p&gt;&lt;h2&gt;
+&lt;a name="user-content-move-from-maven-to-gradle" class="anchor" href="#move-from-maven-to-gradle"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;Move from Maven to Gradle&lt;/h2&gt;
+&lt;p&gt;Finally, this release is the first for Spring Batch to move from Maven to Gradle for an internal build system. This change will have zero effect on developers consuming the jars.  They will still be available via Maven Central for maven users.&lt;/p&gt;
+
+&lt;h2&gt;
+&lt;a name="user-content-conclusion" class="anchor" href="#conclusion"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;3.0.0.RC1 represents the completion of the next major milestone for Spring Batch.  It brings the standards that JSR-352 provides to our community as well as providing an exhaustive collection of additional features for the advanced user.  We look forward to your feedback in the forums, social media, and in person at &lt;a href="http://springone2gx.com/register"&gt;SpringOne2GX&lt;/a&gt;!&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>SpringOne2GX 2013 Replay:  spring.io inside and out</title>
+    <link rel="alternate" href="https://spring.io/blog/2014/05/12/springone2gx-2013-replay-spring-io-inside-and-out" />
+    <category term="news" label="News and Events" />
+    <author>
+      <name>Pieter Humphrey</name>
+    </author>
+    <id>tag:spring.io,2014-05-13:1565</id>
+    <updated>2014-05-12T18:01:00Z</updated>
+    <content type="html">&lt;p&gt;Recorded at SpringOne2GX 2013 in Santa Clara, CA.&lt;/p&gt;
+
+&lt;p&gt; Join Chris Beams as he dives into &lt;a href="http://spring.io"&gt;http://spring.io&lt;/a&gt; - the new spring website. It's chock full of amazing new resources that you can share with your co-workers who might be new to Spring, or simply helping to introduce Spring to those who might not be familiar with it - people coding in other languages, frameworks, or platforms. You've asked us to help make it easier to win the comparisons, and we've listened. Attend this session to get the ammo you need to win that internal bake off, and learn the details about how the site was built and deployed. now and open source project!&lt;/p&gt;
+
+&lt;p&gt;Learn more about the open source spring.io website at our blog: &lt;/p&gt;
+
+&lt;p&gt;&lt;a href="http://spring.io/blog/2014/03/27/project-sagan-open-sourcing-spring-io"&gt;http://spring.io/blog/2014/03/27/project-sagan-open-sourcing-spring-io&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="http://spring.io/blog/2014/04/04/project-sagan-zero-downtime-deployments"&gt;http://spring.io/blog/2014/04/04/project-sagan-zero-downtime-deployments&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="http://spring.io/blog/2014/04/28/project-sagan-client-side-architecture"&gt;http://spring.io/blog/2014/04/28/project-sagan-client-side-architecture&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="http://spring.io/blog/2014/04/18/project-sagan-upgrading-to-jdk-8"&gt;http://spring.io/blog/2014/04/18/project-sagan-upgrading-to-jdk-8&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt;Learn more about Spring Framework 4.0 &lt;a href="http://projects.spring.io/spring-framework"&gt;http://projects.spring.io/spring-framework&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Learn more about Spring Boot &lt;a href="http://projects.spring.io/spring-boot"&gt;http://projects.spring.io/spring-boot&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Learn more about using CloudFoundry at: &lt;a href="http://cloudfoundry.org/"&gt;http://cloudfoundry.org/&lt;/a&gt;&lt;/p&gt;
+
+&lt;iframe width="560" height="315" src="//www.youtube.com/embed/pA1oGmd1R5w" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;</content>
+  </entry>
+  <entry>
+    <title>SpringOne2GX 2013 Replay: Getting Started with Spring Security 3.2</title>
+    <link rel="alternate" href="https://spring.io/blog/2014/05/12/springone2gx-2013-replay-getting-started-with-spring-security-3-2" />
+    <category term="news" label="News and Events" />
+    <author>
+      <name>Pieter Humphrey</name>
+    </author>
+    <id>tag:spring.io,2014-05-13:1564</id>
+    <updated>2014-05-12T18:01:00Z</updated>
+    <content type="html">&lt;p&gt;Recorded at SpringOne2GX 2013 in Santa Clara, CA.&lt;/p&gt;
+
+&lt;p&gt; Speaker: Rob Winch Spring Security is a framework that focuses on providing both authentication and authorization to Java applications. Like all Spring projects, the real power of Spring  Security is found in how easily it can be extended to meet custom requirements. In this presentation Rob will incrementally apply the new features found in Spring Security 3.2 to an existing application to demonstrate how it can meet your authentication and authorization needs. &lt;/p&gt;
+
+&lt;p&gt;Learn more about Spring Security 3.2 at &lt;a href="http://projects.spring.io/spring-security/"&gt;http://projects.spring.io/spring-security/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Learn more about using Spring at: &lt;a href="http://www.spring.io"&gt;http://www.spring.io&lt;/a&gt;&lt;/p&gt;
+
+&lt;iframe width="560" height="315" src="//www.youtube.com/embed/1zu8COg80q4" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;</content>
+  </entry>
   <entry>
     <title>Spring Integration Java DSL Milestone 1 Released</title>
     <link rel="alternate" href="https://spring.io/blog/2014/05/08/spring-integration-java-dsl-milestone-1-released" />
@@ -673,6 +802,19 @@ The first milestone build is scheduled to arrive in late May 2014.&lt;/p&gt;
 &lt;iframe width="560" height="315" src="//www.youtube.com/embed/W69nmjyDNls" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;</content>
   </entry>
   <entry>
+    <title>Spring Security 4.0.0.M1 Released</title>
+    <link rel="alternate" href="https://spring.io/blog/2014/05/05/spring-security-4-0-0-m1-released" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Rob Winch</name>
+    </author>
+    <id>tag:spring.io,2014-05-05:1554</id>
+    <updated>2014-05-05T21:47:00Z</updated>
+    <content type="html">&lt;p&gt;I'm pleased to announce the release of Spring Security 4.0.0.M1 available in the Spring &lt;a href="http://docs.spring.io/spring-security/site/docs/4.0.0.M1/reference/htmlsingle/#get-spring-security"&gt;Milestone repository&lt;/a&gt;. The primary component of this first milestone is testing support. Stay tuned to the &lt;a href="http://spring.io/blog"&gt;spring.io blog&lt;/a&gt; for a &lt;a href="http://spring.io/blog/2014/05/07/preview-spring-security-test-method-security"&gt;blog series&lt;/a&gt; introducing the test support. If you can't wait to try it out, see the tests in the &lt;a href="https://github.com/spring-projects/spring-security/tree/4.0.0.M1/test/src/test/java/org/springframework/security/test/web/servlet/showcase"&gt;showcase package&lt;/a&gt; which demonstrate some of the highlights.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="http://docs.spring.io/spring-security/site/docs/4.0.0.M1/reference/htmlsingle/"&gt;Reference&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-security/site/docs/4.0.0.M1/apidocs/"&gt;Javadoc&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-security/site/docs/4.0.0.M1/guides/"&gt;Guides&lt;/a&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
     <title>Spring for Apache Hadoop 2.0 RC3 released</title>
     <link rel="alternate" href="https://spring.io/blog/2014/05/05/spring-for-apache-hadoop-2-0-rc3-released" />
     <category term="releases" label="Releases" />
@@ -1067,131 +1209,6 @@ hand all that's going on and to provide direct feedback. Expect a number of sign
 &lt;/ul&gt;&lt;p&gt;Learn more about Spring Framework at &lt;a href="http://projects.spring.io/spring-framework"&gt;http://projects.spring.io/spring-framework&lt;/a&gt;&lt;/p&gt;
 
 &lt;iframe width="560" height="315" src="//www.youtube.com/embed/JfgP566BHW0" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;</content>
-  </entry>
-  <entry>
-    <title>SpringOne2GX 2013 Replay: Futures and Rx Observables: powerful abstractions for consuming web services asynchronously</title>
-    <link rel="alternate" href="https://spring.io/blog/2014/04/29/springone2gx-2013-replay-futures-and-rx-observables-powerful-abstractions-for-consuming-web-services-asynchronously" />
-    <category term="news" label="News and Events" />
-    <author>
-      <name>Pieter Humphrey</name>
-    </author>
-    <id>tag:spring.io,2014-04-29:1547</id>
-    <updated>2014-04-29T15:59:00Z</updated>
-    <content type="html">&lt;p&gt;Recorded at SpringOne2GX 2013 in Santa Clara, CA &lt;/p&gt;
-
-&lt;p&gt;Speaker: Chris Richardson &lt;/p&gt;
-
-&lt;p&gt;A modular, polyglot architecture has many advantages but it also adds complexity since each incoming request typically fans out to multiple distributed services. For example, in an online store application the information on a product details page - description, price, recommendations, etc - comes from numerous services. To minimize response time and improve scalability, these services must be invoked concurrently. However, traditional concurrency mechanisms are low-level, painful to use and error-prone. In this talk you will learn about some powerful yet easy to use abstractions for consuming web services asynchronously. We will compare the various implementations of futures that are available in Java, Scala and JavaScript. You will learn how to use reactive observables, which are asynchronous data streams, to access web services from both Java and JavaScript. We will describe how these mechanisms let you write asynchronous code in a very straightforward, declarative fashion.&lt;/p&gt;
-
-&lt;iframe width="560" height="315" src="//www.youtube.com/embed/aZkwIA4k2xU" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;</content>
-  </entry>
-  <entry>
-    <title>Project Sagan: client-side architecture</title>
-    <link rel="alternate" href="https://spring.io/blog/2014/04/28/project-sagan-client-side-architecture" />
-    <category term="engineering" label="Engineering" />
-    <author>
-      <name>Brian Clozel</name>
-    </author>
-    <id>tag:spring.io,2014-04-25:1544</id>
-    <updated>2014-04-28T10:03:00Z</updated>
-    <content type="html">&lt;p&gt;Now that we &lt;a href="https://spring.io/blog/2014/04/11/javascript-modularity-without-the-buzzwords"&gt;know a bit more about JavaScript modules&lt;/a&gt;, we're ready to dive into the client-side architecture of the Sagan application.&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;&lt;em&gt;&lt;strong&gt;Note&lt;/strong&gt;: If you haven't read previous blog posts on the &lt;a href="https://github.com/spring-io/sagan"&gt;Sagan project&lt;/a&gt;, you should know that this is the Spring reference application that powers this blog and everything else at &lt;a href="http://spring.io"&gt;spring.io&lt;/a&gt;. Previous posts &lt;a href="https://spring.io/blog/2014/03/27/project-sagan-open-sourcing-spring-io"&gt;showed out to run this application&lt;/a&gt;, &lt;a href="https://spring.io/blog/2014/04/04/project-sagan-zero-downtime-deployments"&gt;how we do zero downtime deployments&lt;/a&gt; and also &lt;a href="https://spring.io/blog/2014/04/18/project-sagan-upgrading-to-jdk-8"&gt;how we upgraded Sagan to use the latest JDK8 features&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;In this post, I want to walk through the basics of the client-side architecture in the Sagan application:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Why is the client application in a separate &lt;code&gt;sagan-client&lt;/code&gt; project module?&lt;/li&gt;
-&lt;li&gt;How is it linked with the &lt;code&gt;sagan-site&lt;/code&gt; module?&lt;/li&gt;
-&lt;li&gt;What are &lt;a href="https://www.npmjs.org/"&gt;npm&lt;/a&gt;, &lt;a href="http://bower.io"&gt;bower&lt;/a&gt; and &lt;a href="http://gulpjs.com"&gt;gulp&lt;/a&gt;?&lt;/li&gt;
-&lt;li&gt;How do those tools work together to make the client application?&lt;/li&gt;
-&lt;/ol&gt;&lt;p&gt;To illustrate all that, the following screencast will show you not only how to add a new bower dependency and code a small new feature (keyboard shortcuts on the website!), but also how to enhance the gulp build (optimize images!).&lt;/p&gt;
-
-&lt;iframe src="//player.vimeo.com/video/92961329" width="640"  height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen&gt;&lt;/iframe&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;&lt;em&gt;&lt;strong&gt;Note&lt;/strong&gt;: See the &lt;a href="https://vimeo.com/92961329"&gt;show notes&lt;/a&gt; for links to sites mentioned in the screencast. You can also &lt;a href="https://vimeo.com/92961329"&gt;watch this screencast in HD on vimeo&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Interested in npm, bower and others? Spring.io has a nice article for that: &lt;a href="https://spring.io/understanding/javascript-package-managers"&gt;"understanding JavaScript package managers"&lt;/a&gt;.&lt;/p&gt;
-
-&lt;hr&gt;&lt;h3&gt;
-&lt;a name="user-content-springone-2gx-2014-is-around-the-corner" class="anchor" href="#springone-2gx-2014-is-around-the-corner"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;SpringOne 2GX 2014 is around the corner&lt;/h3&gt;
-
-&lt;p&gt;This year's &lt;a href="http://www.springone2gx.com"&gt;SpringOne will be in Dallas, TX&lt;/a&gt; on September 8-11 and &lt;a href="https://2014.event.springone2gx.com/register"&gt;super early bird registration is now open&lt;/a&gt;. We hope to see you there!&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Social 1.1.0 Released</title>
-    <link rel="alternate" href="https://spring.io/blog/2014/04/24/spring-social-1-1-0-released" />
-    <category term="engineering" label="Engineering" />
-    <author>
-      <name>Craig Walls</name>
-    </author>
-    <id>tag:spring.io,2014-04-24:1540</id>
-    <updated>2014-04-24T19:52:18Z</updated>
-    <content type="html">&lt;p&gt;Dear Spring Community,&lt;/p&gt;
-
-&lt;p&gt;I'm very happy to announce the general availability of Spring Social 1.1.0. Along with the release of the core Spring Social project, Spring Social Facebook 1.1.0, Spring Social Twitter 1.1.0, and Spring Social LinkedIn 1.0.0 are also now available.&lt;/p&gt;
-
-&lt;p&gt;These releases include several new features, including:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Simplified Java and XML configuration support&lt;/li&gt;
-&lt;li&gt;A new ReconnectFilter to automatically reestablish a connection when a token has expired or been revoked&lt;/li&gt;
-&lt;li&gt;Updated API bindings for Facebook, Twitter, and LinkedIn&lt;/li&gt;
-&lt;li&gt;A generic connection factory for APIs where there is not (yet) connection framework support&lt;/li&gt;
-&lt;li&gt;Tighter Spring Security integration, including SocialAuthenticationFilter for provider-based sign-in&lt;/li&gt;
-&lt;li&gt;Thymeleaf template support&lt;/li&gt;
-&lt;li&gt;Updated documentation&lt;/li&gt;
-&lt;li&gt;...and much more...&lt;/li&gt;
-&lt;/ul&gt;&lt;p&gt;See the change logs (&lt;a href="https://jira.spring.io/browse/SOCIAL/fixforversion/12740"&gt;Core&lt;/a&gt;|&lt;a href="https://jira.spring.io/browse/SOCIALFB/fixforversion/12742"&gt;Facebook&lt;/a&gt;|&lt;a href="https://jira.spring.io/browse/SOCIALTW/fixforversion/12741/"&gt;Twitter&lt;/a&gt;|&lt;a href="https://jira.spring.io/browse/SOCIALLI/fixforversion/12753/"&gt;LinkedIn&lt;/a&gt;) for details of each project's release.&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Boot 1.0.2.RELEASE Available Now</title>
-    <link rel="alternate" href="https://spring.io/blog/2014/04/24/spring-boot-1-0-2-release-available-now" />
-    <category term="releases" label="Releases" />
-    <author>
-      <name>Dave Syer</name>
-    </author>
-    <id>tag:spring.io,2014-04-24:1538</id>
-    <updated>2014-04-24T13:19:08Z</updated>
-    <content type="html">&lt;p&gt;Spring Boot 1.0.2.RELEASE is available now in the Spring and Maven Central repositories. This is mostly a bug-fix release (nothing major, but please upgrade if you are using an older version). There are also a couple of nice new features.&lt;/p&gt;
-
-&lt;p&gt;My favourite additions are the new &lt;code&gt;@IntegrationTest&lt;/code&gt; features. Here's an example:&lt;/p&gt;
-
-&lt;div class="highlight highlight-java"&gt;&lt;pre&gt;&lt;span class="nd"&gt;@RunWith&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;SpringJUnit4ClassRunner&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;span class="nd"&gt;@SpringApplicationConfiguration&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;classes&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;SampleActuatorApplication&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;span class="nd"&gt;@WebAppConfiguration&lt;/span&gt;
-&lt;span class="nd"&gt;@IntegrationTest&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"server.port=0"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;SampleActuatorApplicationTests&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-
-    &lt;span class="nd"&gt;@Value&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"${local.server.port}"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
-
-        &lt;span class="o"&gt;...&lt;/span&gt;
-
-&lt;span class="o"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Here we have set the default value of "server.port" to 0 (which means "choose a random port") and then we have bound it to a field in the test so we can use it to interact with the running server. Neat, eh? You can bind other key-value pairs by adding more &lt;code&gt;Strings&lt;/code&gt; to the &lt;code&gt;@IntegrationTest&lt;/code&gt; &lt;code&gt;value&lt;/code&gt; attribute.&lt;/p&gt;
-
-&lt;p&gt;We also added the following:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Websocket support to the Groovy CLI&lt;/li&gt;
-&lt;li&gt;Support for "yaml" file extensions in external configuration&lt;/li&gt;
-&lt;li&gt;A webapp will have a &lt;code&gt;LocaleResolver&lt;/code&gt; if &lt;code&gt;spring.mvc.locale&lt;/code&gt; is set&lt;/li&gt;
-&lt;li&gt;The script separator for SQL initialization has been externalized&lt;/li&gt;
-&lt;li&gt;
-&lt;code&gt;Filter&lt;/code&gt; and &lt;code&gt;Servlet&lt;/code&gt; beans can be disabled by wrapping them in a registration bean with &lt;code&gt;enabled=false&lt;/code&gt;
-&lt;/li&gt;
-&lt;/ul&gt;&lt;p&gt;... plus a ton of documentation improvements. See &lt;a href="https://github.com/spring-projects/spring-boot/issues?milestone=10&amp;amp;state=closed"&gt;GitHub for the complete list of changes&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Thanks again to all the community contributors who helped with this release. Take it for a ride, today!&lt;/p&gt;
-
-&lt;p&gt;&lt;a href="http://projects.spring.io/spring-boot/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-boot"&gt;GitHub&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-boot/issues"&gt;Issues&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-boot/docs/1.0.2.RELEASE/reference/htmlsingle/"&gt;Documentation&lt;/a&gt;&lt;/p&gt;</content>
   </entry>
 </feed>
 

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import model.Usuario;
 
 @Repository
-public class DaoUsuario {
+public class UsuarioDAO {
 
 	public void gravarUsuario(Usuario usuario){
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("usuarios");

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+<title>Home</title>
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+<script src="js/angular.min.js"></script>
+<script src="js/angular-resource.min.js"></script>
+<script src="js/app.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="header">
+			<div class="row">
+				<div class="span12">
+					<img src="http://placehold.it/450x150" alt="">
+				</div>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="span4">
+					<ul class="nav nav-pills">
+						<li class="active"><a href="#">Home</a></li>
+						<li><a href="#">Assuntos</a></li>
+						<li><a href="#">Sair</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="content">
+			<div class="row">
+				<div class="span6 offset3">
+					<h3>Exercicio Olá Mundo!</h3>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="span6">
+					<div class="exercicios" ng-controller="ExercicioController">
+						<p>Escreva Olá Mundo</p>
+					</div>
+				</div>
+
+				<div class="span6">
+					<div class="codigo" >
+						<form name="resposta" ng-controller="CodigoController" ng-submit="enviarExercicio()">
+							<textarea class="span6" rows="6" ng-model="codigo" value="{{codigo}}" ></textarea>
+							<button class="btn btn-small btn-primary" type="submit" >Enviar
+								Exercicio</button>
+						</form>
+					</div>
+					<div class="row">
+						<div class="span6">
+							<div class="console well" ng-controller="ConsoleController">
+								<p>#!</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="footer">
+			<hr>
+			<div class="row">
+				<div class="span12">
+					<p>Rodapé</p>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+
+
+
+</body>
+</html>
