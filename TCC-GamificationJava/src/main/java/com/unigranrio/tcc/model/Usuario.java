@@ -1,4 +1,4 @@
-package model;
+package com.unigranrio.tcc.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

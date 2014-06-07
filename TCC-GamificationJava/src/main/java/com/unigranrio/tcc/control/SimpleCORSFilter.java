@@ -1,4 +1,4 @@
-package control;
+package com.unigranrio.tcc.control;
 
 import java.io.IOException;
 import javax.servlet.Filter;

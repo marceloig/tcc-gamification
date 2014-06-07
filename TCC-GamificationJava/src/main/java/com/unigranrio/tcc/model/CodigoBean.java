@@ -1,4 +1,4 @@
-package model;
+package com.unigranrio.tcc.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

@@ -1,4 +1,4 @@
-package model;
+package com.unigranrio.tcc.model;
 
 public class RespostaExercicioBean {
 

@@ -18,7 +18,6 @@ function ExercicioController($scope, $resource) {
 }
 
 function CodigoController($scope, $http) {
-
 	$scope.codigo = "System.out.println( );";
 	$scope.reposta;
 	$scope.enviarExercicio = function() {
@@ -31,6 +30,8 @@ function CodigoController($scope, $http) {
 		$http.post('http://localhost:8080/tcc/codigo00', data).success(
 				function(data) {
 					console.log(data.mensagem);
+					$scope.respostaConsole = data.mensagem;
 				});
 	};
 }
+

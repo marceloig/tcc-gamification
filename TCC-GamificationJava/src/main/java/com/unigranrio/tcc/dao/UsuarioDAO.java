@@ -1,4 +1,4 @@
-package dao;
+package com.unigranrio.tcc.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -6,7 +6,7 @@ import javax.persistence.Persistence;
 
 import org.springframework.stereotype.Repository;
 
-import model.Usuario;
+import com.unigranrio.tcc.model.Usuario;
 
 @Repository
 public class UsuarioDAO {
