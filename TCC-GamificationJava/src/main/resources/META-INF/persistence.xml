@@ -10,7 +10,7 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 
 		<!-- entidade mapeada -->
-		<class>model.Usuario</class>
+		<class>com.unigranrio.tcc.model.Usuario</class>
 
 		<properties>
 			<!-- dados da conexao -->
@@ -20,7 +20,7 @@
 			<property name="javax.persistence.jdbc.password" value="admin" />
 
 			<!-- propriedades do hibernate -->
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
 

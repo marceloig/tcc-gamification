@@ -1,30 +1,33 @@
-$app = angular.module('app', [ 'ngResource' ]);
+var appModule = angular.module('app', []);
 
-// function Usuario($scope, $http) {
-// $http.get('http://localhost:8080/tcc/usuario').success(function(data) {
-// $scope.usuario = data;
-// });
-// }
 
-function Usuario($scope, $resource) {
+appModule.controller('UsuarioController', function($scope, $http) {
+	$http.get('http://localhost:8080/tcc/usuario').success(function(data) {
+		$scope.usuario = data;
+	});
+});
 
-	var usuario = $resource('http://localhost:8080/tcc/usuario');
-	$scope.usuario = usuario.get();
+appModule.controller('ExercicioController', function($scope) {
 
-}
+});
 
-function ExercicioController($scope, $resource) {
 
-}
-
-function CodigoController($scope, $http) {
-	$scope.codigo = "System.out.println( );";
+appModule.controller('CodigoController', function($scope, $http) {
+	
+	var codigo = "System.out.println( );";
+	var editor = ace.edit("editor");
+	editor.setTheme("ace/theme/eclipse");
+	editor.getSession().setMode("ace/mode/java");
+	
+	editor.setValue(codigo);
+		
 	$scope.reposta;
 	$scope.enviarExercicio = function() {
 		$scope.reposta = {
-			"codigo" : $scope.codigo
+			//"codigo" : $scope.codigo
+				"codigo" : editor.getSession().getValue()
 		};
-		
+
 		var data = $scope.reposta;
 
 		$http.post('http://localhost:8080/tcc/codigo00', data).success(
@@ -33,5 +36,4 @@ function CodigoController($scope, $http) {
 					$scope.respostaConsole = data.mensagem;
 				});
 	};
-}
-
+});

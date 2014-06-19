@@ -39,7 +39,7 @@ public class UsuarioControle {
 		System.out.println("Codigo Recebido: " + codigo.getCodigo());
 		
 		String respostaConsole = programa.executar(codigo.getCodigo());
-		System.out.println("Resposta: " + respostaConsole);
+		System.out.println("Resposta da Compilação: " + respostaConsole);
 		RespostaExercicioBean resposta = new RespostaExercicioBean(respostaConsole);
 		return resposta;
 	}

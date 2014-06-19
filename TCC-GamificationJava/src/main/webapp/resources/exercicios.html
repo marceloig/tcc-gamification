@@ -6,6 +6,15 @@
 <script src="js/angular.min.js"></script>
 <script src="js/angular-resource.min.js"></script>
 <script src="js/app.js"></script>
+
+<style type="text/css">
+#editor {
+	position: relative;
+	width: 450px;
+	height: 400px;
+}
+</style>
+
 </head>
 <body>
 	<div class="container">
@@ -42,10 +51,11 @@
 				</div>
 
 				<div class="span6">
-					<div class="codigo" >
-						<form name="resposta" ng-controller="CodigoController" ng-submit="enviarExercicio()">
-							<textarea class="span6" rows="6" ng-model="codigo" value="{{codigo}}" ></textarea>
-							<button class="btn btn-small btn-primary" type="submit" >Enviar
+					<div class="codigo">
+						<div id="editor"></div>
+						<form name="resposta" ng-controller="CodigoController"
+							ng-submit="enviarExercicio()">
+							<button class="btn btn-small btn-primary" type="submit">Enviar
 								Exercicio</button>
 						</form>
 					</div>
@@ -74,7 +84,8 @@
 		</div>
 	</div>
 
-
+	<script src="ace/src-noconflict/ace.js" type="text/javascript"
+		charset="utf-8"></script>
 
 </body>
 </html>
