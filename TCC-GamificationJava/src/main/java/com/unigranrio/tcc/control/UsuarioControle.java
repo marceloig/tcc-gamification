@@ -1,12 +1,5 @@
 package com.unigranrio.tcc.control;
 
-import javassist.CannotCompileException;
-import javassist.ClassClassPath;
-import javassist.ClassPool;
-import javassist.CtClass;
-import javassist.CtMethod;
-import javassist.NotFoundException;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,8 +22,8 @@ public class UsuarioControle {
 	@RequestMapping(value = "/usuario", method = RequestMethod.GET)
 	public @ResponseBody
 	Usuario getUsuario() {
-		//return new Usuario();
-		return dao.buscarUsuarioByLogin();
+		Usuario usuario = dao.buscarUsuarioByLogin();
+		return usuario;
 	}
 	
 	@RequestMapping(value = "/codigo00", method = RequestMethod.POST)
@@ -40,8 +33,8 @@ public class UsuarioControle {
 		
 		String respostaConsole = programa.executar(codigo.getCodigo());
 		System.out.println("Resposta da Compilação: " + respostaConsole);
-		RespostaExercicioBean resposta = new RespostaExercicioBean(respostaConsole);
-		return resposta;
+		RespostaExercicioBean retorno = new RespostaExercicioBean(respostaConsole);
+		return retorno;
 	}
 
 }

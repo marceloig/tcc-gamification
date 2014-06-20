@@ -50,19 +50,18 @@
 					</div>
 				</div>
 
-				<div class="span6">
+				<div class="span6" ng-controller="CodigoController">
 					<div class="codigo">
 						<div id="editor"></div>
-						<form name="resposta" ng-controller="CodigoController"
-							ng-submit="enviarExercicio()">
+						<form name="resposta" ng-submit="enviarExercicio()">
 							<button class="btn btn-small btn-primary" type="submit">Enviar
 								Exercicio</button>
 						</form>
 					</div>
 					<div class="row">
 						<div class="span6">
-							<div class="console well" ng-controller="CodigoController">
-								<p value="{{respostaConsole}}">{{respostaConsole}}</p>
+							<div class="console well">
+								<p>{{retorno.mensagem}}</p>
 							</div>
 						</div>
 					</div>

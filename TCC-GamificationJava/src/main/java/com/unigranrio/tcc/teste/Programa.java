@@ -28,6 +28,7 @@ public class Programa {
 			child.insertClassPath(new ClassClassPath(this.getClass()));
 
 			CtClass cc = child.makeClass("Exercicio" + Integer.toString(i));
+			//CtClass cc = child.makeClass("Exercicio");
 			CtMethod m = CtNewMethod.make("public void execute() { " + codigo
 					+ " }", cc);
 			cc.addMethod(m);
@@ -37,7 +38,7 @@ public class Programa {
 
 			Class exIntf = cc.toClass();
 			ProgramaIntf obj = (ProgramaIntf) exIntf.newInstance();
-
+			
 			PrintStream out = new PrintStream(new FileOutputStream(
 					"console.txt", false));
 
@@ -50,6 +51,7 @@ public class Programa {
 			
 			resultado = reader.nextLine();
 			while(reader.hasNext()){
+				resultado += "\n";
 				resultado += reader.nextLine();
 			}
 			
@@ -62,7 +64,7 @@ public class Programa {
 			e.printStackTrace();
 		} catch (CannotCompileException e) {
 			resultado = e.getReason();
-			// e.printStackTrace();
+			e.printStackTrace();
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
