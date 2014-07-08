@@ -1,0 +1,40 @@
+<meta charset="utf-8">
+<div id="content">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="col-md-6 col-md-offset-3">
+				<div class="exercicios">
+					<h3>{{titulo}}</h3>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="exercicios">
+						<p>{{descricao}}</p>
+					</div>
+				</div>
+
+				<div ng-controller="CodigoController">
+					<div class="col-md-6">
+						<div id="codigo">
+							<div id="editor"></div>
+							<form name="resposta" ng-submit="enviarExercicio()">
+								<button class="btn btn-small btn-primary" type="submit">Enviar
+									Exercicio</button>
+							</form>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="console well well-lg">
+									<p>{{retorno.mensagem}}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+</div>

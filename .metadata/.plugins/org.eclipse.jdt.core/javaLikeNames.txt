@@ -1,6 +1,2 @@
-dsld
-gpp
-gradle
-groovy
-grunit
+aj
 java
