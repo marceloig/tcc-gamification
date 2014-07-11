@@ -8,15 +8,15 @@ import com.unigranrio.tcc.model.entity.Usuario;
 public class Teste {
 	
 	public static void main(String[] args) {
-		inserirNivel();
-		//inserirUsuario();
+		//inserirNivel();
+		inserirUsuario();
 	}
 
 	public static void inserirNivel(){
 		Nivel nivel = new Nivel();
 		nivel.setNome("Novato");
 		nivel.setPontos(0);
-		nivel.setImagem(null);
+		nivel.setCaminhoImagem("image/novato.png");
 		
 		NivelDAO nivelDAO = new NivelDAO();
 		nivelDAO.gravarNivel(nivel);
@@ -24,11 +24,11 @@ public class Teste {
 	
 	public static void inserirUsuario(){
 		Usuario usuario = new Usuario();
-		usuario.setNome("Igor Marcelo");
-		usuario.setLogin("igmarcelo");
+		usuario.setNome("Teste");
+		usuario.setLogin("teste");
 		usuario.setSenha("123456");
 		usuario.setPontos(0);
-		//usuario.setNivel(null);
+		usuario.setNivel(null);
 		usuario.setAssuntos(null);
 		usuario.setBadges(null);
 		

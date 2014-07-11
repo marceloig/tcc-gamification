@@ -10,6 +10,7 @@ import com.unigranrio.tcc.dao.UsuarioDAO;
 import com.unigranrio.tcc.exercicio.Programa;
 import com.unigranrio.tcc.model.CodigoBean;
 import com.unigranrio.tcc.model.RespostaExercicioBean;
+import com.unigranrio.tcc.model.UsuarioBean;
 import com.unigranrio.tcc.model.entity.Usuario;
 
 
@@ -18,11 +19,12 @@ public class UsuarioControle {
 	
 	private UsuarioDAO dao = new UsuarioDAO();
 	private Programa programa = new Programa();
+	private Usuario usuario = new Usuario();
 		
 	@RequestMapping(value = "/usuario", method = RequestMethod.GET)
 	public @ResponseBody
 	Usuario getUsuario() {
-		Usuario usuario = dao.buscarUsuarioByLogin();
+		Usuario usuario = dao.buscarUsuarioByLogin("");
 		return usuario;
 	}
 	
@@ -35,6 +37,18 @@ public class UsuarioControle {
 		System.out.println("Resposta da Compilação: " + respostaConsole);
 		RespostaExercicioBean retorno = new RespostaExercicioBean(respostaConsole);
 		return retorno;
+	}
+	
+	@RequestMapping(value = "/novoUsuario", method = RequestMethod.POST)
+	public @ResponseBody
+	String CadastrarUsuario(@RequestBody UsuarioBean usuarioBean){
+		System.out.println("Chegou!!!");
+		usuario.setNome(usuarioBean.getNome());
+		usuario.setLogin(usuarioBean.getLogin());
+		usuario.setSenha(usuarioBean.getSenha());
+		dao.gravarUsuario(usuario);
+		
+		return "Cadastrado";
 	}
 
 }

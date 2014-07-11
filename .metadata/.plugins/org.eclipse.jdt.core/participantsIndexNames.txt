@@ -1,0 +1,3 @@
+INDEX VERSION 1.126
+C:\Users\Igor\git\tcc-gamification\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2417225861.index
+\TCC-GamificationJava\src

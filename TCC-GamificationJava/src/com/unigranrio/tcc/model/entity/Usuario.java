@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 
 @Entity
@@ -18,8 +19,8 @@ public class Usuario {
 	@Column (nullable = false)
 	private String senha;
 	
-	//@Column (nullable = false)
-	//private Nivel nivel;
+	@ManyToOne
+	private Nivel nivel;
 	
 	@Column (nullable = false)
 	private int pontos;
@@ -63,14 +64,14 @@ public class Usuario {
 	}
 
 
-//	public Nivel getNivel() {
-//		return nivel;
-//	}
-//
-//
-//	public void setNivel(Nivel nivel) {
-//		this.nivel = nivel;
-//	}
+	public Nivel getNivel() {
+		return nivel;
+	}
+
+
+	public void setNivel(Nivel nivel) {
+		this.nivel = nivel;
+	}
 
 
 	public int getPontos() {

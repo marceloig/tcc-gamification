@@ -9,6 +9,9 @@ appModule.config([ '$routeProvider',
 			}).when('/home', {
 				templateUrl : 'home.html',
 				controller : 'UsuarioController'
+			}).when('/cadastro', {
+				templateUrl : 'cadastro.html',
+				controller : 'CadastroController'
 			}).when('/exercicio', {
 				templateUrl : 'exercicios.html',
 				controller : 'ExercicioController'
@@ -30,6 +33,24 @@ appModule.controller('UsuarioController', function($scope, $http) {
 appModule.controller('ExercicioController', function($scope) {
 	$scope.titulo = "Exercicio Olá Mundo";
 	$scope.descricao = "Escreva Olá Mundo!";
+
+});
+
+appModule.controller('CadastroController', function($scope, $http) {
+	$scope.usuario = {
+			"nome": "",
+			"login": "",
+			"senha": ""
+	};
+	$scope.mensagem = "";
+	$scope.cadastrarUsuario = function() {
+		var data = $scope.usuario;
+		$http.post('http://localhost:8080/TCC-GamificationJava/novoUsuario',
+				data).success(function(data) {
+					data = "Cadastrado com sucesso";
+					$scope.mensagem = data;
+				});
+	};
 
 });
 

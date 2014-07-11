@@ -22,7 +22,7 @@ public class UsuarioDAO {
 		manager.close();
 	}
 	
-	public Usuario buscarUsuarioByLogin(){
+	public Usuario buscarUsuarioByLogin(String login){
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("gamificationJava");
 		EntityManager manager = factory.createEntityManager();
 
