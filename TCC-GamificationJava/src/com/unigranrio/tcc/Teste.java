@@ -9,7 +9,7 @@ public class Teste {
 	
 	public static void main(String[] args) {
 		//inserirNivel();
-		inserirUsuario();
+		//inserirUsuario();
 	}
 
 	public static void inserirNivel(){
@@ -24,8 +24,8 @@ public class Teste {
 	
 	public static void inserirUsuario(){
 		Usuario usuario = new Usuario();
-		usuario.setNome("Teste");
-		usuario.setLogin("teste");
+		usuario.setNome("Igor Marcelo");
+		usuario.setLogin("igmarcelo");
 		usuario.setSenha("123456");
 		usuario.setPontos(0);
 		usuario.setNivel(null);

@@ -26,7 +26,7 @@ public class UsuarioDAO {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("gamificationJava");
 		EntityManager manager = factory.createEntityManager();
 
-		Usuario usuario = manager.find(Usuario.class, "igmarcelo");
+		Usuario usuario = manager.find(Usuario.class, login);
 
 		return usuario;
 	}

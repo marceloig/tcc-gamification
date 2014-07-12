@@ -2,10 +2,10 @@ var appModule = angular.module('app', [ 'ngRoute' ]);
 
 appModule.config([ '$routeProvider',
 		function($routeProvider, $locationProvider) {
-			
+
 			$routeProvider.when('/', {
 				templateUrl : 'login.html',
-				controller : 'ExercicioController'
+				controller : 'LoginController'
 			}).when('/home', {
 				templateUrl : 'home.html',
 				controller : 'UsuarioController'
@@ -15,17 +15,24 @@ appModule.config([ '$routeProvider',
 			}).when('/exercicio', {
 				templateUrl : 'exercicios.html',
 				controller : 'ExercicioController'
+			}).when('/sair', {
+				templateUrl : 'login.html',
+				controller : 'LoginController'
 			}).otherwise({
 				redirectTo : '/home'
 			});
-			
+
 			// remove o # da url use the HTML5 History API
-			//$locationProvider.html5Mode(true);
+			// $locationProvider.html5Mode(true);
 		} ]);
 
+appModule.controller('LoginController', function($scope, $http) {
+	
+});
+
 appModule.controller('UsuarioController', function($scope, $http) {
-	$http.get('http://localhost:8080/TCC-GamificationJava/usuario')
-			.success(function(data) {
+	$http.get('http://localhost:8080/TCC-GamificationJava/usuario').success(
+			function(data) {
 				$scope.usuario = data;
 			});
 });
@@ -38,18 +45,28 @@ appModule.controller('ExercicioController', function($scope) {
 
 appModule.controller('CadastroController', function($scope, $http) {
 	$scope.usuario = {
-			"nome": "",
-			"login": "",
-			"senha": ""
+		"nome" : "",
+		"login" : "",
+		"senha" : ""
 	};
 	$scope.mensagem = "";
+	$scope.status;
+	
 	$scope.cadastrarUsuario = function() {
 		var data = $scope.usuario;
 		$http.post('http://localhost:8080/TCC-GamificationJava/novoUsuario',
 				data).success(function(data) {
-					data = "Cadastrado com sucesso";
-					$scope.mensagem = data;
-				});
+			var cadastro = data;
+			if (cadastro == "true") {
+				$scope.mensagem = "Cadastrado com sucesso";
+				$scope.status = "success";
+				
+			} else {
+				$scope.mensagem = "Usuário já existe";
+				$scope.status = "warning";
+			}
+			//$scope.mensagem = data;
+		});
 	};
 
 });
@@ -72,13 +89,13 @@ appModule.controller('CodigoController', function($scope, $http) {
 		};
 
 		var data = $scope.reposta;
-		$http.post('http://localhost:8080/TCC-GamificationJava/codigo00',
-				data).success(function(data) {
-			// $scope.retorno = data;
-			$scope.retorno = data;
-			console.log(data.mensagem);
-			// alert(data.mensagem);
-		});
+		$http.post('http://localhost:8080/TCC-GamificationJava/codigo00', data)
+				.success(function(data) {
+					// $scope.retorno = data;
+					$scope.retorno = data;
+					console.log(data.mensagem);
+					// alert(data.mensagem);
+				});
 	};
 
 });

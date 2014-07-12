@@ -13,42 +13,52 @@ import com.unigranrio.tcc.model.RespostaExercicioBean;
 import com.unigranrio.tcc.model.UsuarioBean;
 import com.unigranrio.tcc.model.entity.Usuario;
 
-
 @Controller
 public class UsuarioControle {
-	
+
 	private UsuarioDAO dao = new UsuarioDAO();
 	private Programa programa = new Programa();
 	private Usuario usuario = new Usuario();
-		
+
 	@RequestMapping(value = "/usuario", method = RequestMethod.GET)
 	public @ResponseBody
 	Usuario getUsuario() {
-		Usuario usuario = dao.buscarUsuarioByLogin("");
+		Usuario usuario = dao.buscarUsuarioByLogin("igmarcelo");
 		return usuario;
 	}
-	
+
 	@RequestMapping(value = "/codigo00", method = RequestMethod.POST)
 	public @ResponseBody
-	RespostaExercicioBean receberRespostaExercicio(@RequestBody CodigoBean codigo){
+	RespostaExercicioBean receberRespostaExercicio(
+			@RequestBody CodigoBean codigo) {
 		System.out.println("Codigo Recebido: " + codigo.getCodigo());
-		
+
 		String respostaConsole = programa.executar(codigo.getCodigo());
-		System.out.println("Resposta da Compilação: " + respostaConsole);
-		RespostaExercicioBean retorno = new RespostaExercicioBean(respostaConsole);
+		System.out.println("Resposta da CompilaÃ§Ã£o: " + respostaConsole);
+		RespostaExercicioBean retorno = new RespostaExercicioBean(
+				respostaConsole);
 		return retorno;
 	}
-	
+
 	@RequestMapping(value = "/novoUsuario", method = RequestMethod.POST)
 	public @ResponseBody
-	String CadastrarUsuario(@RequestBody UsuarioBean usuarioBean){
+	boolean CadastrarUsuario(@RequestBody UsuarioBean usuarioBean) {
 		System.out.println("Chegou!!!");
-		usuario.setNome(usuarioBean.getNome());
-		usuario.setLogin(usuarioBean.getLogin());
-		usuario.setSenha(usuarioBean.getSenha());
-		dao.gravarUsuario(usuario);
+		boolean mensagem;
 		
-		return "Cadastrado";
+		if (dao.buscarUsuarioByLogin(usuarioBean.getLogin()) == null) {
+			
+			usuario.setNome(usuarioBean.getNome());
+			usuario.setLogin(usuarioBean.getLogin());
+			usuario.setSenha(usuarioBean.getSenha());
+
+			dao.gravarUsuario(usuario);
+			mensagem = true;
+		} else {
+			mensagem = false;
+		}
+
+		return mensagem;
 	}
 
 }
