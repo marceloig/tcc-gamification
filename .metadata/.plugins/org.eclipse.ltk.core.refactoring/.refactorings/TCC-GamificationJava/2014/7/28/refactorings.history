@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename package &apos;com.unigranrio.tcc.interceptor&apos; to &apos;com.unigranrio.tcc.security&apos;&#x0D;&#x0A;- Original project: &apos;TCC-GamificationJava&apos;&#x0D;&#x0A;- Original element: &apos;TCC-GamificationJava/src/com.unigranrio.tcc.interceptor&apos;&#x0D;&#x0A;- Renamed element: &apos;TCC-GamificationJava/src/com.unigranrio.tcc.security&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename package &apos;com.unigranrio.tcc.interceptor&apos;" flags="589830" hierarchical="false" id="org.eclipse.jdt.ui.rename.package" input="/src&lt;com.unigranrio.tcc.interceptor" name="com.unigranrio.tcc.security" qualified="false" references="true" stamp="1405277149316" textual="false" version="1.0"/>
+</session>
