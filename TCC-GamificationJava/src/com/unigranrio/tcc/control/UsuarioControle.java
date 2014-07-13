@@ -1,5 +1,7 @@
 package com.unigranrio.tcc.control;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,30 @@ public class UsuarioControle {
 	private UsuarioDAO dao = new UsuarioDAO();
 	private Programa programa = new Programa();
 	private Usuario usuario = new Usuario();
+
+	@RequestMapping(value = "/usuario/login", method = RequestMethod.POST)
+	public @ResponseBody
+	String logarUsuario(HttpSession session, @RequestBody UsuarioBean usuarioBean) {
+		System.out.println("Chegou!!!");
+		String mensagem = "";
+		usuario = dao.buscarUsuarioByLogin(usuarioBean.getLogin());
+
+		if (usuario != null) {
+			
+			if (usuario.getSenha().equals(usuarioBean.getSenha())) {
+				mensagem = "Usuario logado";
+				session.setAttribute("usuarioLogado", usuarioBean);
+				return "ok";
+			} else {
+				mensagem = "Senha incorreta";
+			}
+
+		} else {
+			mensagem = "Usuario não existe";
+		}
+
+		return mensagem;
+	}
 
 	@RequestMapping(value = "/usuario", method = RequestMethod.GET)
 	public @ResponseBody
@@ -40,14 +66,14 @@ public class UsuarioControle {
 		return retorno;
 	}
 
-	@RequestMapping(value = "/novoUsuario", method = RequestMethod.POST)
+	@RequestMapping(value = "/usuario/novo", method = RequestMethod.POST)
 	public @ResponseBody
 	boolean CadastrarUsuario(@RequestBody UsuarioBean usuarioBean) {
 		System.out.println("Chegou!!!");
 		boolean mensagem;
-		
+
 		if (dao.buscarUsuarioByLogin(usuarioBean.getLogin()) == null) {
-			
+
 			usuario.setNome(usuarioBean.getNome());
 			usuario.setLogin(usuarioBean.getLogin());
 			usuario.setSenha(usuarioBean.getSenha());

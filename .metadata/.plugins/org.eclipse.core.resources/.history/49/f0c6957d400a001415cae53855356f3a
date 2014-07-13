@@ -1,0 +1,5 @@
+package com.unigranrio.tcc.interceptor;
+
+public class AutorizacaoInterceptor {
+
+}

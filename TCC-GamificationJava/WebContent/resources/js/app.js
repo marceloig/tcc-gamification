@@ -26,8 +26,29 @@ appModule.config([ '$routeProvider',
 			// $locationProvider.html5Mode(true);
 		} ]);
 
-appModule.controller('LoginController', function($scope, $http) {
-	
+appModule.controller('LoginController', function($scope, $http, $location) {
+
+	$scope.usuario = {
+		"login" : "",
+		"senha" : ""
+	};
+	$scope.mensagem = "";
+
+	$scope.logarUsuario = function() {
+		var data = $scope.usuario;
+		$http.post('http://localhost:8080/TCC-GamificationJava/usuario/login',
+				data).success(function(data) {
+			var status = data;
+			if (status == "ok") {
+				//alert(status);
+				$location.path('/home');
+				$location.replace();
+			} else {
+				$scope.mensagem = data;
+			}
+
+		});
+	};
 });
 
 appModule.controller('UsuarioController', function($scope, $http) {
@@ -51,21 +72,21 @@ appModule.controller('CadastroController', function($scope, $http) {
 	};
 	$scope.mensagem = "";
 	$scope.status;
-	
+
 	$scope.cadastrarUsuario = function() {
 		var data = $scope.usuario;
-		$http.post('http://localhost:8080/TCC-GamificationJava/novoUsuario',
+		$http.post('http://localhost:8080/TCC-GamificationJava/usuario/novo',
 				data).success(function(data) {
 			var cadastro = data;
 			if (cadastro == "true") {
 				$scope.mensagem = "Cadastrado com sucesso";
 				$scope.status = "success";
-				
+
 			} else {
 				$scope.mensagem = "Usuário já existe";
 				$scope.status = "warning";
 			}
-			//$scope.mensagem = data;
+			// $scope.mensagem = data;
 		});
 	};
 
