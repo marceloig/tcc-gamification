@@ -13,7 +13,7 @@ public class Nivel {
 
 	private String nome;
 	private int pontos;
-	private String CaminhoImagem;
+	private String nomeImagem;
 
 	public Long getId() {
 		return id;
@@ -39,12 +39,12 @@ public class Nivel {
 		this.pontos = pontos;
 	}
 
-	public String getCaminhoImagem() {
-		return CaminhoImagem;
+	public String getNomeImagem() {
+		return nomeImagem;
 	}
 
-	public void setCaminhoImagem(String caminhoImagem) {
-		CaminhoImagem = caminhoImagem;
+	public void setNomeImagem(String nomeImagem) {
+		this.nomeImagem = nomeImagem;
 	}
 
 }

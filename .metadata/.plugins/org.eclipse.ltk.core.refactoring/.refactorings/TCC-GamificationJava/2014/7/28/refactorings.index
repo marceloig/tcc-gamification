@@ -1,1 +1,6 @@
 1405277149316	Rename package 'com.unigranrio.tcc.interceptor'
+1405278573378	Rename type 'AutorizacaoInterceptor'
+1405280087486	Delete element
+1405281080794	Delete element
+1405281088301	Delete element
+1405291152080	Rename type 'WebSecurityConfig'

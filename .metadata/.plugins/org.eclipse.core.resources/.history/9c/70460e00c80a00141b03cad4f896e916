@@ -1,0 +1,8 @@
+package com.unigranrio.tcc.security;
+
+import org.springframework.context.annotation.Configuration;
+
+
+public class WebSecurityConfig {
+
+}

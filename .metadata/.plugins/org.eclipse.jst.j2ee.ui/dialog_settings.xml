@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<item value="true" key="J2EE_EXPORT_OVERWRITE"/>
+	<item value="true" key="J2EE_EXPORT_SOURCE"/>
 	<list key="J2EE_IMPORT_null">
+		<item value="D:\Projeto Final\TCC-GamificationJava.war"/>
+	</list>
+	<list key="J2EE_EXPORT_JST_WEB">
 		<item value="D:\Projeto Final\TCC-GamificationJava.war"/>
 	</list>
 	<list key="MRU_RUNTIME_STORE">

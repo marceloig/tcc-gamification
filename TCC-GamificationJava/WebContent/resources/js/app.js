@@ -19,7 +19,7 @@ appModule.config([ '$routeProvider',
 				templateUrl : 'login.html',
 				controller : 'LoginController'
 			}).otherwise({
-				redirectTo : '/home'
+				redirectTo : '/'
 			});
 
 			// remove o # da url use the HTML5 History API
@@ -52,7 +52,7 @@ appModule.controller('LoginController', function($scope, $http, $location) {
 });
 
 appModule.controller('UsuarioController', function($scope, $http) {
-	$http.get('http://localhost:8080/TCC-GamificationJava/usuario').success(
+	$http.get('http://localhost:8080/TCC-GamificationJava/usuario/get').success(
 			function(data) {
 				$scope.usuario = data;
 			});
@@ -75,7 +75,7 @@ appModule.controller('CadastroController', function($scope, $http) {
 
 	$scope.cadastrarUsuario = function() {
 		var data = $scope.usuario;
-		$http.post('http://localhost:8080/TCC-GamificationJava/usuario/novo',
+		$http.post('http://localhost:8080/TCC-GamificationJava/usuario/post',
 				data).success(function(data) {
 			var cadastro = data;
 			if (cadastro == "true") {

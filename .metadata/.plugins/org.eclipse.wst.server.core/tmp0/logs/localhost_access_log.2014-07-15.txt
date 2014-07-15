@@ -1,0 +1,11 @@
+127.0.0.1 - - [15/Jul/2014:19:15:05 -0300] "GET / HTTP/1.1" 404 955
+0:0:0:0:0:0:0:1 - - [15/Jul/2014:19:15:07 -0300] "GET /TCC-GamificationJava/ HTTP/1.1" 404 952
+0:0:0:0:0:0:0:1 - - [15/Jul/2014:19:15:18 -0300] "GET /TCC-GamificationJava/resources/html HTTP/1.1" 302 -
+0:0:0:0:0:0:0:1 - - [15/Jul/2014:19:15:18 -0300] "GET /TCC-GamificationJava/resources/html/ HTTP/1.1" 200 1823
+0:0:0:0:0:0:0:1 - - [15/Jul/2014:19:15:18 -0300] "GET /TCC-GamificationJava/resources/css/bootstrap.min.css HTTP/1.1" 200 109518
+0:0:0:0:0:0:0:1 - - [15/Jul/2014:19:15:18 -0300] "GET /TCC-GamificationJava/resources/js/angular.min.js HTTP/1.1" 200 102445
+0:0:0:0:0:0:0:1 - - [15/Jul/2014:19:15:18 -0300] "GET /TCC-GamificationJava/resources/js/angular-resource.min.js HTTP/1.1" 200 3297
+0:0:0:0:0:0:0:1 - - [15/Jul/2014:19:15:18 -0300] "GET /TCC-GamificationJava/resources/js/angular-route.min.js HTTP/1.1" 200 3952
+0:0:0:0:0:0:0:1 - - [15/Jul/2014:19:15:18 -0300] "GET /TCC-GamificationJava/resources/js/app.js HTTP/1.1" 200 3102
+0:0:0:0:0:0:0:1 - - [15/Jul/2014:19:15:18 -0300] "GET /TCC-GamificationJava/resources/ace/src-noconflict/ace.js HTTP/1.1" 200 612482
+0:0:0:0:0:0:0:1 - - [15/Jul/2014:19:15:20 -0300] "GET /TCC-GamificationJava/resources/html/login.html HTTP/1.1" 200 1383

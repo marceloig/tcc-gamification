@@ -33,7 +33,6 @@ public class UsuarioControle {
 			
 			if (usuario.getSenha().equals(usuarioBean.getSenha())) {
 				mensagem = "Usuario logado";
-				session.setAttribute("usuarioLogado", usuarioBean);
 				return "ok";
 			} else {
 				mensagem = "Senha incorreta";
@@ -46,7 +45,7 @@ public class UsuarioControle {
 		return mensagem;
 	}
 
-	@RequestMapping(value = "/usuario", method = RequestMethod.GET)
+	@RequestMapping(value = "/usuario/get", method = RequestMethod.GET)
 	public @ResponseBody
 	Usuario getUsuario() {
 		Usuario usuario = dao.buscarUsuarioByLogin("igmarcelo");
@@ -66,7 +65,7 @@ public class UsuarioControle {
 		return retorno;
 	}
 
-	@RequestMapping(value = "/usuario/novo", method = RequestMethod.POST)
+	@RequestMapping(value = "/usuario/post", method = RequestMethod.POST)
 	public @ResponseBody
 	boolean CadastrarUsuario(@RequestBody UsuarioBean usuarioBean) {
 		System.out.println("Chegou!!!");
