@@ -1,19 +1,22 @@
 package com.unigranrio.tcc.model;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import com.unigranrio.tcc.model.AssuntoBean;
-import com.unigranrio.tcc.model.ConquistaBean;
-import com.unigranrio.tcc.model.NivelBean;
+import com.unigranrio.tcc.model.entity.Conquista;
+import com.unigranrio.tcc.model.entity.Nivel;
+import com.unigranrio.tcc.model.entity.Progresso;
 
 public class UsuarioBean {
+
 	private String nome;
 	private String login;
 	private String senha;
-	private NivelBean nivel;
+	private Nivel nivel;
 	private int pontos;
-	private ArrayList<AssuntoBean> assuntos;
-	private ArrayList<ConquistaBean> badges;
+
+	private List<Conquista> badges;
+
+	private List<Progresso> progresso;
 
 	public String getNome() {
 		return nome;
@@ -39,11 +42,11 @@ public class UsuarioBean {
 		this.senha = senha;
 	}
 
-	public NivelBean getNivel() {
+	public Nivel getNivel() {
 		return nivel;
 	}
 
-	public void setNivel(NivelBean nivel) {
+	public void setNivel(Nivel nivel) {
 		this.nivel = nivel;
 	}
 
@@ -55,20 +58,20 @@ public class UsuarioBean {
 		this.pontos = pontos;
 	}
 
-	public ArrayList<AssuntoBean> getAssuntos() {
-		return assuntos;
-	}
-
-	public void setAssuntos(ArrayList<AssuntoBean> assuntos) {
-		this.assuntos = assuntos;
-	}
-
-	public ArrayList<ConquistaBean> getBadges() {
+	public List<Conquista> getBadges() {
 		return badges;
 	}
 
-	public void setBadges(ArrayList<ConquistaBean> badges) {
+	public void setBadges(List<Conquista> badges) {
 		this.badges = badges;
+	}
+
+	public List<Progresso> getProgresso() {
+		return progresso;
+	}
+
+	public void setProgresso(List<Progresso> progresso) {
+		this.progresso = progresso;
 	}
 
 }

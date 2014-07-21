@@ -1,9 +1,5 @@
 package com.unigranrio.tcc.dao;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
 import org.springframework.stereotype.Repository;
 
 import com.unigranrio.tcc.model.entity.Usuario;
@@ -12,21 +8,19 @@ import com.unigranrio.tcc.model.entity.Usuario;
 public class UsuarioDAO {
 
 	public void gravarUsuario(Usuario usuario){
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("gamificationJava");
-		EntityManager manager = factory.createEntityManager();
 		
-		manager.getTransaction().begin();    
-		manager.persist(usuario);
-		manager.getTransaction().commit();
+		Connection.openConnection();
+		Connection.getConnection().getTransaction().begin();    
+		Connection.getConnection().persist(usuario);
+		Connection.getConnection().getTransaction().commit();
 
-		manager.close();
+		Connection.closeConnection();
 	}
 	
 	public Usuario buscarUsuarioByLogin(String login){
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("gamificationJava");
-		EntityManager manager = factory.createEntityManager();
-
-		Usuario usuario = manager.find(Usuario.class, login);
+		
+		Connection.openConnection();
+		Usuario usuario = Connection.getConnection().find(Usuario.class, login);
 
 		return usuario;
 	}

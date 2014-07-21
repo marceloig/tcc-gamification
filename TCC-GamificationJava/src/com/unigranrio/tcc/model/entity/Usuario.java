@@ -1,12 +1,12 @@
 package com.unigranrio.tcc.model.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Usuario {
@@ -25,13 +25,12 @@ public class Usuario {
 
 	@Column(nullable = false)
 	private int pontos;
-
-	private ArrayList<Assunto> assuntos;
-	private ArrayList<Conquista> badges;
-
-	public Usuario() {
-
-	}
+	
+	@OneToMany
+	private List<Conquista> badges;
+	
+	@OneToMany
+	private List<Progresso> progresso;
 
 	public String getNome() {
 		return nome;
@@ -73,20 +72,21 @@ public class Usuario {
 		this.pontos = pontos;
 	}
 
-	public List<Assunto> getAssuntos() {
-		return assuntos;
-	}
-
-	public ArrayList<Conquista> getBadges() {
+	public List<Conquista> getBadges() {
 		return badges;
 	}
 
-	public void setBadges(ArrayList<Conquista> badges) {
+	public void setBadges(List<Conquista> badges) {
 		this.badges = badges;
 	}
 
-	public void setAssuntos(ArrayList<Assunto> assuntos) {
-		this.assuntos = assuntos;
+	public List<Progresso> getProgresso() {
+		return progresso;
 	}
 
+	public void setProgresso(List<Progresso> progresso) {
+		this.progresso = progresso;
+	}
+
+	
 }

@@ -2,13 +2,17 @@ var appModule = angular.module('app', [ 'ngRoute' ]);
 
 appModule.config([ '$routeProvider',
 		function($routeProvider, $locationProvider) {
-
+			// remove o # da url use the HTML5 History API
+			// $locationProvider.html5Mode(true);
 			$routeProvider.when('/', {
 				templateUrl : 'login.html',
 				controller : 'LoginController'
 			}).when('/home', {
 				templateUrl : 'home.html',
 				controller : 'UsuarioController'
+			}).when('/modulos', {
+				templateUrl : 'modulos.html',
+				controller : 'ModuloController'
 			}).when('/cadastro', {
 				templateUrl : 'cadastro.html',
 				controller : 'CadastroController'
@@ -22,8 +26,6 @@ appModule.config([ '$routeProvider',
 				redirectTo : '/'
 			});
 
-			// remove o # da url use the HTML5 History API
-			// $locationProvider.html5Mode(true);
 		} ]);
 
 appModule.controller('LoginController', function($scope, $http, $location) {
@@ -40,7 +42,7 @@ appModule.controller('LoginController', function($scope, $http, $location) {
 				data).success(function(data) {
 			var status = data;
 			if (status == "ok") {
-				//alert(status);
+				// alert(status);
 				$location.path('/home');
 				$location.replace();
 			} else {
@@ -52,10 +54,14 @@ appModule.controller('LoginController', function($scope, $http, $location) {
 });
 
 appModule.controller('UsuarioController', function($scope, $http) {
-	$http.get('http://localhost:8080/TCC-GamificationJava/usuario/get').success(
-			function(data) {
+	$http.get('http://localhost:8080/TCC-GamificationJava/usuario/get')
+			.success(function(data) {
 				$scope.usuario = data;
 			});
+});
+
+appModule.controller('ModuloController', function($scope, $http) {
+
 });
 
 appModule.controller('ExercicioController', function($scope) {
