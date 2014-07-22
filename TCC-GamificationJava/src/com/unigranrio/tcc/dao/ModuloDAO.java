@@ -1,5 +1,7 @@
 package com.unigranrio.tcc.dao;
 
+import java.util.List;
+
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -48,5 +50,20 @@ public class ModuloDAO {
 
 		Connection.closeConnection();
 		return modulo;
+	}
+	
+	public List<Modulo> listarModulos() {
+
+		Connection.openConnection();
+		CriteriaBuilder cb = Connection.getConnection().getCriteriaBuilder();
+		CriteriaQuery<Modulo> c = cb.createQuery(Modulo.class);
+		Root<Modulo> root = c.from(Modulo.class);
+		root.fetch("assuntos", JoinType.LEFT);
+		c.select(root).distinct(true);
+
+		TypedQuery<Modulo> query = Connection.getConnection().createQuery(c);
+		List<Modulo> modulos = query.getResultList();
+		Connection.closeConnection();
+		return modulos;
 	}
 }

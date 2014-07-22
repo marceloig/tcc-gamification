@@ -2,9 +2,7 @@ package com.unigranrio.tcc.model;
 
 import java.util.List;
 
-import com.unigranrio.tcc.model.entity.Conquista;
 import com.unigranrio.tcc.model.entity.Nivel;
-import com.unigranrio.tcc.model.entity.Progresso;
 
 public class UsuarioBean {
 
@@ -14,9 +12,9 @@ public class UsuarioBean {
 	private Nivel nivel;
 	private int pontos;
 
-	private List<Conquista> badges;
+	private List<ConquistaBean> badges;
 
-	private List<Progresso> progresso;
+	private List<ProgressoBean> progresso;
 
 	public String getNome() {
 		return nome;
@@ -58,19 +56,19 @@ public class UsuarioBean {
 		this.pontos = pontos;
 	}
 
-	public List<Conquista> getBadges() {
+	public List<ConquistaBean> getBadges() {
 		return badges;
 	}
 
-	public void setBadges(List<Conquista> badges) {
+	public void setBadges(List<ConquistaBean> badges) {
 		this.badges = badges;
 	}
 
-	public List<Progresso> getProgresso() {
+	public List<ProgressoBean> getProgresso() {
 		return progresso;
 	}
 
-	public void setProgresso(List<Progresso> progresso) {
+	public void setProgresso(List<ProgressoBean> progresso) {
 		this.progresso = progresso;
 	}
 

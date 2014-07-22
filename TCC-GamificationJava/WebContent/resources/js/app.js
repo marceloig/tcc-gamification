@@ -61,7 +61,10 @@ appModule.controller('UsuarioController', function($scope, $http) {
 });
 
 appModule.controller('ModuloController', function($scope, $http) {
-
+	$http.get('http://localhost:8080/TCC-GamificationJava/modulos/get')
+			.success(function(data) {
+				$scope.modulos = data;
+			});
 });
 
 appModule.controller('ExercicioController', function($scope) {

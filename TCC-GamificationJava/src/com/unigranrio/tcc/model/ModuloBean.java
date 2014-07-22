@@ -2,15 +2,12 @@ package com.unigranrio.tcc.model;
 
 import java.util.List;
 
-import com.unigranrio.tcc.model.entity.Assunto;
-import com.unigranrio.tcc.model.entity.Progresso;
-
 public class ModuloBean {
 
 	private Long id;
 	private String nome;
-	private List<Assunto> assuntos;
-	private List<Progresso> historico;
+	private List<AssuntoBean> assuntos;
+	private List<ProgressoBean> historico;
 
 	public Long getId() {
 		return id;
@@ -28,19 +25,19 @@ public class ModuloBean {
 		this.nome = nome;
 	}
 
-	public List<Assunto> getAssuntos() {
+	public List<AssuntoBean> getAssuntos() {
 		return assuntos;
 	}
 
-	public void setAssuntos(List<Assunto> assuntos) {
+	public void setAssuntos(List<AssuntoBean> assuntos) {
 		this.assuntos = assuntos;
 	}
 
-	public List<Progresso> getHistorico() {
+	public List<ProgressoBean> getHistorico() {
 		return historico;
 	}
 
-	public void setHistorico(List<Progresso> historico) {
+	public void setHistorico(List<ProgressoBean> historico) {
 		this.historico = historico;
 	}
 }

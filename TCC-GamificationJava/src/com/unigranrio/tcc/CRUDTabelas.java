@@ -1,6 +1,5 @@
 package com.unigranrio.tcc;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.unigranrio.tcc.dao.AssuntoDAO;
@@ -15,11 +14,7 @@ import com.unigranrio.tcc.model.entity.Usuario;
 public class CRUDTabelas {
 
 	public static void main(String[] args) {
-		
-		//inserirModulo();
-		inserirAssunto();
-		alterarModulo();
-		buscarModulo();
+		//listarModulos();
 	}
 
 	public static void inserirNivel() {
@@ -81,35 +76,51 @@ public class CRUDTabelas {
 
 	public static void inserirModulo() {
 		Modulo modulo0 = new Modulo();
-		modulo0.setNome("Aprofundando em Java");
+		modulo0.setNome("Conhecendo Java");
 		
 		Modulo modulo1 = new Modulo();
-		modulo1.setNome("UML");
+		modulo1.setNome("Aprofundando em Java");
 		
 		Modulo modulo2 = new Modulo();
-		modulo2.setNome("Conceitos de Orientação a Objeto com Java");
+		modulo2.setNome("UML");
+		
+		Modulo modulo3 = new Modulo();
+		modulo3.setNome("Conceitos de Orientação a Objeto com Java");
 
 		ModuloDAO moduloDAO = new ModuloDAO();
 		moduloDAO.gravarModulo(modulo0);
 		moduloDAO.gravarModulo(modulo1);
 		moduloDAO.gravarModulo(modulo2);
+		moduloDAO.gravarModulo(modulo3);
 
 	}
 
 	public static void buscarModulo() {
 		ModuloDAO moduloDAO = new ModuloDAO();
-		Modulo modulo0 = moduloDAO.buscarModuloByNome("Aprofundando em Java");
+		Modulo modulo0 = moduloDAO.buscarModuloByNome("Conceitos de Orientação a Objeto com Java");
 		for (Assunto assunto : modulo0.getAssuntos()) {
 			System.out.println("ID: " + assunto.getId());
 			System.out.println("Nome: " + assunto.getNome());
 		}
 	}
 
+	public static void listarModulos(){
+		ModuloDAO moduloDAO = new ModuloDAO();
+		List<Modulo> modulo0 = moduloDAO.listarModulos();
+		for (Modulo modulo : modulo0) {
+			System.out.println("Modulo ID: " + modulo.getId());
+			System.out.println("Modulo Nome: " + modulo.getNome());
+			for(Assunto assunto : modulo.getAssuntos()){
+				System.out.println("Assunto ID: " + assunto.getId());
+				System.out.println("Assunto Nome: " + assunto.getNome());
+			}
+		}
+	}
 	public static void alterarModulo() {
 		ModuloDAO moduloDAO = new ModuloDAO();
 		AssuntoDAO assuntoDAO = new AssuntoDAO();
 		
-		Modulo modulo0 = moduloDAO.buscarModuloByNome("Aprofundando em Java");
+		Modulo modulo0 = moduloDAO.buscarModuloByNome("Conceitos de Orientação a Objeto com Java");
 		List<Assunto> assuntos = assuntoDAO.listarAssuntosByModulo(modulo0);
 		
 		modulo0.setAssuntos(assuntos);
@@ -121,17 +132,30 @@ public class CRUDTabelas {
 		ModuloDAO moduloDAO = new ModuloDAO();
 		AssuntoDAO assuntoDAO = new AssuntoDAO();
 
-		Modulo modulo0 = moduloDAO.buscarModuloByNome("Aprofundando em Java");
-
-		ArrayList<Assunto> assuntos = new ArrayList<Assunto>();
+		Modulo modulo0 = moduloDAO.buscarModuloByNome("Conceitos de Orientação a Objeto com Java");
 
 		Assunto assunto0 = new Assunto();
-		assunto0.setNome("Criação de packages");
+		assunto0.setNome("Encapsulamento");
 		assunto0.setModulo(modulo0);
-		assuntos.add(assunto0);
-
-		assuntoDAO.gravarAssunto(assunto0);
+		
+		Assunto assunto1 = new Assunto();
+		assunto1.setNome("Relacionamento: Associação/Composição/Agregação");
+		assunto1.setModulo(modulo0);
+		
+		Assunto assunto2 = new Assunto();
+		assunto2.setNome("Relacionamento: Herança");
+		assunto2.setModulo(modulo0);
+		
+		Assunto assunto3 = new Assunto();
+		assunto3.setNome("Polimorfismo");
+		assunto3.setModulo(modulo0);
+		
 		
 
+		assuntoDAO.gravarAssunto(assunto0);	
+		assuntoDAO.gravarAssunto(assunto1);
+		assuntoDAO.gravarAssunto(assunto2);
+		assuntoDAO.gravarAssunto(assunto3);
+		
 	};
 }

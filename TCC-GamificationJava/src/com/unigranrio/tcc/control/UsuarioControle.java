@@ -18,19 +18,21 @@ import com.unigranrio.tcc.model.entity.Usuario;
 @Controller
 public class UsuarioControle {
 
-	private UsuarioDAO dao = new UsuarioDAO();
+	private UsuarioDAO usuarioDAO = new UsuarioDAO();
+
 	private Programa programa = new Programa();
 	private Usuario usuario = new Usuario();
 
 	@RequestMapping(value = "/usuario/login", method = RequestMethod.POST)
 	public @ResponseBody
-	String logarUsuario(HttpSession session, @RequestBody UsuarioBean usuarioBean) {
+	String logarUsuario(HttpSession session,
+			@RequestBody UsuarioBean usuarioBean) {
 		System.out.println("Chegou!!!");
 		String mensagem = "";
-		usuario = dao.buscarUsuarioByLogin(usuarioBean.getLogin());
+		usuario = usuarioDAO.buscarUsuarioByLogin(usuarioBean.getLogin());
 
 		if (usuario != null) {
-			
+
 			if (usuario.getSenha().equals(usuarioBean.getSenha())) {
 				mensagem = "Usuario logado";
 				return "ok";
@@ -48,7 +50,8 @@ public class UsuarioControle {
 	@RequestMapping(value = "/usuario/get", method = RequestMethod.GET)
 	public @ResponseBody
 	Usuario getUsuario() {
-		Usuario usuario = dao.buscarUsuarioByLogin("igmarcelo");
+		Usuario usuario = usuarioDAO.buscarUsuarioByLogin("igmarcelo");
+		System.out.println(usuario.getNome());
 		return usuario;
 	}
 
@@ -71,13 +74,13 @@ public class UsuarioControle {
 		System.out.println("Chegou!!!");
 		boolean mensagem;
 
-		if (dao.buscarUsuarioByLogin(usuarioBean.getLogin()) == null) {
+		if (usuarioDAO.buscarUsuarioByLogin(usuarioBean.getLogin()) == null) {
 
 			usuario.setNome(usuarioBean.getNome());
 			usuario.setLogin(usuarioBean.getLogin());
 			usuario.setSenha(usuarioBean.getSenha());
 
-			dao.gravarUsuario(usuario);
+			usuarioDAO.gravarUsuario(usuario);
 			mensagem = true;
 		} else {
 			mensagem = false;

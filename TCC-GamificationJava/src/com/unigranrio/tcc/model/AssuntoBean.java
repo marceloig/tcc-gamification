@@ -2,8 +2,6 @@ package com.unigranrio.tcc.model;
 
 import java.util.List;
 
-import com.unigranrio.tcc.model.entity.Conquista;
-import com.unigranrio.tcc.model.entity.Exercicio;
 import com.unigranrio.tcc.model.entity.Modulo;
 
 public class AssuntoBean {
@@ -11,8 +9,8 @@ public class AssuntoBean {
 	private Long id;
 	private String nome;
 	private Modulo modulo;
-	private List<Exercicio> exercicios;
-	private List<Conquista> conquistas;
+	private List<ExercicioBean> exercicios;
+	private List<ConquistaBean> conquistas;
 	public Long getId() {
 		return id;
 	}
@@ -31,16 +29,16 @@ public class AssuntoBean {
 	public void setModulo(Modulo modulo) {
 		this.modulo = modulo;
 	}
-	public List<Exercicio> getExercicios() {
+	public List<ExercicioBean> getExercicios() {
 		return exercicios;
 	}
-	public void setExercicios(List<Exercicio> exercicios) {
+	public void setExercicios(List<ExercicioBean> exercicios) {
 		this.exercicios = exercicios;
 	}
-	public List<Conquista> getConquistas() {
+	public List<ConquistaBean> getConquistas() {
 		return conquistas;
 	}
-	public void setConquistas(List<Conquista> conquistas) {
+	public void setConquistas(List<ConquistaBean> conquistas) {
 		this.conquistas = conquistas;
 	}
 	
