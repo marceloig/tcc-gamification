@@ -2,14 +2,12 @@ package com.unigranrio.tcc.model;
 
 import java.util.List;
 
-import com.unigranrio.tcc.model.entity.Nivel;
-
 public class UsuarioBean {
 
 	private String nome;
 	private String login;
 	private String senha;
-	private Nivel nivel;
+	private NivelBean nivel;
 	private int pontos;
 
 	private List<ConquistaBean> badges;
@@ -40,11 +38,11 @@ public class UsuarioBean {
 		this.senha = senha;
 	}
 
-	public Nivel getNivel() {
+	public NivelBean getNivel() {
 		return nivel;
 	}
 
-	public void setNivel(Nivel nivel) {
+	public void setNivel(NivelBean nivel) {
 		this.nivel = nivel;
 	}
 

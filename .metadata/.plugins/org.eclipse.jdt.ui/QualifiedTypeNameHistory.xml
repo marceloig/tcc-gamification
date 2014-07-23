@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.unigranrio.tcc.dao.ModuloDAO"/>
+<fullyQualifiedTypeName name="com.unigranrio.tcc.model.entity.Modulo"/>
+<fullyQualifiedTypeName name="com.unigranrio.tcc.model.ModuloBean"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="com.unigranrio.tcc.model.AssuntoBean"/>
+</qualifiedTypeNameHistroy>

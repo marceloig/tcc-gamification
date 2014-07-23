@@ -30,7 +30,6 @@ public class Programa {
 			child.insertClassPath(new ClassClassPath(this.getClass()));
 
 			CtClass cc = child.makeClass("Exercicio" + Integer.toString(numero));
-			// CtClass cc = child.makeClass("Exercicio");
 			CtMethod m = CtNewMethod.make("public void execute() { " + codigo
 					+ " }", cc);
 			cc.addMethod(m);

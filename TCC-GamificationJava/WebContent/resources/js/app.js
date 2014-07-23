@@ -58,12 +58,14 @@ appModule.controller('UsuarioController', function($scope, $http) {
 			.success(function(data) {
 				$scope.usuario = data;
 			});
+	
 });
 
 appModule.controller('ModuloController', function($scope, $http) {
 	$http.get('http://localhost:8080/TCC-GamificationJava/modulos/get')
 			.success(function(data) {
 				$scope.modulos = data;
+				//$scope.assuntos = $scope.modulos.assuntos;
 			});
 });
 
@@ -119,7 +121,7 @@ appModule.controller('CodigoController', function($scope, $http) {
 		};
 
 		var data = $scope.reposta;
-		$http.post('http://localhost:8080/TCC-GamificationJava/codigo00', data)
+		$http.post('http://localhost:8080/TCC-GamificationJava/exercicio/java/exercicio0', data)
 				.success(function(data) {
 					// $scope.retorno = data;
 					$scope.retorno = data;
