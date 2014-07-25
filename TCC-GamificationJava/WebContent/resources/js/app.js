@@ -58,6 +58,15 @@ appModule.controller('UsuarioController', function($scope, $http) {
 			.success(function(data) {
 				$scope.usuario = data;
 			});
+
+	$http.get('http://localhost:8080/TCC-GamificationJava/usuario/listByPontuacao')
+				.success(function(data) {
+					$scope.usuariosTop = data;
+				});	
+	$http.get('http://localhost:8080/TCC-GamificationJava/usuario/listByClassificacao')
+				.success(function(data) {
+					$scope.usuariosClassificacao = data;
+	});	
 	
 });
 
@@ -65,7 +74,6 @@ appModule.controller('ModuloController', function($scope, $http) {
 	$http.get('http://localhost:8080/TCC-GamificationJava/modulos/get')
 			.success(function(data) {
 				$scope.modulos = data;
-				//$scope.assuntos = $scope.modulos.assuntos;
 			});
 });
 

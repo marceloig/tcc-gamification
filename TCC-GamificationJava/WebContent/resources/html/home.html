@@ -11,7 +11,8 @@
 		<div class="col-md-3 col-md-offset-9 col-sm-4 col-sm-offset-4">
 			<div>
 				<p>Pontos: {{usuario.pontos}}</p>
-				<p>Proximo Nível: 0000</p>
+				<p>Proximo Nível: XXXX</p>
+				<p>Pontos para proximo Nível: 0000</p>
 			</div>
 		</div>
 	</div>
@@ -47,52 +48,24 @@
 			<div class="panel panel-default">
 				<div class="panel-heading text-center">Sua Classificação</div>
 				<table class="table ">
-
-					<tr>
-						<td>login</td>
-						<td>pontos</td>
-						<td>nivel</td>
-					</tr>
-
-					<tr>
-						<td>login</td>
-						<td>pontos</td>
-						<td>nivel</td>
-					</tr>
-
-					<tr>
-						<td>login</td>
-						<td>pontos</td>
-						<td>nivel</td>
-					</tr>
-					<tr>
+					<tr ng-repeat="usuarioClassificacao in usuariosClassificacao | orderBy:'pontos':true"
+						ng-class='{info: usuario.login == usuarioClassificacao.login}'>
+						<td>{{usuarioClassificacao.login}}</td>
+						<td>{{usuarioClassificacao.pontos}}</td>
+						<td>{{usuarioClassificacao.nivel.nome}}</td>
 					</tr>
 				</table>
 			</div>
 			<div class="row">
 				<div class="col-md-12">
 					<div class="panel panel-default">
-						<div class="panel-heading text-center">Melhores Classificados</div>
+						<div class="panel-heading text-center">Melhores
+							Classificados</div>
 						<table class="table ">
-
-							<tr>
-								<td>login</td>
-								<td>pontos</td>
-								<td>nivel</td>
-							</tr>
-
-							<tr>
-								<td>login</td>
-								<td>pontos</td>
-								<td>nivel</td>
-							</tr>
-
-							<tr>
-								<td>login</td>
-								<td>pontos</td>
-								<td>nivel</td>
-							</tr>
-							<tr>
+							<tr ng-repeat="usuarioTop in usuariosTop | orderBy:'pontos':true">
+								<td>{{usuarioTop.login}}</td>
+								<td>{{usuarioTop.pontos}}</td>
+								<td>{{usuarioTop.nivel.nome}}</td>
 							</tr>
 						</table>
 					</div>

@@ -6,9 +6,21 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 @Entity
+@NamedQueries({
+		@NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
+		@NamedQuery(name = "Usuario.findMaiorEIgual", query = "SELECT u FROM Usuario u WHERE u.pontos >= :pontos "
+				+ "ORDER BY u.pontos ASC"),
+		@NamedQuery(name = "Usuario.findMenor", query = "SELECT u FROM Usuario u WHERE u.pontos < :pontos "
+				+ "ORDER BY u.pontos DESC"),
+		@NamedQuery(name = "Usuario.listByPontuacao", query = "SELECT u FROM Usuario u "
+				+ "ORDER BY u.pontos DESC"),
+		
+		})
 public class Usuario {
 
 	@Column(nullable = false)
@@ -16,7 +28,7 @@ public class Usuario {
 
 	@Id
 	private String login;
-	
+
 	@Column(nullable = false)
 	private String senha;
 
@@ -25,10 +37,10 @@ public class Usuario {
 
 	@Column(nullable = false)
 	private int pontos;
-	
+
 	@OneToMany
 	private List<Conquista> badges;
-	
+
 	@OneToMany
 	private List<Progresso> progresso;
 
@@ -88,5 +100,4 @@ public class Usuario {
 		this.progresso = progresso;
 	}
 
-	
 }

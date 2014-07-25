@@ -2,6 +2,10 @@ package com.unigranrio.tcc;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.unigranrio.tcc.dao.AssuntoDAO;
 import com.unigranrio.tcc.dao.ModuloDAO;
 import com.unigranrio.tcc.dao.NivelDAO;
@@ -11,13 +15,24 @@ import com.unigranrio.tcc.model.entity.Modulo;
 import com.unigranrio.tcc.model.entity.Nivel;
 import com.unigranrio.tcc.model.entity.Usuario;
 
+@Transactional
 public class CRUDTabelas {
 
-	public static void main(String[] args) {
-		//listarModulos();
+	private UsuarioDAO usuarioDAO;
+	private NivelDAO nivelDAO;
+	private AssuntoDAO assuntoDAO;
+	private ModuloDAO moduloDAO;
+	
+	
+	@Autowired
+	public void setDAOs(UsuarioDAO usuarioDAO, NivelDAO nivelDAO, AssuntoDAO assuntoDAO, ModuloDAO moduloDAO) {
+		this.usuarioDAO = usuarioDAO;
+		this.nivelDAO = nivelDAO;
+		this.assuntoDAO = assuntoDAO;
+		this.moduloDAO = moduloDAO;
 	}
 
-	public static void inserirNivel() {
+	public void inserirNivel() {
 		Nivel nivel0 = new Nivel();
 		nivel0.setNome("Novato");
 		nivel0.setPontos(0);
@@ -51,7 +66,7 @@ public class CRUDTabelas {
 		nivelDAO.gravarNivel(nivel4);
 	}
 
-	public static void inserirUsuario() {
+	public void inserirUsuario() {
 		NivelDAO nivelDAO = new NivelDAO();
 		Nivel nivel = nivelDAO.buscarNivelByNome("Novato");
 
@@ -67,14 +82,14 @@ public class CRUDTabelas {
 		usuarioDAO.gravarUsuario(usuario);
 	}
 
-	public static void buscarNivel() {
+	public void buscarNivel() {
 		NivelDAO nivelDAO = new NivelDAO();
 		Nivel nivel = nivelDAO.buscarNivelByNome("Novato");
 
 		System.out.println("Nivel nome: " + nivel.getNome());
 	}
 
-	public static void inserirModulo() {
+	public void inserirModulo() {
 		Modulo modulo0 = new Modulo();
 		modulo0.setNome("Conhecendo Java");
 		
@@ -85,7 +100,7 @@ public class CRUDTabelas {
 		modulo2.setNome("UML");
 		
 		Modulo modulo3 = new Modulo();
-		modulo3.setNome("Conceitos de Orientação a Objeto com Java");
+		modulo3.setNome("Conceitos de Orientaï¿½ï¿½o a Objeto com Java");
 
 		ModuloDAO moduloDAO = new ModuloDAO();
 		moduloDAO.gravarModulo(modulo0);
@@ -95,16 +110,16 @@ public class CRUDTabelas {
 
 	}
 
-	public static void buscarModulo() {
+	public void buscarModulo() {
 		ModuloDAO moduloDAO = new ModuloDAO();
-		Modulo modulo0 = moduloDAO.buscarModuloByNome("Conceitos de Orientação a Objeto com Java");
+		Modulo modulo0 = moduloDAO.buscarModuloByNome("Conceitos de Orientaï¿½ï¿½o a Objeto com Java");
 		for (Assunto assunto : modulo0.getAssuntos()) {
 			System.out.println("ID: " + assunto.getId());
 			System.out.println("Nome: " + assunto.getNome());
 		}
 	}
 
-	public static void listarModulos(){
+	public void listarModulos(){
 		ModuloDAO moduloDAO = new ModuloDAO();
 		List<Modulo> modulo0 = moduloDAO.listarModulos();
 		for (Modulo modulo : modulo0) {
@@ -116,11 +131,12 @@ public class CRUDTabelas {
 			}
 		}
 	}
-	public static void alterarModulo() {
+	
+	public void alterarModulo() {
 		ModuloDAO moduloDAO = new ModuloDAO();
 		AssuntoDAO assuntoDAO = new AssuntoDAO();
 		
-		Modulo modulo0 = moduloDAO.buscarModuloByNome("Conceitos de Orientação a Objeto com Java");
+		Modulo modulo0 = moduloDAO.buscarModuloByNome("Conceitos de Orientaï¿½ï¿½o a Objeto com Java");
 		List<Assunto> assuntos = assuntoDAO.listarAssuntosByModulo(modulo0);
 		
 		modulo0.setAssuntos(assuntos);
@@ -128,22 +144,22 @@ public class CRUDTabelas {
 		moduloDAO.alterarModulo(modulo0);
 	}
 
-	public static void inserirAssunto() {
+	public void inserirAssunto() {
 		ModuloDAO moduloDAO = new ModuloDAO();
 		AssuntoDAO assuntoDAO = new AssuntoDAO();
 
-		Modulo modulo0 = moduloDAO.buscarModuloByNome("Conceitos de Orientação a Objeto com Java");
+		Modulo modulo0 = moduloDAO.buscarModuloByNome("Conceitos de Orientaï¿½ï¿½o a Objeto com Java");
 
 		Assunto assunto0 = new Assunto();
 		assunto0.setNome("Encapsulamento");
 		assunto0.setModulo(modulo0);
 		
 		Assunto assunto1 = new Assunto();
-		assunto1.setNome("Relacionamento: Associação/Composição/Agregação");
+		assunto1.setNome("Relacionamento: Associaï¿½ï¿½o/Composiï¿½ï¿½o/Agregaï¿½ï¿½o");
 		assunto1.setModulo(modulo0);
 		
 		Assunto assunto2 = new Assunto();
-		assunto2.setNome("Relacionamento: Herança");
+		assunto2.setNome("Relacionamento: Heranï¿½a");
 		assunto2.setModulo(modulo0);
 		
 		Assunto assunto3 = new Assunto();
@@ -158,4 +174,13 @@ public class CRUDTabelas {
 		assuntoDAO.gravarAssunto(assunto3);
 		
 	};
+
+	public void listarAlunos(){
+		UsuarioDAO usuarioDAO = new UsuarioDAO();
+		List<Usuario> usuarios = usuarioDAO.listarUsuarios();
+		for(Usuario usuario : usuarios){
+			System.out.println("Login: " + usuario.getLogin());
+			System.out.println("Nome: " + usuario.getNome());
+		}
+	}
 }

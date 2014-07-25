@@ -1,5 +1,8 @@
 package com.unigranrio.tcc.control;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
@@ -23,10 +26,10 @@ public class UsuarioControle {
 
 	private UsuarioDAO usuarioDAO;
 	private NivelDAO nivelDAO;
-	
+
 	private UsuarioBean usuarioBean = new UsuarioBean();
 	private NivelBean nivelBean = new NivelBean();
-	
+
 	private Usuario usuario = new Usuario();
 
 	@Autowired
@@ -34,7 +37,7 @@ public class UsuarioControle {
 		this.usuarioDAO = usuarioDAO;
 		this.nivelDAO = nivelDAO;
 	}
-	
+
 	@RequestMapping(value = "/usuario/login", method = RequestMethod.POST)
 	public @ResponseBody
 	String logarUsuario(HttpSession session,
@@ -62,18 +65,62 @@ public class UsuarioControle {
 	@RequestMapping(value = "/usuario/get", method = RequestMethod.GET)
 	public @ResponseBody
 	UsuarioBean getUsuario() {
-		
+
 		Usuario usuario = usuarioDAO.buscarUsuarioByLogin("igmarcelo");
-			
+
 		nivelBean.setNome(usuario.getNivel().getNome());
 		nivelBean.setPontos(usuario.getNivel().getPontos());
-		
+
 		usuarioBean.setLogin(usuario.getLogin());
-		usuarioBean.setNome(usuario.getNome());	
+		usuarioBean.setNome(usuario.getNome());
+		usuarioBean.setPontos(usuario.getPontos());
 		usuarioBean.setNivel(nivelBean);
-		
-		System.out.println("Nome: " + usuario.getNome());
+
 		return usuarioBean;
+	}
+
+	@RequestMapping(value = "/usuario/listByPontuacao", method = RequestMethod.GET)
+	public @ResponseBody
+	List<UsuarioBean> listarUsuariosPorPontuacao() {
+
+		List<UsuarioBean> usuariosBean = new LinkedList<UsuarioBean>();
+
+		for (Usuario usuario : usuarioDAO.listarUsuariosPorPontuacao()) {
+			UsuarioBean usuarioBean = new UsuarioBean();
+			NivelBean nivelBean = new NivelBean();
+
+			usuarioBean.setLogin(usuario.getLogin());
+			usuarioBean.setNome(usuario.getNome());
+			usuarioBean.setPontos(usuario.getPontos());
+			nivelBean.setNome(usuario.getNivel().getNome());
+			nivelBean.setPontos(usuario.getNivel().getPontos());
+			usuarioBean.setNivel(nivelBean);
+
+			usuariosBean.add(usuarioBean);
+		}
+		return usuariosBean;
+	}
+	
+	@RequestMapping(value = "/usuario/listByClassificacao", method = RequestMethod.GET)
+	public @ResponseBody
+	List<UsuarioBean> listarUsuariosClassificacao() {
+
+		List<UsuarioBean> usuariosBean = new LinkedList<UsuarioBean>();
+
+		for (Usuario usuario : usuarioDAO.listarUsuariosMaiorMenorEIgual(500)) {
+			UsuarioBean usuarioBean = new UsuarioBean();
+			NivelBean nivelBean = new NivelBean();
+
+			usuarioBean.setLogin(usuario.getLogin());
+			usuarioBean.setNome(usuario.getNome());
+			usuarioBean.setPontos(usuario.getPontos());
+			nivelBean.setNome(usuario.getNivel().getNome());
+			nivelBean.setPontos(usuario.getNivel().getPontos());
+			usuarioBean.setNivel(nivelBean);
+			
+			usuariosBean.add(usuarioBean);
+		}
+		return usuariosBean;
 	}
 
 	@RequestMapping(value = "/usuario/post", method = RequestMethod.POST)

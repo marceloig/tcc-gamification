@@ -1,6 +1,7 @@
 package com.unigranrio.tcc.control;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -30,8 +31,8 @@ public class ModuloControle {
 
 	@RequestMapping(value = "/modulos/get", method = RequestMethod.GET)
 	public @ResponseBody
-	ArrayList<ModuloBean> listarModulos() {
-		ArrayList<ModuloBean> modulosBean = new ArrayList<ModuloBean>();
+	List<ModuloBean> listarModulos() {
+		List<ModuloBean> modulosBean = new LinkedList<ModuloBean>();
 
 		for (Modulo modulo : moduloDAO.listarModulos()) {
 			ModuloBean moduloBean = new ModuloBean();

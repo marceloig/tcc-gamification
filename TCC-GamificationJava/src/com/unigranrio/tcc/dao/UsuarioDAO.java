@@ -4,10 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +12,7 @@ import com.unigranrio.tcc.model.entity.Usuario;
 
 @Repository
 public class UsuarioDAO {
-	
+
 	@PersistenceContext
 	private EntityManager manager;
 
@@ -32,15 +29,32 @@ public class UsuarioDAO {
 	}
 
 	public List<Usuario> listarUsuarios() {
-		
-		CriteriaBuilder cb = manager.getCriteriaBuilder();
-		CriteriaQuery<Usuario> c = cb.createQuery(Usuario.class);
-		Root<Usuario> root = c.from(Usuario.class);
-		c.select(root);
 
-		TypedQuery<Usuario> query = manager.createQuery(c);
+		Query query = manager.createNamedQuery("Usuario.findAll");
 		List<Usuario> usuarios = query.getResultList();
+
+		return usuarios;
+	}
+
+	public List<Usuario> listarUsuariosPorPontuacao() {
+		Query query = manager.createNamedQuery("Usuario.listByPontuacao");
+		query.setMaxResults(3);
+		List<Usuario> usuarios = query.getResultList();
+
+		return usuarios;
+	}
 	
+	public List<Usuario> listarUsuariosMaiorMenorEIgual(int pontos) {
+		Query query1 = manager.createNamedQuery("Usuario.findMaiorEIgual");
+		query1.setParameter("pontos", pontos);
+		query1.setMaxResults(3);
+		List<Usuario> usuarios = query1.getResultList();
+		
+		Query query2 = manager.createNamedQuery("Usuario.findMenor");
+		query2.setParameter("pontos", pontos);
+		query2.setMaxResults(2);
+		usuarios.addAll(query2.getResultList());
+
 		return usuarios;
 	}
 }
