@@ -15,7 +15,6 @@ import javax.persistence.ManyToOne;
 public class Exercicio {
 
 	@Id
-	@GeneratedValue
 	private Long id;
 
 	private String nome;

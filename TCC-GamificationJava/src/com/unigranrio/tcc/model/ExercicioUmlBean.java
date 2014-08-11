@@ -1,25 +1,28 @@
 package com.unigranrio.tcc.model;
 
-import java.util.List;
+import java.util.Map;
 
-public class ExercicioUmlBean {
-	
-	private List<String> opcaoResposta;
-	private String resposta;
+import com.unigranrio.tcc.model.entity.ImagemExercicio;
 
-	public List<String> getOpcaoResposta() {
-		return opcaoResposta;
+public class ExercicioUmlBean extends ExercicioBean{
+
+	private Map<Alternativa, ImagemExercicio> alternativas;
+	private Alternativa resposta;
+
+	public Map<Alternativa, ImagemExercicio> getAlternativas() {
+		return alternativas;
 	}
 
-	public void setOpcaoResposta(List<String> opcaoResposta) {
-		this.opcaoResposta = opcaoResposta;
+	public void setAlternativas(Map<Alternativa, ImagemExercicio> alternativas) {
+		this.alternativas = alternativas;
 	}
 
-	public String getResposta() {
+	public Alternativa getResposta() {
 		return resposta;
 	}
 
-	public void setResposta(String resposta) {
+	public void setResposta(Alternativa resposta) {
 		this.resposta = resposta;
 	}
+
 }

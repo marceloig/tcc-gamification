@@ -33,7 +33,6 @@ public class ModuloControle {
 	public @ResponseBody
 	List<ModuloBean> listarModulos() {
 		List<ModuloBean> modulosBean = new LinkedList<ModuloBean>();
-
 		for (Modulo modulo : moduloDAO.listarModulos()) {
 			ModuloBean moduloBean = new ModuloBean();
 			List<AssuntoBean> assuntosBean = new ArrayList<AssuntoBean>();

@@ -1,4 +1,5 @@
-var appModule = angular.module('app', [ 'ngRoute' ]);
+'use strict';
+var appModule = angular.module('app', [ 'ngRoute' ])
 
 appModule.config([ '$routeProvider',
 		function($routeProvider, $locationProvider) {
@@ -19,6 +20,9 @@ appModule.config([ '$routeProvider',
 			}).when('/exercicio', {
 				templateUrl : 'exercicios.html',
 				controller : 'ExercicioController'
+			}).when('/uml/exercicios', {
+				templateUrl : '/uml/exercicios.html',
+				controller : 'UmlController'
 			}).when('/sair', {
 				templateUrl : 'login.html',
 				controller : 'LoginController'
@@ -90,7 +94,7 @@ appModule.controller('CadastroController', function($scope, $http) {
 		"senha" : ""
 	};
 	$scope.mensagem = "";
-	$scope.status;
+	$scope.status = "";
 
 	$scope.cadastrarUsuario = function() {
 		var data = $scope.usuario;
@@ -121,7 +125,7 @@ appModule.controller('CodigoController', function($scope, $http) {
 
 	editor.setValue(codigo);
 
-	$scope.reposta;
+	$scope.reposta = "";
 	$scope.enviarExercicio = function() {
 		codigo = editor.getSession().getValue();
 		$scope.reposta = {
@@ -138,4 +142,22 @@ appModule.controller('CodigoController', function($scope, $http) {
 				});
 	};
 
+});
+
+appModule.controller('UmlController', function($scope, $http) {
+
+	$scope.repostaUml = "";
+	$scope.enviarResposta = function() {
+	
+		$scope.repostaUml = {
+			"resposta" : resposta
+		};
+
+		var data = $scope.repostaUml;
+		$http.post('http://localhost:8080/TCC-GamificationJava/uml/exercicio', data)
+				.success(function(data) {
+					$scope.retorno = data;
+					console.log(data.mensagem);
+				});
+	};
 });

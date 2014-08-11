@@ -35,7 +35,7 @@ public class ModuloDAO {
 
 	public Modulo buscarModuloByNome(String nome) {
 
-		Query query = manager.createNamedQuery("Modulo.findByNome ");
+		Query query = manager.createNamedQuery("Modulo.findByNome");
 		query.setParameter("nome", nome);
 		Modulo modulo = (Modulo) query.getSingleResult();
 

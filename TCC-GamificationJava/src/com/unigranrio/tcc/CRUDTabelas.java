@@ -15,7 +15,7 @@ import com.unigranrio.tcc.model.entity.Modulo;
 import com.unigranrio.tcc.model.entity.Nivel;
 import com.unigranrio.tcc.model.entity.Usuario;
 
-@Transactional
+
 public class CRUDTabelas {
 
 	private UsuarioDAO usuarioDAO;
@@ -112,7 +112,7 @@ public class CRUDTabelas {
 
 	public void buscarModulo() {
 		ModuloDAO moduloDAO = new ModuloDAO();
-		Modulo modulo0 = moduloDAO.buscarModuloByNome("Conceitos de Orienta��o a Objeto com Java");
+		Modulo modulo0 = moduloDAO.buscarModuloByNome("Conceitos de Orientação a Objeto com Java");
 		for (Assunto assunto : modulo0.getAssuntos()) {
 			System.out.println("ID: " + assunto.getId());
 			System.out.println("Nome: " + assunto.getNome());

@@ -3,7 +3,6 @@ package com.unigranrio.tcc.model.entity;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
@@ -12,8 +11,8 @@ import javax.persistence.OneToMany;
 
 @Entity
 @NamedQueries ({
-@NamedQuery(name = "Modulo.findByNome", query = "SELECT m FROM Modulo m WHERE m.nome = :nome"),
-@NamedQuery(name = "Modulo.listAll", query = "SELECT m FROM Modulo m LEFT JOIN FETCH m.assuntos")
+@NamedQuery(name = "Modulo.findByNome", query = "SELECT m FROM Modulo m LEFT JOIN FETCH m.assuntos WHERE m.nome = :nome"),
+@NamedQuery(name = "Modulo.listAll", query = "SELECT DISTINCT (m) FROM Modulo m LEFT JOIN FETCH m.assuntos")
 })
 public class Modulo {
 

@@ -13,24 +13,22 @@
 					<p>{{descricao}}</p>
 				</div>
 
-				<div ng-controller="CodigoController">
+				<div ng-controller="RespostaController">
 					<div class="col-md-6">
-						<div id="codigo">
-							<div id="editor"></div>
-							<p></p>
-							<p></p>
-							<form name="resposta" ng-submit="enviarExercicio()">
-								<button class="btn btn-small btn-primary" type="submit">Enviar
-									Exercicio</button>
-							</form>
-						</div>
+						<div id="alternativas"></div>
+						<p></p>
+						<p></p>
+						<form name="resposta" ng-submit="enviarResposta()">
+							<button class="btn btn-small btn-primary" type="submit">Enviar
+								Resposta</button>
+						</form>
+
 						<p></p>
 						<p></p>
 						<div class="row">
 							<div class="col-md-12">
-								<div class="console well well-lg">
-									<p>{{retorno.mensagem}}</p>
-								</div>
+								<div ng-show="mensagem" class="alert alert-{{status}}"
+									role="alert">{{mensagem}}</div>
 							</div>
 						</div>
 					</div>

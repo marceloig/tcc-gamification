@@ -19,7 +19,7 @@ public class Programa {
 
 	private static int numero;
 	private String resultado;
-	private static Class exIntf;
+	private static Class<ProgramaIntf> exIntf;
 
 	
 	public String executar(String codigo) {
