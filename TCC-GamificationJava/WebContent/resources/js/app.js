@@ -17,9 +17,9 @@ appModule.config([ '$routeProvider',
 			}).when('/cadastro', {
 				templateUrl : 'cadastro.html',
 				controller : 'CadastroController'
-			}).when('/exercicio', {
-				templateUrl : 'exercicios.html',
-				controller : 'ExercicioController'
+			}).when('/java/exercicios', {
+				templateUrl : 'java/exercicios.html',
+				controller : 'JavaController'
 			}).when('/uml/exercicios', {
 				templateUrl : 'uml/exercicios.html',
 				controller : 'UmlController'
@@ -81,12 +81,6 @@ appModule.controller('ModuloController', function($scope, $http) {
 			});
 });
 
-appModule.controller('ExercicioController', function($scope) {
-	$scope.titulo = "Exercicio Olá Mundo";
-	$scope.descricao = "Escreva Olá Mundo!";
-
-});
-
 appModule.controller('CadastroController', function($scope, $http) {
 	$scope.usuario = {
 		"nome" : "",
@@ -115,9 +109,10 @@ appModule.controller('CadastroController', function($scope, $http) {
 
 });
 
-appModule.controller('CodigoController', function($scope, $http) {
+appModule.controller('JavaController', function($scope, $http) {
 
-	// $scope.retorno = {mensagem: ">>"};
+	$scope.titulo = "Exercicio Olá Mundo";
+	$scope.descricao = "Escreva Olá Mundo!";
 	var codigo = "System.out.println(pá);";
 	var editor = ace.edit("editor");
 	editor.setTheme("ace/theme/eclipse");
@@ -125,7 +120,7 @@ appModule.controller('CodigoController', function($scope, $http) {
 
 	editor.setValue(codigo);
 
-	$scope.resposta = "";
+	$scope.resposta = {};
 	$scope.enviarExercicio = function() {
 		codigo = editor.getSession().getValue();
 		$scope.resposta = {
@@ -134,11 +129,8 @@ appModule.controller('CodigoController', function($scope, $http) {
 
 		var data = $scope.resposta;
 		$http.post('http://localhost:8080/TCC-GamificationJava/java/exercicio/post', data)
-				.success(function(data) {
-					// $scope.retorno = data;
-					var retornoResposta = {"retorno" : data};
-					console.log(retornoResposta);
-					alert(retornoResposta);
+				.success(function(data) {					 
+					$scope.retornoJava = data;
 					
 				});
 	};
@@ -147,10 +139,10 @@ appModule.controller('CodigoController', function($scope, $http) {
 
 appModule.controller('UmlController', function($scope, $http, $location) {
 	
-	$scope.exercicio = null;
-	$scope.alternativa = null;
+	$scope.exercicio = {};
+	$scope.alternativa = {};
 	$scope.resposta = "";	
-	$scope.respostaUml = "";
+	$scope.respostaUml = {};
 	
 	$http.get('http://localhost:8080/TCC-GamificationJava/java/exercicio/get')
 	.success(function(data) {
@@ -166,7 +158,13 @@ appModule.controller('UmlController', function($scope, $http, $location) {
 		
 		$http.post('http://localhost:8080/TCC-GamificationJava/uml/exercicio/post', data)
 				.success(function(data) {
-					$scope.retorno = data;
+					var retornoUml = data;
+					console.log(retornoUml.retorno);
+					if(retornoUml.retorno === true){
+						alert("Parabéns você acertou!");
+					}else{
+						alert("Que pena você errou! Tente novamente");
+					}
 					
 				});
 	};

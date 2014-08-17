@@ -7,6 +7,7 @@ public class RespostaBean {
 
 	private String codigo;
 	private String resposta;
+	private boolean retorno;
 
 	public String getCodigo() {
 		return codigo;
@@ -22,6 +23,14 @@ public class RespostaBean {
 
 	public void setResposta(String reposta) {
 		this.resposta = reposta;
+	}
+
+	public boolean isRetorno() {
+		return retorno;
+	}
+
+	public void setRetorno(boolean retorno) {
+		this.retorno = retorno;
 	}
 
 }

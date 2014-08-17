@@ -24,32 +24,37 @@ public class ExercicioControle {
 
 	private Programa programa = new Programa();
 	private ExercicioDAO exercicioDAO = new ExercicioDAO();
+	private RespostaBean retornoUml = new RespostaBean();
+	private RespostaBean retornoJava = new RespostaBean();
 
 	@RequestMapping(value = "/java/exercicio/post", method = RequestMethod.POST)
-	public @ResponseBody RespostaExercicioBean receberRespostaExercicioJava(
+	public @ResponseBody
+	RespostaBean receberRespostaExercicioJava(
 			@RequestBody RespostaBean codigo) {
 		System.out.println("Codigo Recebido: " + codigo.getCodigo());
 
 		String respostaConsole = programa.executar(codigo.getCodigo());
 		System.out.println("Resposta da Compilação: " + respostaConsole);
-		RespostaExercicioBean retorno = new RespostaExercicioBean(
-				respostaConsole);
-		return retorno;
+
+		retornoJava.setResposta(respostaConsole);
+		return retornoJava;
 	}
 
 	@RequestMapping(value = "/uml/exercicio/post", method = RequestMethod.POST)
-	public @ResponseBody boolean receberRespostaExercicioUml(
-			@RequestBody RespostaBean resposta) {
-		
-		System.out.println("Chegou!!!");
+	public @ResponseBody
+	RespostaBean receberRespostaExercicioUml(@RequestBody RespostaBean resposta) {
+
 		ExercicioUml exUml = exercicioDAO.buscarExercicioUmlById(69);
-		boolean retorno = resposta.getResposta().equals(exUml.getRespostaUml().getAlternativa());
+		boolean retorno = resposta.getResposta().equals(
+				exUml.getRespostaUml().getAlternativa());
+		retornoUml.setRetorno(retorno);
 		System.out.println(retorno);
-		return retorno;
+		return retornoUml;
 	}
 
 	@RequestMapping(value = "/java/exercicio/get", method = RequestMethod.GET)
-	public @ResponseBody ExercicioUmlBean getExercicio() {
+	public @ResponseBody
+	ExercicioUmlBean getExercicio() {
 
 		ExercicioUmlBean exUmlBean = new ExercicioUmlBean();
 		Map<Alternativa, ImagemExercicioBean> alternativas = new HashMap<Alternativa, ImagemExercicioBean>();
@@ -62,7 +67,7 @@ public class ExercicioControle {
 				.getAlternativas().entrySet()) {
 			ImagemExercicioBean imgExercicioBean = new ImagemExercicioBean();
 			ImagemExercicio imgExercicio = alternativa.getValue();
-			
+
 			imgExercicioBean.setNomeImagem(imgExercicio.getNomeImagem());
 			imgExercicioBean.setCaminhoImagem(imgExercicio.getCaminhoImagem());
 

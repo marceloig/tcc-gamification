@@ -4,11 +4,6 @@ public class RespostaExercicioBean {
 
 	private String mensagem;
 
-	public RespostaExercicioBean(String mensagem) {
-		super();
-		this.mensagem = mensagem;
-	}
-
 	public String getMensagem() {
 		return mensagem;
 	}
