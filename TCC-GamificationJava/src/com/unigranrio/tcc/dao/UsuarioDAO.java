@@ -3,45 +3,33 @@ package com.unigranrio.tcc.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+import org.springframework.stereotype.Repository;
 
 import com.unigranrio.tcc.model.entity.Usuario;
 
+@Repository
 public class UsuarioDAO {
+
+	@PersistenceContext
+	private EntityManager manager;
 
 	public void gravarUsuario(Usuario usuario) {
 
-		EntityManagerFactory factory = Persistence
-				.createEntityManagerFactory("gamificationJava");
-		EntityManager manager = factory.createEntityManager();
-
-		manager.getTransaction().begin();
 		manager.persist(usuario);
-		manager.getTransaction().commit();
-		
-		manager.close();
-		factory.close();
-
+		System.out.println("Chegou!!!");
 	}
 
 	public Usuario buscarUsuarioByLogin(String login) {
 
-		EntityManagerFactory factory = Persistence
-				.createEntityManagerFactory("gamificationJava");
-		EntityManager manager = factory.createEntityManager();
-		
 		Usuario usuario = manager.find(Usuario.class, login);
 
 		return usuario;
 	}
 
 	public List<Usuario> listarUsuarios() {
-		
-		EntityManagerFactory factory = Persistence
-				.createEntityManagerFactory("gamificationJava");
-		EntityManager manager = factory.createEntityManager();
 
 		Query query = manager.createNamedQuery("Usuario.findAll");
 		List<Usuario> usuarios = query.getResultList();
@@ -50,11 +38,7 @@ public class UsuarioDAO {
 	}
 
 	public List<Usuario> listarUsuariosPorPontuacao() {
-		
-		EntityManagerFactory factory = Persistence
-				.createEntityManagerFactory("gamificationJava");
-		EntityManager manager = factory.createEntityManager();
-		
+
 		Query query = manager.createNamedQuery("Usuario.listByPontuacao");
 		query.setMaxResults(3);
 		List<Usuario> usuarios = query.getResultList();
@@ -63,10 +47,6 @@ public class UsuarioDAO {
 	}
 
 	public List<Usuario> listarUsuariosMaiorMenorEIgual(int pontos) {
-		
-		EntityManagerFactory factory = Persistence
-				.createEntityManagerFactory("gamificationJava");
-		EntityManager manager = factory.createEntityManager();
 
 		Query query1 = manager.createNamedQuery("Usuario.findMaiorEIgual");
 		query1.setParameter("pontos", pontos);

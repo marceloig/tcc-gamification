@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,10 +17,16 @@ import com.unigranrio.tcc.model.ModuloBean;
 import com.unigranrio.tcc.model.entity.Assunto;
 import com.unigranrio.tcc.model.entity.Modulo;
 
+@Transactional
 @Controller
 public class ModuloControle {
 
 	private ModuloDAO moduloDAO = new ModuloDAO();
+	
+	@Autowired
+    public void setModuloDAO(ModuloDAO moduloDAO) {
+      this.moduloDAO = moduloDAO;
+    }
 
 	@RequestMapping(value = "/modulos/get", method = RequestMethod.GET)
 	public @ResponseBody

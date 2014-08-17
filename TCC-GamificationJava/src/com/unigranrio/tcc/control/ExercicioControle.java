@@ -3,7 +3,9 @@ package com.unigranrio.tcc.control;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,10 +17,10 @@ import com.unigranrio.tcc.model.Alternativa;
 import com.unigranrio.tcc.model.ExercicioUmlBean;
 import com.unigranrio.tcc.model.ImagemExercicioBean;
 import com.unigranrio.tcc.model.RespostaBean;
-import com.unigranrio.tcc.model.RespostaExercicioBean;
 import com.unigranrio.tcc.model.entity.ExercicioUml;
 import com.unigranrio.tcc.model.entity.ImagemExercicio;
 
+@Transactional
 @Controller
 public class ExercicioControle {
 
@@ -26,6 +28,11 @@ public class ExercicioControle {
 	private ExercicioDAO exercicioDAO = new ExercicioDAO();
 	private RespostaBean retornoUml = new RespostaBean();
 	private RespostaBean retornoJava = new RespostaBean();
+	
+	@Autowired
+    public void seExercicioDAO(ExercicioDAO exercicioDAO) {
+      this.exercicioDAO = exercicioDAO;
+    }
 
 	@RequestMapping(value = "/java/exercicio/post", method = RequestMethod.POST)
 	public @ResponseBody

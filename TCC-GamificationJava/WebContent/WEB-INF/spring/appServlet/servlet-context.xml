@@ -11,6 +11,29 @@
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing 
 		infrastructure -->
+	<beans:bean id="postgresDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<beans:property name="driverClassName" value="org.postgresql.Driver" />
+		<beans:property name="url"
+			value="jdbc:postgresql://localhost:5432/gamificationjava" />
+		<beans:property name="username" value="postgres" />
+		<beans:property name="password" value="admin" />
+	</beans:bean>
+
+	<beans:bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<beans:property name="dataSource" ref="postgresDataSource" />
+		<beans:property name="jpaVendorAdapter">
+			<beans:bean
+				class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+		</beans:property>
+	</beans:bean>
+
+	<beans:bean id="transactionManager"
+		class="org.springframework.orm.jpa.JpaTransactionManager">
+		<beans:property name="entityManagerFactory" ref="entityManagerFactory" />
+	</beans:bean>
+
+	<tx:annotation-driven />
 
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
@@ -41,7 +64,7 @@
 	<beans:bean id="jsonMessageConverter"
 		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 	</beans:bean>
-	
+
 	<context:component-scan base-package="*" />
 
 </beans:beans>

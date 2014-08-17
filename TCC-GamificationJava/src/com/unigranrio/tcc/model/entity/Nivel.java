@@ -3,8 +3,13 @@ package com.unigranrio.tcc.model.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQueries ({
+@NamedQuery(name = "Nivel.findByNome", query = "SELECT n FROM Nivel n WHERE n.nome = :nome"),
+})
 public class Nivel {
 
 	@Id

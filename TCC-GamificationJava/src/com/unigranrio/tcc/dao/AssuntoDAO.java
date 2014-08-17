@@ -3,8 +3,6 @@ package com.unigranrio.tcc.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -17,40 +15,25 @@ import org.springframework.stereotype.Repository;
 import com.unigranrio.tcc.model.entity.Assunto;
 import com.unigranrio.tcc.model.entity.Modulo;
 
-
+@Repository
 public class AssuntoDAO {
 
+	@PersistenceContext
+	private EntityManager manager;
+	
 	public void gravarAssunto(Assunto assunto) {
-		EntityManagerFactory factory = Persistence
-				.createEntityManagerFactory("gamificationJava");
-		EntityManager manager = factory.createEntityManager();
 		
-		manager.getTransaction().begin();
 		manager.persist(assunto);
-		manager.getTransaction().commit();
-
-		manager.close();
-		factory.close();
 		
 	}
 	
 	public void alterarAssunto(Assunto assunto) {
-		EntityManagerFactory factory = Persistence
-				.createEntityManagerFactory("gamificationJava");
-		EntityManager manager = factory.createEntityManager();
 		
-		manager.getTransaction().begin();
 		manager.merge(assunto);
-		manager.getTransaction().commit();
-
-		manager.close();
-		factory.close();
+		
 	}
 
 	public Assunto buscarAssuntoByNome(String nome) {
-		EntityManagerFactory factory = Persistence
-				.createEntityManagerFactory("gamificationJava");
-		EntityManager manager = factory.createEntityManager();
 		
 		CriteriaBuilder cb = manager.getCriteriaBuilder();
 		CriteriaQuery<Assunto> c = cb.createQuery(Assunto.class);
@@ -67,9 +50,6 @@ public class AssuntoDAO {
 	}
 
 	public List<Assunto> listarAssuntosByModulo(Modulo modulo) {
-		EntityManagerFactory factory = Persistence
-				.createEntityManagerFactory("gamificationJava");
-		EntityManager manager = factory.createEntityManager();
 		
 		CriteriaBuilder cb = manager.getCriteriaBuilder();
 		CriteriaQuery<Assunto> c = cb.createQuery(Assunto.class);

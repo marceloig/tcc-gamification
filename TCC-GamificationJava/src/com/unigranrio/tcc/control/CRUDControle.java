@@ -2,10 +2,9 @@ package com.unigranrio.tcc.control;
 
 import java.util.HashMap;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -16,11 +15,11 @@ import com.unigranrio.tcc.dao.NivelDAO;
 import com.unigranrio.tcc.dao.UsuarioDAO;
 import com.unigranrio.tcc.model.Alternativa;
 import com.unigranrio.tcc.model.entity.Assunto;
-import com.unigranrio.tcc.model.entity.Exercicio;
 import com.unigranrio.tcc.model.entity.ExercicioUml;
 import com.unigranrio.tcc.model.entity.ImagemExercicio;
 import com.unigranrio.tcc.model.entity.Modulo;
 
+@Transactional
 @Controller
 public class CRUDControle {
 
@@ -29,6 +28,15 @@ public class CRUDControle {
 	private AssuntoDAO assuntoDAO = new AssuntoDAO();
 	private ModuloDAO moduloDAO = new ModuloDAO();
 	private ExercicioDAO exercicioDAO = new ExercicioDAO();
+	
+	@Autowired
+    public void setDAOs(UsuarioDAO usuarioDAO, NivelDAO nivelDAO, AssuntoDAO assuntoDAO, ModuloDAO moduloDAO, ExercicioDAO exercicioDAO) {
+      this.usuarioDAO = usuarioDAO;
+      this.nivelDAO = nivelDAO;
+      this.assuntoDAO = assuntoDAO;
+      this.moduloDAO = moduloDAO;
+      this.exercicioDAO = exercicioDAO;
+    }
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public void receberRespostaExercicio() {

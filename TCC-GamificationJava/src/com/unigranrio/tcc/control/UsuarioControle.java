@@ -4,9 +4,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
-import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,11 +20,18 @@ import com.unigranrio.tcc.model.UsuarioBean;
 import com.unigranrio.tcc.model.entity.Nivel;
 import com.unigranrio.tcc.model.entity.Usuario;
 
+@Transactional
 @Controller
 public class UsuarioControle {
 
 	private UsuarioDAO usuarioDAO = new UsuarioDAO();
 	private NivelDAO nivelDAO = new NivelDAO();
+	
+	@Autowired
+    public void setUsuarioDAOeNivelDAO(UsuarioDAO usuarioDAO, NivelDAO nivelDAO) {
+      this.usuarioDAO = usuarioDAO;
+      this.nivelDAO = nivelDAO;
+    }
 
 	private UsuarioBean usuarioBean = new UsuarioBean();
 	private NivelBean nivelBean = new NivelBean();
@@ -118,7 +126,6 @@ public class UsuarioControle {
 	@RequestMapping(value = "/usuario/post", method = RequestMethod.POST)
 	public @ResponseBody
 	boolean CadastrarUsuario(@RequestBody UsuarioBean usuarioBean) {
-		System.out.println("Chegou!!!");
 		boolean mensagem;
 
 		if (usuarioDAO.buscarUsuarioByLogin(usuarioBean.getLogin()) == null) {
