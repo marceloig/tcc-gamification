@@ -8,7 +8,7 @@ appModule.config([ '$routeProvider',
 			$routeProvider.when('/', {
 				templateUrl : 'login.html',
 				controller : 'LoginController'
-			}).when('/home', {
+			}).when('/home/:login', {
 				templateUrl : 'home.html',
 				controller : 'UsuarioController'
 			}).when('/modulos', {
@@ -47,7 +47,7 @@ appModule.controller('LoginController', function($scope, $http, $location) {
 			var status = data;
 			if (status == "ok") {
 				// alert(status);
-				$location.path('/home');
+				$location.path('/home/' + $scope.usuario.login);
 				$location.replace();
 			} else {
 				$scope.mensagem = data;
@@ -57,20 +57,29 @@ appModule.controller('LoginController', function($scope, $http, $location) {
 	};
 });
 
-appModule.controller('UsuarioController', function($scope, $http) {
-	$http.get('http://localhost:8080/TCC-GamificationJava/usuario/get')
-			.success(function(data) {
-				$scope.usuario = data;
-			});
+appModule.controller('UsuarioController', function($scope, $http, $routeParams) {
 
-	$http.get('http://localhost:8080/TCC-GamificationJava/usuario/listByPontuacao')
+	$scope.pontuacao = 0;
+	var usuarioLogin = {
+			"login" : $routeParams.login,
+			"pontos" : 1000
+		};
+
+	$http.get('http://localhost:8080/TCC-GamificationJava/usuario/listByMelhores')
 				.success(function(data) {
 					$scope.usuariosTop = data;
-				});	
-	$http.get('http://localhost:8080/TCC-GamificationJava/usuario/listByClassificacao')
-				.success(function(data) {
-					$scope.usuariosClassificacao = data;
-	});	
+				});
+	
+	$http.post('http://localhost:8080/TCC-GamificationJava/usuario/get',usuarioLogin)
+	.success(function(data) {
+		$scope.usuario = data;
+		usuarioLogin.pontos = $scope.usuario.pontos;
+		
+		$http.post('http://localhost:8080/TCC-GamificationJava/usuario/listByClassificacao', usuarioLogin)
+		.success(function(data) {
+			$scope.usuariosClassificacao = data;
+		});
+	});
 	
 });
 
@@ -103,22 +112,26 @@ appModule.controller('CadastroController', function($scope, $http) {
 				$scope.mensagem = "Usuário já existe";
 				$scope.status = "warning";
 			}
-			// $scope.mensagem = data;
+		
 		});
 	};
 
 });
 
 appModule.controller('JavaController', function($scope, $http) {
-
-	$scope.titulo = "Exercicio Olá Mundo";
-	$scope.descricao = "Escreva Olá Mundo!";
-	var codigo = "System.out.println(pá);";
+	
 	var editor = ace.edit("editor");
 	editor.setTheme("ace/theme/eclipse");
 	editor.getSession().setMode("ace/mode/java");
-
-	editor.setValue(codigo);
+	
+	$scope.exercicioJava = {};
+	var codigo = "";
+	$http.get('http://localhost:8080/TCC-GamificationJava/java/exercicio/get')
+	.success(function(data) {					 
+		$scope.exercicioJava = data;
+		codigo = $scope.exercicioJava.codigoReferencia;
+		editor.setValue(codigo);
+	});
 
 	$scope.resposta = {};
 	$scope.enviarExercicio = function() {
@@ -137,14 +150,14 @@ appModule.controller('JavaController', function($scope, $http) {
 
 });
 
-appModule.controller('UmlController', function($scope, $http, $location) {
+appModule.controller('UmlController', function($scope, $http) {
 	
 	$scope.exercicio = {};
 	$scope.alternativa = {};
 	$scope.resposta = "";	
 	$scope.respostaUml = {};
 	
-	$http.get('http://localhost:8080/TCC-GamificationJava/java/exercicio/get')
+	$http.get('http://localhost:8080/TCC-GamificationJava/uml/exercicio/get')
 	.success(function(data) {
 		$scope.exercicio = data;
 		$scope.alternativa = data.alternativas;
