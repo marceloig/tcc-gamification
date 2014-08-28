@@ -126,10 +126,11 @@ appModule.controller('JavaController', function($scope, $http) {
 	
 	$scope.exercicioJava = {};
 	var codigo = "";
+	
 	$http.get('http://localhost:8080/TCC-GamificationJava/java/exercicio/get')
 	.success(function(data) {					 
 		$scope.exercicioJava = data;
-		codigo = $scope.exercicioJava.codigoReferencia;
+		codigo = $scope.exercicioJava.codigoReferencia;	
 		editor.setValue(codigo);
 	});
 
@@ -144,9 +145,35 @@ appModule.controller('JavaController', function($scope, $http) {
 		$http.post('http://localhost:8080/TCC-GamificationJava/java/exercicio/post', data)
 				.success(function(data) {					 
 					$scope.retornoJava = data;
-					
+					var retorno = data.resposta;
+					var resposta = $scope.exercicioJava.respostaJava;
+					var mensagem = verificarReposta(retorno, resposta);
+					alert(mensagem);
 				});
 	};
+	
+	function verificarReposta(retorno, resposta) {
+		var tentativas = $scope.exercicioJava.tentativas;
+		var mensagem = "";
+		if(retorno === resposta){
+			mensagem = "Parabéns você acertou!";
+			console.log("Acertou!!!");
+			pontuacao(tentativas);
+		}else{
+			if($scope.exercicioJava.tentativas !== 0){
+				$scope.exercicioJava.tentativas = $scope.exercicioJava.tentativas - 1;
+			}
+			mensagem = "Você errou, tente novamente";
+			console.log("Errou!!!");	
+		}
+	    return mensagem;
+	}
+	
+	function pontuacao(tentativas){
+		if(tentativas === 0){
+			$scope.exercicioJava.pontos = $scope.exercicioJava.pontos - 20;
+		}
+	}
 
 });
 

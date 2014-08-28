@@ -5,7 +5,44 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2014-08-27T11:33:00Z</updated>
+  <updated>2014-08-28T08:29:57Z</updated>
+  <entry>
+    <title>Spring Tool Suite and Groovy/Grails Tool Suite 3.6.1 released</title>
+    <link rel="alternate" href="https://spring.io/blog/2014/08/28/spring-tool-suite-and-groovy-grails-tool-suite-3-6-1-released" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Martin Lippert</name>
+    </author>
+    <id>tag:spring.io,2014-08-28:1744</id>
+    <updated>2014-08-28T08:29:57Z</updated>
+    <content type="html">&lt;p&gt;Dear Spring Community,&lt;/p&gt;
+
+&lt;p&gt;I am happy to announce the new release of our Eclipse-based tooling today:
+The Spring Tool Suite (STS) 3.6.1 and the Groovy/Grails Tool Suite (GGTS) 3.6.1.&lt;/p&gt;
+
+&lt;p&gt;Highlights from this release include:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;updated to tc Server 3.0.0&lt;/li&gt;
+&lt;li&gt;performance improvements for building Spring projects&lt;/li&gt;
+&lt;li&gt;AspectJ/AJDT now support annotation processors&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;To download the distributions, please go visit:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Spring Tool Suite: &lt;a href="https://spring.io/tools/sts/all"&gt;https://spring.io/tools/sts/all&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;Groovy/Grails Tool Suite: &lt;a href="https://spring.io/tools/ggts/all"&gt;https://spring.io/tools/ggts/all&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;Detailed new and noteworthy notes can be found here: &lt;a href="http://docs.spring.io/sts/nan/v361/NewAndNoteworthy.html"&gt;STS/GGTS 3.6.1 New &amp;amp; Noteworthy&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;NOTE:
+Both tool suites ship on top of the latest Eclipse Luna 4.4 release as 64bit and 32bit based zip files only.
+There will be no native installers for STS/GGTS anymore.&lt;/p&gt;
+
+&lt;p&gt;With the 3.6.0 release we shifted towards a slightly changed release schedule, shipping minor releases more frequently. Therefore 3.6.2 is scheduled to ship already in October, shortly after the Eclipse Luna SR1 release, followed by 3.6.3 in early Dezember and 3.6.4 in early March 2015, shortly after the Eclipse Luna SR2 release.&lt;/p&gt;
+
+&lt;p&gt;Enjoy!&lt;/p&gt;</content>
+  </entry>
   <entry>
     <title>Spring Data Dijkstra SR4 released</title>
     <link rel="alternate" href="https://spring.io/blog/2014/08/27/spring-data-dijkstra-sr4-released" />
@@ -79,7 +116,7 @@
       <name>Greg Turnquist</name>
     </author>
     <id>tag:spring.io,2014-08-20:1741</id>
-    <updated>2014-08-21T20:05:33Z</updated>
+    <updated>2014-08-21T20:05:00Z</updated>
     <content type="html">&lt;p&gt;I was recently made aware that a public API we were using for one of our guides contained objectionable material. After confirming this, I immediately responded that we would pick another source. Wishing to avoid such an issue in the future, I decided the best solution was to build our own RESTful quote service. So I decided to use the best tools to do so, the Spring stack, and was able to migrate the very next day.&lt;/p&gt;
 
 &lt;h3&gt;
@@ -101,7 +138,7 @@
 &lt;h3&gt;
 &lt;a name="user-content-picking-your-content" class="anchor" href="#picking-your-content" aria-hidden="true"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;Picking your content&lt;/h3&gt;
 
-&lt;p&gt;The original content for the guide was a series of "Chunk Norris" jokes. I like a good laugh. But when I revisited the public API, I saw that several of the jokes were a bit rancid. After a brief discussion with colleagues, the idea came up to cite historical quotes. I took that idea and bent it a little. For my upcoming book, &lt;a href="http://blog.greglturnquist.com/category/learning-spring-boot"&gt;&lt;em&gt;Learning Spring Boot&lt;/em&gt;&lt;/a&gt;, I had collected quotes from various developers about Spring Boot. So I decided to use that as the curated content.&lt;/p&gt;
+&lt;p&gt;The original content for the guide was a series of "Chunk Norris" jokes. I like a good laugh. But when I revisited the public API, I saw that several of the jokes were a bit rancid. After a brief discussion with colleagues, the idea came up to cite historical quotes. I took that idea and bent it a little. I had recently collected quotes from various developers about Spring Boot for personal reasons, so I decided to use that as the curated content.&lt;/p&gt;
 
 &lt;h3&gt;
 &lt;a name="user-content-time-to-code" class="anchor" href="#time-to-code" aria-hidden="true"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;Time to code!&lt;/h3&gt;
@@ -865,128 +902,6 @@ Application property: state_timestamp=1405459654
     <id>tag:spring.io,2014-07-28:1714</id>
     <updated>2014-07-28T16:54:15Z</updated>
     <content type="html">&lt;p&gt;We are pleased to announce that Spring Batch Admin 1.3.0.RELEASE is now available via Maven Central, Github and the SpringSource download repository.  This release provides updates to Spring Batch Admin to make it compatible with Spring Batch 2.2.x and beyond.  In addition to the minor functional updates, this release also provides an overall update to third party dependencies.  As noted previously, this will be the last major version with the spring-batch-integration module included as it has been moved to Spring Batch as of Spring Batch 3.0.  As always, we look forward to your feedback in the comments, &lt;a href="http://jira.spring.io/browse/BATCHADM"&gt;Jira&lt;/a&gt;, &lt;a href="http://stackoverflow.com/questions/tagged/spring-batch-admin"&gt;StackOverflow&lt;/a&gt;, and in person at &lt;a href="http://springone2gx.com"&gt;SpringOne&lt;/a&gt;!&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Framework 4.1 -- Spring MVC Improvements</title>
-    <link rel="alternate" href="https://spring.io/blog/2014/07/28/spring-framework-4-1-spring-mvc-improvements" />
-    <category term="engineering" label="Engineering" />
-    <author>
-      <name>Rossen Stoyanchev</name>
-    </author>
-    <id>tag:spring.io,2014-07-28:1712</id>
-    <updated>2014-07-28T15:10:00Z</updated>
-    <content type="html">&lt;p&gt;Recently Juergen Hoeller
-&lt;a href="https://spring.io/blog/2014/07/21/spring-framework-4-1-release-candidate-available"&gt;announced the availability&lt;/a&gt;
-of the first of two 4.1 release candidates.
-Brian Clozel followed up with a post on the 
-&lt;a href="https://spring.io/blog/2014/07/24/spring-framework-4-1-handling-static-web-resources"&gt;static web resources handling&lt;/a&gt; enhancements.
-Previously Stephane Nicoll blogged about
-&lt;a href="https://spring.io/blog/2014/06/16/further-cache-improvements-in-spring-4-1"&gt;cache&lt;/a&gt; and
-&lt;a href="https://spring.io/blog/2014/04/30/spring-4-1-s-upcoming-jms-improvements"&gt;JMS&lt;/a&gt; related improvements.
-The goal of this post is to summarize Spring MVC improvements.&lt;/p&gt;
-
-&lt;p&gt;The JDK 1.8 &lt;code&gt;java.util.Optional&lt;/code&gt; is now supported for &lt;code&gt;@RequestParam&lt;/code&gt;, &lt;code&gt;@RequestHeader&lt;/code&gt; and
-&lt;code&gt;@MatrixVariable&lt;/code&gt; controller method arguments while &lt;code&gt;ListenableFuture&lt;/code&gt; is supported as a
-return value alternative to &lt;code&gt;DeferredResult&lt;/code&gt; where an underlying
-service (or perhaps a call to &lt;code&gt;AsyncRestTemplate&lt;/code&gt;) already returns ListenableFuture.&lt;/p&gt;
-
-&lt;p&gt;Jackson's &lt;code&gt;@JsonView&lt;/code&gt; is supported directly on  &lt;code&gt;@ResponseBody&lt;/code&gt; and &lt;code&gt;ResponseEntity&lt;/code&gt;
-controller methods for serializing different amounts of detail for the same POJO,
-e.g. summary vs detail page. This is also supported with &lt;code&gt;View&lt;/code&gt;-based rendering
-by adding the serialization view type as a model attribute under a special key.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/JSONP"&gt;JSONP&lt;/a&gt; is now supported with Jackson.
-For response body methods declare an &lt;code&gt;@ControllerAdvice&lt;/code&gt; as shown below.
-For &lt;code&gt;View&lt;/code&gt;-based rendering simply configure the JSONP query parameter name(s)
-on &lt;code&gt;MappingJackson2JsonView&lt;/code&gt;.&lt;/p&gt;
-
-&lt;div class="highlight highlight-java"&gt;&lt;pre&gt;&lt;span class="nd"&gt;@ControllerAdvice&lt;/span&gt;
-&lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;JsonpAdvice&lt;/span&gt; &lt;span class="kd"&gt;extends&lt;/span&gt; &lt;span class="n"&gt;AbstractJsonpResponseBodyAdvice&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-
-    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="nf"&gt;JsonpAdvice&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-        &lt;span class="kd"&gt;super&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"callback"&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-    &lt;span class="o"&gt;}&lt;/span&gt;
-
-&lt;span class="o"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Note that &lt;code&gt;@ControllerAdvice&lt;/code&gt; was introduced in 3.2 for &lt;code&gt;@ExceptionHandler&lt;/code&gt;,
-&lt;code&gt;@ModelAttribute&lt;/code&gt;, and &lt;code&gt;@InitBinder&lt;/code&gt; methods shared across all or a subset of
-controllers. &lt;code&gt;ResponseEntityExceptionHandler&lt;/code&gt; is one example for global
-exception handling by writing error details to the body of the
-response. In 4.1 an &lt;code&gt;@ControllerAdvice&lt;/code&gt; can also implement
-&lt;code&gt;ResponseBodyAdvice&lt;/code&gt; in which case it will be called after the controller method
-returns but before the response is written and therefore committed. This has a number
-of useful applications with @JsonView the JSONP already serving as two examples
-built on it.&lt;/p&gt;
-
-&lt;p&gt;Two new &lt;code&gt;HttpMessageConverter&lt;/code&gt; types:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;
-&lt;a href="http://code.google.com/p/google-gson/"&gt;Gson&lt;/a&gt; -- lighter footprint
-than Jackson; has already been in use in Spring Android.&lt;/li&gt;
-&lt;li&gt;
-&lt;a href="https://developers.google.com/protocol-buffers/"&gt;Google Protocol Buffers&lt;/a&gt;
-(just missed RC1 but already in master for 4.1 RC2)
--- efficient and effective as an inter-service
-communication data protocol within an enterprise but can also be exposed as
-JSON and XML for browsers. This comes through a contribution from
-&lt;a href="http://www.slideshare.net/mokeefe/javaone-2009-ts5276-restful-protocol-buffers"&gt;Alex Antonov&lt;/a&gt;.&lt;/li&gt;
-&lt;/ul&gt;&lt;p&gt;&lt;code&gt;MvcUriComponentsBuilder&lt;/code&gt; was introduced in 4.0 as a way of building links to
-controller methods through controller method invocation (similar to mock testing).
-In 4.1 views such as JSPs can also build links to controllers by referring to their
-mappings by name. A default name is assigned to every @RequestMapping. For example
-&lt;code&gt;FooController&lt;/code&gt; with method &lt;code&gt;handleFoo&lt;/code&gt; is assigned "FC#handleFoo" by default but
-the naming strategy is customizable and can be also be set explicitly through the
-new &lt;code&gt;name&lt;/code&gt; attribute on &lt;code&gt;@RequestMapping&lt;/code&gt;. A new &lt;code&gt;mvcUrl&lt;/code&gt; Spring JSP tag makes
-this easy to use in JSP pages. The same can be done for any other view technology.&lt;/p&gt;
-
-&lt;p&gt;The familiar &lt;code&gt;ResponseEntity&lt;/code&gt; now has a builder-style API that guides controller
-methods towards the preparation of server-side responses, e.g. &lt;code&gt;ResponseEntity.ok()&lt;/code&gt;.
-For the client side there is a new &lt;code&gt;RequestEntity&lt;/code&gt; also offering a builder-style
-API that guides towards the preparation of client-side HTTP requests.&lt;/p&gt;
-
-&lt;p&gt;MVC Java config and XML namespace:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;View resolver configuration -- if you've had to configure view resolution with
-content negotiation you'll likely appreciate this one. See the
-&lt;a href="http://docs.spring.io/spring-framework/docs/4.1.0.RC1//spring-framework-reference/html/mvc.html#mvc-config-view-resolvers"&gt;updated documentation&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;Enhanced "view controllers" -- in addition to mapping URLs directly to view names
-without the need for controller logic, view controllers now have built-in support
-for redirecting and setting the response status. An application can use this to
-configure redirect URLs, render 404 responses with a view, send "no content"
-responses, etc. Some use cases
-&lt;a href="https://jira.spring.io/browse/SPR-11543?focusedCommentId=100308&amp;amp;page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-100308"&gt;listed here&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;Path matching -- tese frequently used customizations are now built-in
-and have also been backported to 4.0. See the
-&lt;a href="http://docs.spring.io/spring-framework/docs/4.1.0.RC1//spring-framework-reference/html/mvc.html#mvc-config-path-matching"&gt;updated documentation&lt;/a&gt;.&lt;/li&gt;
-&lt;/ul&gt;&lt;p&gt;Speaking of view resolution in 4.1 we've added support for view rendering through
-&lt;a href="http://beta.groovy-lang.org/docs/groovy-2.3.2/html/documentation/markup-template-engine.html"&gt;Groovy markup templates&lt;/a&gt;
-available in Groovy 2.3. If you've been waiting for DRY markup, along the lines of
-HAML (Ruby on Rails), this one is for you.&lt;/p&gt;
-
-&lt;p&gt;Spring MVC Test related:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;JSON responses can be asserted with
-&lt;a href="https://github.com/skyscreamer/JSONassert"&gt;JSON Assert&lt;/a&gt; as an extra option to
-using JSONPath much like it has been possible to do for XML with XMLUnit.&lt;/li&gt;
-&lt;li&gt;MockMvcBuilder "recipies" can now be created with the help of &lt;code&gt;MockMvcConfigurer&lt;/code&gt;.
-This was added to make it easy to apply Spring Security setup but can be used to
-encapsulate common setup for any 3rd party framework or within a project.&lt;/li&gt;
-&lt;li&gt;
-&lt;code&gt;MockRestServiceServer&lt;/code&gt; now supports the &lt;code&gt;AsyncRestTemplate&lt;/code&gt; for client-side testing.&lt;/li&gt;
-&lt;/ul&gt;&lt;p&gt;The &lt;a href="https://github.com/spring-projects/spring-test-mvc-htmlunit"&gt;Spring MVC Test HtmlUnit&lt;/a&gt;
-extension (separate project) has also been progressing steadily with an M1 milestone.
-If this is of interest do check out the project's home page.&lt;/p&gt;
-
-&lt;p&gt;Spring Frawork 4.1 is just around the corner (end of August) and so is
-&lt;a href="http://springone2gx.com/"&gt;SpringOne 2GX 2014&lt;/a&gt; in early September in Dallas, TX.
-Take a close look at these improvements to see if they meet your needs or if
-they need further improvement. Do come to this year's SpringOne where we have
-a great lineup for the Web and JavaScript track.&lt;/p&gt;</content>
   </entry>
 </feed>
 
