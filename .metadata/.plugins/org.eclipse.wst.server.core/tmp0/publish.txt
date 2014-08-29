@@ -1,5 +1,5 @@
 #Tomcat publish data
-#Tue Jul 22 00:26:51 BRT 2014
+#Thu Aug 28 23:13:52 BRT 2014
 org.eclipse.jst.jee.server\:/binary\:C\:\\Users\\Igor\\git\\tcc-gamification\\TCC-GamificationJava\\WebContent\\META-INF\\maven\\com.unigranrio\\tcc\\target\\tcc-1.0.0-BUILD-SNAPSHOT\\WEB-INF\\lib\\spring-web-3.2.2.RELEASE.jar=META-INF/maven/com.unigranrio/tcc/target/tcc-1.0.0-BUILD-SNAPSHOT/WEB-INF/lib/spring-web-3.2.2.RELEASE.jar
-org.eclipse.jst.jee.server\:/binary\:C\:\\Users\\Igor\\git\\tcc-gamification\\TCC-GamificationJava\\WebContent\\WEB-INF\\lib\\spring-web-3.2.2.RELEASE.jar=WEB-INF/lib/spring-web-3.2.2.RELEASE.jar
 org.eclipse.jst.jee.server\:/binary\:C\:\\Users\\Igor\\git\\tcc-gamification\\TCC-GamificationJava\\WebContent\\META-INF\\maven\\com.unigranrio\\tcc\\target\\tcc-1.0.0-BUILD-SNAPSHOT.war=META-INF/maven/com.unigranrio/tcc/target/tcc-1.0.0-BUILD-SNAPSHOT.war
+org.eclipse.jst.jee.server\:/binary\:C\:\\Users\\Igor\\git\\tcc-gamification\\TCC-GamificationJava\\WebContent\\WEB-INF\\lib\\spring-web-3.2.2.RELEASE.jar=WEB-INF/lib/spring-web-3.2.2.RELEASE.jar

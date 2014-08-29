@@ -3,31 +3,32 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="col-md-6 col-md-offset-3">
-				<div class="exercicios">
-					<h3>{{titulo}}</h3>
-				</div>
+				<h3>{{titulo}}</h3>
+			</div>
+			<div class="col-md-3">
+				<h4>Pontos: 000</h4>
 			</div>
 			<div class="row">
 				<div class="col-md-6">
-					<div class="exercicios">
-						<p>{{descricao}}</p>
-					</div>
+					<p>{{descricao}}</p>
 				</div>
 
-				<div ng-controller="CodigoController">
-					<div class="col-md-6">
-						<div id="codigo">
-							<div id="editor"></div>
-							<form name="resposta" ng-submit="enviarExercicio()">
-								<button class="btn btn-small btn-primary" type="submit">Enviar
-									Exercicio</button>
-							</form>
-						</div>
-						<div class="row">
-							<div class="col-md-12">
-								<div class="console well well-lg">
-									<p>{{retorno.mensagem}}</p>
-								</div>
+				<div class="col-md-6">
+					<div id="codigo">
+						<div id="editor"></div>
+						<p></p>
+						<p></p>
+						<form name="resposta" ng-submit="enviarExercicio()">
+							<button class="btn btn-small btn-primary" type="submit">Enviar
+								Exercicio</button>
+						</form>
+					</div>
+					<p></p>
+					<p></p>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="console well well-lg">
+								<p>{{retornoJava.resposta}}</p>
 							</div>
 						</div>
 					</div>

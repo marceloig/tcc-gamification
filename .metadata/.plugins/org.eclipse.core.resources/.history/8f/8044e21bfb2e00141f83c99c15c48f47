@@ -1,0 +1,44 @@
+
+<div id="content">
+	<p></p>
+	<p></p>
+	<div class="row">
+		<div ng-repeat="modulo in modulos | orderBy:'id'">
+			<div class="col-md-8 col-md-offset-2">
+				<div class="panel panel-default panel-primary">
+					<div class="panel-heading">
+						<h4 class="text-center">{{modulo.nome}}</h4>
+					</div>
+					<div class="panel-body">
+						<ul class="nav nav-tabs" role="tablist" id="myTab">
+							<li class="active"><a href="" role="tab" data-toggle="tab">Home</a></li>
+							<li><a href="" role="tab" data-toggle="tab">Profile</a></li>
+							<li><a href="" role="tab" data-toggle="tab">Messages</a></li>
+							<li><a href="" role="tab" data-toggle="tab">Settings</a></li>
+						</ul>
+
+						<div class="tab-content">
+							<div class="tab-pane active" id="home">Home</div>
+							<div class="tab-pane" id="profile">Profile</div>
+							<div class="tab-pane" id="messages">Messages</div>
+							<div class="tab-pane" id="settings">Settings</div>
+						</div>
+
+						<script>
+							$('#myTab a').click(function(e) {
+								e.preventDefault()
+								$(this).tab('show')
+							})
+						</script>
+						<div class="list-group">
+							<a href="#/uml/exercicios"
+								ng-repeat="assunto in modulo.assuntos | orderBy:'id'"
+								class="list-group-item text-center">{{assunto.nome}}</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>

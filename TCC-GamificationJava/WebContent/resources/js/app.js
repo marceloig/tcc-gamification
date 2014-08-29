@@ -46,7 +46,6 @@ appModule.controller('LoginController', function($scope, $http, $location) {
 				data).success(function(data) {
 			var status = data;
 			if (status == "ok") {
-				// alert(status);
 				$location.path('/home/' + $scope.usuario.login);
 				$location.replace();
 			} else {
@@ -126,6 +125,24 @@ appModule.controller('JavaController', function($scope, $http) {
 	
 	$scope.exercicioJava = {};
 	var codigo = "";
+	$scope.dica1 = {"status" : true, "id" : 1};
+	$scope.dica2 = {"status" : true, "id" : 2};
+	$scope.dica3 = {"status" : true, "id" : 3};
+	
+	$scope.dicas = function(dica){
+		if(dica.status === true && dica.id === 1){
+			$scope.exercicioJava.pontos = $scope.exercicioJava.pontos - 10;
+			$scope.dica1.status = false;
+		}
+		if(dica.status === true && dica.id === 2){
+			$scope.exercicioJava.pontos = $scope.exercicioJava.pontos - 10;
+			$scope.dica2.status = false;
+		}
+		if(dica.status === true && dica.id === 3){
+			$scope.exercicioJava.pontos = $scope.exercicioJava.pontos - 10;
+			$scope.dica3.status = false;
+		}
+	};
 	
 	$http.get('http://localhost:8080/TCC-GamificationJava/java/exercicio/get')
 	.success(function(data) {					 
@@ -134,12 +151,11 @@ appModule.controller('JavaController', function($scope, $http) {
 		editor.setValue(codigo);
 	});
 
-	$scope.resposta = {};
+	$scope.resposta = {"codigo" : ""};
 	$scope.enviarExercicio = function() {
 		codigo = editor.getSession().getValue();
-		$scope.resposta = {
-			"codigo" : codigo
-		};
+		$scope.resposta.codigo = codigo;
+		
 
 		var data = $scope.resposta;
 		$http.post('http://localhost:8080/TCC-GamificationJava/java/exercicio/post', data)
@@ -147,18 +163,20 @@ appModule.controller('JavaController', function($scope, $http) {
 					$scope.retornoJava = data;
 					var retorno = data.resposta;
 					var resposta = $scope.exercicioJava.respostaJava;
-					var mensagem = verificarReposta(retorno, resposta);
-					alert(mensagem);
+					$scope.mensagem = verificarReposta(retorno, resposta);
+					$('#javaModal').modal();
+
 				});
 	};
 	
 	function verificarReposta(retorno, resposta) {
-		var tentativas = $scope.exercicioJava.tentativas;
 		var mensagem = "";
 		if(retorno === resposta){
 			mensagem = "Parabéns você acertou!";
+			if($scope.exercicioJava.tentativas === 0){
+				$scope.exercicioJava.pontos = $scope.exercicioJava.pontos - 20;
+			}
 			console.log("Acertou!!!");
-			pontuacao(tentativas);
 		}else{
 			if($scope.exercicioJava.tentativas !== 0){
 				$scope.exercicioJava.tentativas = $scope.exercicioJava.tentativas - 1;
@@ -167,12 +185,6 @@ appModule.controller('JavaController', function($scope, $http) {
 			console.log("Errou!!!");	
 		}
 	    return mensagem;
-	}
-	
-	function pontuacao(tentativas){
-		if(tentativas === 0){
-			$scope.exercicioJava.pontos = $scope.exercicioJava.pontos - 20;
-		}
 	}
 
 });
@@ -191,21 +203,24 @@ appModule.controller('UmlController', function($scope, $http) {
 	});
 	
 	$scope.enviarResposta = function() {
-		$scope.respostaUml = {
-				"resposta" : $scope.resposta
-			};
-		var data = $scope.respostaUml;
-		
-		$http.post('http://localhost:8080/TCC-GamificationJava/uml/exercicio/post', data)
-				.success(function(data) {
-					var retornoUml = data;
-					console.log(retornoUml.retorno);
-					if(retornoUml.retorno === true){
-						alert("Parabéns você acertou!");
-					}else{
-						alert("Que pena você errou! Tente novamente");
-					}
-					
-				});
+		$scope.mensagem = verificarReposta($scope.resposta, $scope.exercicio.respostaUml);
+		$('#umlModal').modal();
+
 	};
+	
+	function verificarReposta(resposta, respostaCorreta){
+		var mensagem = "";
+		if(resposta === respostaCorreta){
+			mensagem = "Parabéns você acertou!";
+			if($scope.exercicio.tentativas === 0){
+				$scope.exercicio.pontos = $scope.exercicio.pontos - 20;
+			}
+		}else{
+			if($scope.exercicio.tentativas !== 0){
+				$scope.exercicio.tentativas = $scope.exercicio.tentativas - 1;
+			}
+			mensagem = "Que pena você errou! Tente novamente";
+		}
+		return mensagem;
+	}
 });

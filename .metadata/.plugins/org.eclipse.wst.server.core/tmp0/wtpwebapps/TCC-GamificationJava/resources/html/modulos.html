@@ -1,22 +1,21 @@
 
 <div id="content">
-	<div class="row">
-		<div class="col-md-12">
-			<div class="col-md-4 col-md-offset-5">
-				<div class="exercicios">
-					<h3>Módulos</h3>
-				</div>
-			</div>
-		</div>
-	</div>
 	<p></p>
 	<p></p>
 	<div class="row">
-		<div ng-repeat="modulo in modulos">
-			<div class="col-md-6">
+		<div ng-repeat="modulo in modulos | orderBy:'id'">
+			<div class="col-md-8 col-md-offset-2">
 				<div class="panel panel-default panel-primary">
-					<div class="panel-heading">{{modulo.nome}}</div>
-					<div class="panel-body">Panel content</div>
+					<div class="panel-heading">
+						<h4 class="text-center">{{modulo.nome}}</h4>
+					</div>
+					<div class="panel-body">
+						<div class="list-group">
+							<a href="#/uml/exercicios"
+								ng-repeat="assunto in modulo.assuntos | orderBy:'id'"
+								class="list-group-item text-center">{{assunto.nome}}</a>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

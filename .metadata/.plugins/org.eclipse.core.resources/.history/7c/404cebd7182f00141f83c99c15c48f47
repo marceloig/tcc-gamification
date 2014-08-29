@@ -1,0 +1,91 @@
+
+<div id="content">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="col-md-6 col-md-offset-1">
+				<h3>{{exercicioJava.nome}}</h3>
+			</div>
+			<div class="col-md-2">
+				<h5>Tentativas: {{exercicioJava.tentativas}}</h5>
+
+			</div>
+			<div class="col-md-2">
+				<h5>Pontos: {{exercicioJava.pontos}}</h5>
+
+			</div>
+
+			<div class="row">
+				<div class="col-md-6">
+					<p>{{exercicioJava.descricao}}</p>
+					<div class="row">
+						<div class="col-md-11 col-md-offset-1">
+							<button type="button" class="btn btn-info" id="dica1"
+								data-container="body" data-toggle="popover" data-placement="top"
+								data-content="{{exercicioJava.dicas.0}}" ng-model="dica1"
+								ng-click="dicas(dica1)">Dica 1</button>
+							<button type="button" class="btn btn-info" id="dica2"
+								data-container="body" data-toggle="popover"
+								data-placement="bottom" data-content="{{exercicioJava.dicas.1}}"
+								ng-model="dica2" ng-click="dicas(dica2)">Dica 2</button>
+							<button type="button" class="btn btn-info" id="dica3"
+								data-container="body" data-toggle="popover"
+								data-placement="right" data-content="{{exercicioJava.dicas.2}}"
+								ng-model="dica3" ng-click="dicas(dica3)">Dica 3</button>
+							<script>
+								$('#dica1').popover();
+								$('#dica2').popover();
+								$('#dica3').popover();
+							</script>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div id="codigo">
+						<div id="editor"></div>
+						<p></p>
+						<p></p>
+						<form name="resposta" ng-submit="enviarExercicio()">
+							<button class="btn btn-small btn-primary" type="submit">Enviar
+								Exercicio</button>
+						</form>
+					</div>
+					<p></p>
+					<p></p>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="console well well-lg">
+								<p>{{retornoJava.resposta}}</p>
+							</div>
+							<div class="modal fade" id="myModal">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal">
+												<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+											</button>
+											<h4 class="modal-title">Modal title</h4>
+										</div>
+										<div class="modal-body">
+											<p>One fine body&hellip;</p>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default"
+												data-dismiss="modal">Close</button>
+										</div>
+									</div>
+									<!-- /.modal-content -->
+								</div>
+								<!-- /.modal-dialog -->
+							</div>
+							<!-- /.modal -->
+							
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+</div>
