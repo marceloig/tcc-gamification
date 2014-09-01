@@ -1,0 +1,42 @@
+
+<div id="content">
+	<p></p>
+	<p></p>
+	<div class="row">
+		<div ng-repeat="modulo in modulos | orderBy:'id'">
+			<div class="col-md-8 col-md-offset-2">
+				<button type="button" class="btn btn-primary" data-toggle="collapse"
+					data-target="#{{modulo.id}}" ng-click="accordion($index)">{{modulo.nome}}</button>
+
+				<div id="{{modulo.id}}" class="collapse in">
+					<a href="#/uml/exercicios"
+						ng-repeat="assunto in modulo.assuntos | orderBy:'id'"
+						class="list-group-item text-center">{{assunto.nome}}</a>
+				</div>
+			</div>
+
+		</div>
+		<script>
+			$(".collapse").collapse()
+		</script>
+
+
+		<div ng-repeat="modulo in modulos | orderBy:'id'">
+			<div class="col-md-8 col-md-offset-2">
+				<div class="panel panel-default panel-primary">
+					<div class="panel-heading">
+						<h4 class="text-center" ng-click="hidden($index)">{{modulo.nome}}</h4>
+					</div>
+					<div class="panel-body" ng-show="visivel">
+						<div class="list-group">
+							<a href="#/uml/exercicios"
+								ng-repeat="assunto in modulo.assuntos | orderBy:'id'"
+								class="list-group-item text-center">{{assunto.nome}}</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>

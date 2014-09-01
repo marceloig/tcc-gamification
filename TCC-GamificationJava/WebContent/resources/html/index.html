@@ -22,6 +22,19 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 <style type="text/css">
+.barra-lateral {
+	height: 200px;
+	overflow-y: scroll;
+}
+
+.divisao {
+	border-color: white;
+}
+
+.divisao-margin-bottom {
+	margin-bottom: 0px
+}
+
 .badges {
 	padding-right: 2px;
 	padding-left: 2px;
@@ -37,19 +50,21 @@
 
 </head>
 <body>
+<div>
 	<div class="container">
 		<div id="header">
 			<div class="row">
 				<div class="col-md-12">
-					<img src="http://placehold.it/450x150" alt=""
-						class="img-responsive">
+					<img
+						src="https://www.unigranrio.edu.br/portal/img/uni/header_uni.jpg"
+						alt="" class="img-responsive">
 				</div>
 			</div>
-			<hr>
+			<hr class="divisao-margin-bottom divisao">
 			<div class="row">
-				<div class="col-md-4">
-					<ul class="nav nav-pills">
-						<li class="active"><a href="#/home/">Home</a></li>
+				<div class="col-md-12">
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#/home/{{Usuario.getLogin()}}">Home</a></li>
 						<li><a href="#/modulos">Módulos</a></li>
 						<li><a href="#/sair">Sair</a></li>
 					</ul>
@@ -72,5 +87,6 @@
 		</div>
 
 	</div>
+	
 </body>
 </html>
