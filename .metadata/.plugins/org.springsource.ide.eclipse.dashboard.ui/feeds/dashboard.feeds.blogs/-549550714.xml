@@ -5,7 +5,37 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2014-08-28T08:29:57Z</updated>
+  <updated>2014-09-02T20:01:00Z</updated>
+  <entry>
+    <title>Spring guides make it easier to jump to core content</title>
+    <link rel="alternate" href="https://spring.io/blog/2014/09/02/spring-guides-make-it-easier-to-jump-to-core-content" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Greg Turnquist</name>
+    </author>
+    <id>tag:spring.io,2014-09-02:1746</id>
+    <updated>2014-09-02T20:01:00Z</updated>
+    <content type="html">&lt;p&gt;If you remember last year, we rolled out a &lt;a href="http://spring.io/blog/2013/10/23/the-spring-io-site"&gt;powerful new website&lt;/a&gt; built top-to-bottom with Spring. It was fresh, new, and loaded with gobs of &lt;a href="http://spring.io/guides"&gt;getting started guides&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Since then, the feedback has been overwhelmingly positive. We've had record traffic with a large portion visiting the guides. So what's new?&lt;/p&gt;
+
+&lt;p&gt;We recently added the ability to hide/show the build steps. Many people expressed the desire to skip project setup steps and instead jump to the core content. We listened and responded.&lt;/p&gt;
+
+&lt;p&gt;After reading over a guide, do you need Gradle or Maven build steps? No problem! Just click on the appropriate header, and the steps will expand and show you the extra bits. To top it off, the website uses HTML local storage to remember the choice you made. Surf to another guide and you'll see the same perspective. &lt;/p&gt;
+
+&lt;p&gt;Hopefully, this slims things down to your preference.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Spring Security OAuth 2.0.3 Available Now</title>
+    <link rel="alternate" href="https://spring.io/blog/2014/09/01/spring-security-oauth-2-0-3-available-now" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Dave Syer</name>
+    </author>
+    <id>tag:spring.io,2014-09-01:1745</id>
+    <updated>2014-09-01T07:39:00Z</updated>
+    <content type="html">&lt;p&gt;Spring Security OAuth 2.0.3 is available now in all the usual Maven repositories. It's a bug fix release, nothing major, so upgrading from 2.0.x should be painless (and is recommended). Some people were having issues getting JWT tokens to work properly, and those should be fixed. The only noteworthy functional change is that Resource Servers (if configured with &lt;code&gt;@Configuration&lt;/code&gt;) will now check the validity of the client and scopes before allowing access to protected resources. This means that client privileges can be revoked quickly, but may also lead to a performance penalty (so caching the &lt;code&gt;ClientDetailsService&lt;/code&gt; results would be recommended).&lt;/p&gt;</content>
+  </entry>
   <entry>
     <title>Spring Tool Suite and Groovy/Grails Tool Suite 3.6.1 released</title>
     <link rel="alternate" href="https://spring.io/blog/2014/08/28/spring-tool-suite-and-groovy-grails-tool-suite-3-6-1-released" />
@@ -305,6 +335,73 @@ There will be no native installers for STS/GGTS anymore.&lt;/p&gt;
 &lt;a name="user-content-springone-2gx-2014" class="anchor" href="#springone-2gx-2014" aria-hidden="true"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;SpringOne 2GX 2014&lt;/h3&gt;
 
 &lt;p&gt;Book your place at &lt;a href="https://2014.event.springone2gx.com/register"&gt;SpringOne&lt;/a&gt; in Dallas, TX for Sept 8-11 soon. It's simply the best opportunity to find out first hand all that's going on and to provide direct feedback. You can see myself and Roy Clarkson talk about &lt;a href="https://2014.event.springone2gx.com/schedule/sessions/spring_data_rest_data_meets_hypermedia.html"&gt;Spring Data REST - Data Meets Hypermedia&lt;/a&gt; to see how to merge Spring Data and RESTful services.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Preview Spring Security WebSocket Support</title>
+    <link rel="alternate" href="https://spring.io/blog/2014/08/21/preview-spring-security-websocket-support" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Rob Winch</name>
+    </author>
+    <id>tag:spring.io,2014-08-18:1733</id>
+    <updated>2014-08-21T16:22:00Z</updated>
+    <content type="html">&lt;h2&gt;
+&lt;a name="user-content-introduction" class="anchor" href="#introduction" aria-hidden="true"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;Previously, an application could use Spring Security to perform authentication in a WebSocket application. This worked because the &lt;code&gt;Principal&lt;/code&gt; of an &lt;code&gt;HttpServletRequest&lt;/code&gt; will be propagated to the WebSocket Session.&lt;/p&gt;
+
+&lt;p&gt;The problem is that authorization was limited to handshake. This means that once the connection was made, there was no way to provide any granularity to authorization of the WebSocket application.&lt;/p&gt;
+
+&lt;h2&gt;
+&lt;a name="user-content-using-spring-securitys-messaging-support" class="anchor" href="#using-spring-securitys-messaging-support" aria-hidden="true"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;Using Spring Security's Messaging Support&lt;/h2&gt;
+
+&lt;p&gt;Spring Security 4.0.0.M2 has introduced authorization support for WebSockets through the Spring Messaging abstraction. To provide authorization, simply extend the &lt;code&gt;AbstractSecurityWebSocketMessageBrokerConfigurer&lt;/code&gt; and configure the &lt;code&gt;MessageSecurityMetadataSourceRegistry&lt;/code&gt;. For example:&lt;/p&gt;
+
+&lt;div class="highlight highlight-java"&gt;&lt;pre&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;WebSocketSecurityConfig&lt;/span&gt; &lt;span class="kd"&gt;extends&lt;/span&gt;
+          &lt;span class="n"&gt;AbstractSecurityWebSocketMessageBrokerConfigurer&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;protected&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;configure&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MessageSecurityMetadataSourceRegistry&lt;/span&gt; &lt;span class="n"&gt;messages&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+      &lt;span class="n"&gt;messages&lt;/span&gt;
+        &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;destinationMatchers&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"/user/queue/errors"&lt;/span&gt;&lt;span class="o"&gt;).&lt;/span&gt;&lt;span class="na"&gt;permitAll&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt;
+        &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;anyMessage&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;hasRole&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"USER"&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+      &lt;span class="o"&gt;}&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;div class="callout"&gt;
+&lt;div class="callout-title"&gt;Direct JSR-356 Support&lt;/div&gt;
+We have entertained integrating directly with JSR-356. However, at this time it is very difficult since JSR-356 is very low level and currently does not provide the abstractions necessary.
+&lt;/div&gt;&lt;/p&gt;
+
+&lt;p&gt;This will ensure that:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The &lt;code&gt;/user/queue/errors&lt;/code&gt; destination can be accessed by any user&lt;/li&gt;
+&lt;li&gt;Any other Message can only be accessed by users with the role of &lt;code&gt;ROLE_ADMIN&lt;/code&gt;
+&lt;/li&gt;
+&lt;/ul&gt;&lt;h2&gt;
+&lt;a name="user-content-method-security-and-websockets" class="anchor" href="#method-security-and-websockets" aria-hidden="true"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;Method Security and WebSockets&lt;/h2&gt;
+
+&lt;p&gt;We can also use method security with WebSockets. For example, the following method can only be invoked by a user with the role &lt;code&gt;ROLE_ADMIN&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class="highlight highlight-java"&gt;&lt;pre&gt;    &lt;span class="nd"&gt;@PreAuthorize&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"hasRole('ROLE_ADMIN')"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="nd"&gt;@MessageMapping&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"/trade"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;executeTrade&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Trade&lt;/span&gt; &lt;span class="n"&gt;trade&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Principal&lt;/span&gt; &lt;span class="n"&gt;principal&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;
+&lt;a name="user-content-sample-application" class="anchor" href="#sample-application" aria-hidden="true"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;Sample Application&lt;/h2&gt;
+
+&lt;p&gt;You can find a complete example, of authorization in the security branch of &lt;a href="https://github.com/rwinch/spring-websocket-portfolio/tree/security"&gt;rwinch/spring-websocket-portfolio&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2&gt;
+&lt;a name="user-content-what-next" class="anchor" href="#what-next" aria-hidden="true"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;What Next?&lt;/h2&gt;
+
+&lt;p&gt;While this resolves our authorization problems, we still are missing a good mechanism to keep our &lt;code&gt;HttpSession&lt;/code&gt; alive when sending messages over WebSockets. In the next post, I will discuss in more detail what these problems are and how Spring Session can alleviate these problems.&lt;/p&gt;
+
+&lt;p&gt;&lt;div class="callout"&gt;
+&lt;div class="callout-title"&gt;SpringOne 2GX 2014 is around the corner&lt;/div&gt;
+Book your place at &lt;a href="https://2014.event.springone2gx.com/register"&gt;SpringOne&lt;/a&gt; in Dallas, TX for Sept 8-11 soon. It's simply the best opportunity to find out first hand all that's going on and to provide direct feedback. &lt;a href="https://2014.event.springone2gx.com/schedule/sessions/from_0_to_spring_security_4_0.html"&gt;From 0 to Spring Security 4.0&lt;/a&gt; session will contain detailed information on how to get started with Spring Security and provide a deep dive into the new features found in Spring Security 4. Of course there plenty of other &lt;a href="https://2014.event.springone2gx.com/schedule/2014-09-09"&gt;exciting Spring related talks&lt;/a&gt;!
+&lt;/div&gt;&lt;/p&gt;</content>
   </entry>
   <entry>
     <title>This Week in Spring-19th August 2014</title>
@@ -787,121 +884,6 @@ Book your place at &lt;a href="https://2014.event.springone2gx.com/register"&gt;
 &lt;p&gt;Tuesday, Sept 23rd, 2014 3:00PM BST (London UTC+01:00) &lt;a href="http://connect.pivotal.io/OSS_Webinar_ProcessDrivenSpringAppsActiviti7AM_Register.html"&gt;Register&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;Tuesday, Sept 23rd, 2014 10:00 am Pacific Daylight Time (San Francisco, UTC-07:00) &lt;a href="http://connect.pivotal.io/OSS_Webinar_ProcessDrivenSpringAppsActiviti10AM_Register.html"&gt;Register&lt;/a&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Webinar: Microservices with Spring Boot - Sept 16th</title>
-    <link rel="alternate" href="https://spring.io/blog/2014/07/29/webinar-microservices-with-spring-boot-sept-16th" />
-    <category term="news" label="News and Events" />
-    <author>
-      <name>Pieter Humphrey</name>
-    </author>
-    <id>tag:spring.io,2014-07-30:1716</id>
-    <updated>2014-07-29T19:29:00Z</updated>
-    <content type="html">&lt;p&gt; Speaker: Josh Long, Pivotal&lt;/p&gt;
-
-&lt;p&gt;Microservices? A thing? Or hype? What does it mean in practice? The answer, like so many Facebook statuses, is complicated. In broad strokes, Microservices offer a refreshed approach to application architecture. Microservices are a new way to describe many of the patterns that have fallen out of large-scale applications in practice over the recent years. There is no doubt that the approach works.  The question is: how does one build a microservice architecture? Join Josh Long for this webinar introducing Spring's support for building microservice architectures.&lt;/p&gt;
-
-&lt;p&gt;Tuesday, Sept 16th, 2014 3:00PM BST (London UTC+01:00) &lt;a href="http://connect.pivotal.io/OSS_Webinar_MicroserviceswithSpringBoot-JoshLong7AM_Register.html"&gt;Register&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Tuesday, Sept 16th, 2014 10:00 am Pacific Daylight Time (San Francisco, UTC-07:00) &lt;a href="http://connect.pivotal.io/OSS_Webinar_MicroserviceswithSpringBoot10AM_Register.html"&gt;Register&lt;/a&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Using Spring Cloud programmatically</title>
-    <link rel="alternate" href="https://spring.io/blog/2014/07/29/using-spring-cloud-programmatically" />
-    <category term="engineering" label="Engineering" />
-    <author>
-      <name>Ramnivas Laddad</name>
-    </author>
-    <id>tag:spring.io,2014-07-15:1690</id>
-    <updated>2014-07-29T18:57:14Z</updated>
-    <content type="html">&lt;p&gt;In the &lt;a href="https://spring.io/blog/2014/06/03/introducing-spring-cloud"&gt;last blog&lt;/a&gt;, I showed you how to use &lt;a href="http://projects.spring.io/spring-cloud"&gt;Spring Cloud&lt;/a&gt;'s Java configuration option to obtain service connectors declaratively (there is also XML namespace support, if you need it). In this blog, we will take a closer look at how you would use Spring Cloud programmatically. This will help in the situations where you cannot use Java or XML configuration. It will also demystify how Spring Cloud works and prepare for the next blog in this series, where we discuss extending Spring Cloud.&lt;/p&gt;
-
-&lt;p&gt;To work with Spring Cloud we need to access an object of the &lt;code&gt;Cloud&lt;/code&gt; class. However, you can’t create a &lt;code&gt;Cloud&lt;/code&gt; object directly (its constructor is not public). Instead, you will obtain it through &lt;code&gt;CloudFactory&lt;/code&gt;.&lt;/p&gt;
-
-&lt;div class="highlight highlight-java"&gt;&lt;pre&gt;&lt;span class="n"&gt;CloudFactory&lt;/span&gt; &lt;span class="n"&gt;cloudFactory&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nf"&gt;CloudFactory&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
-&lt;span class="n"&gt;Cloud&lt;/span&gt; &lt;span class="n"&gt;cloud&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cloudFactory&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getCloud&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;The cloud object created in this matter is suitable for the environment in which the app is operating. For example, if the app is running in Cloud Foundry it is configured to understand how it exposes services to the app. Note that creating a &lt;code&gt;CloudFactory&lt;/code&gt; instance is somewhat expensive, therefore you should try to avoid creating multiple instances. If you use a dependency injection framework such as Spring, it will take care of avoiding multiple instances; otherwise, just manage it yourself.&lt;/p&gt;
-
-&lt;p&gt;Once we have the cloud object, we can get application instance information, service information objects using various criteria, and service connectors using the specified criteria. Let's say, you want to get &lt;code&gt;ServiceInfo&lt;/code&gt; objects for all services bound to the app and print the JDBC URL for relational services, you could use the following snippet:&lt;/p&gt;
-
-&lt;div class="highlight highlight-java"&gt;&lt;pre&gt;&lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;ServiceInfo&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;serviceInfos&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cloud&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getServiceInfos&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
-&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ServiceInfo&lt;/span&gt; &lt;span class="n"&gt;serviceInfo&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;serviceInfos&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;serviceInfo&lt;/span&gt; &lt;span class="k"&gt;instanceof&lt;/span&gt; &lt;span class="n"&gt;RelationalServiceInfo&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(((&lt;/span&gt;&lt;span class="n"&gt;RelationalServiceInfo&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;serviceInfo&lt;/span&gt;&lt;span class="o"&gt;).&lt;/span&gt;&lt;span class="na"&gt;getJdbcUrl&lt;/span&gt;&lt;span class="o"&gt;());&lt;/span&gt;
-    &lt;span class="o"&gt;}&lt;/span&gt;
-&lt;span class="o"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;This will produce output such as this:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;jdbc:postgresql://babar.elephantsql.com:5432/tbsonrjm?user=***&amp;amp;password=***
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Objects obtained using &lt;code&gt;getServiceInfos()&lt;/code&gt; and its variations contain enough information such as URL and credentials to create a service connector. In some cases, obtaining a &lt;code&gt;ServiceInfo&lt;/code&gt; object may be all you need, since you can always create suitable connectors (such as a &lt;code&gt;DataSource&lt;/code&gt;) based on it. But in most cases, you would let Spring Cloud create a suitable service connector for a service. For example, if you would like to get a &lt;code&gt;DataSource&lt;/code&gt; for the "inventory-db" service directly, you could use the following snippet:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;DataSource inventoryDataSource = 
-    cloud.getServiceConnector("inventory-db", DataSource.class, null);
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;There is a variation of this method: &lt;code&gt;getSingletonServiceConnector()&lt;/code&gt;, which you can use as follows:&lt;/p&gt;
-
-&lt;div class="highlight highlight-java"&gt;&lt;pre&gt;&lt;span class="n"&gt;DataSource&lt;/span&gt; &lt;span class="n"&gt;inventoryDataSource&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cloud&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getSingletonServiceConnector&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;DataSource&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Here, it will return a &lt;code&gt;DataSource&lt;/code&gt; for the unique relational database service bound to the app; if there is no such service or there is more than one service, it will throw an exception. We passed &lt;code&gt;null&lt;/code&gt; as the last argument to both methods to use the default configuration for the created connector. However, you can pass a configuration you desire to override. For example, here we specify pool config as well as connection config for the datasource to be created.&lt;/p&gt;
-
-&lt;div class="highlight highlight-java"&gt;&lt;pre&gt;&lt;span class="n"&gt;PoolConfig&lt;/span&gt; &lt;span class="n"&gt;poolConfig&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nf"&gt;PoolConfig&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-&lt;span class="n"&gt;ConnectionConfig&lt;/span&gt; &lt;span class="n"&gt;connectionConfig&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nf"&gt;ConnectionConfig&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"characterEncoding=UTF-8"&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-&lt;span class="n"&gt;DataSourceConfig&lt;/span&gt; &lt;span class="n"&gt;serviceConfig&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nf"&gt;DataSourceConfig&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;poolConfig&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;connectionConfig&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-&lt;span class="n"&gt;DataSource&lt;/span&gt; &lt;span class="n"&gt;invetoryDataSource&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cloud&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getSingletonServiceConnector&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;DataSource&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;serviceConfig&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Last, there is a method to obtain application info that contains application id (cloud dependent, but typically the application name), application instance id, and loosely defined application properties. Let’s print all this information:&lt;/p&gt;
-
-&lt;div class="highlight highlight-java"&gt;&lt;pre&gt;&lt;span class="n"&gt;ApplicationInstanceInfo&lt;/span&gt; &lt;span class="n"&gt;appInstanceInfo&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cloud&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getApplicationInstanceInfo&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
-&lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"Application id: "&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;appInstanceInfo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getAppId&lt;/span&gt;&lt;span class="o"&gt;());&lt;/span&gt;
-&lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"Application instance id: "&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;appInstanceInfo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getInstanceId&lt;/span&gt;&lt;span class="o"&gt;());&lt;/span&gt;
-&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Map&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;Entry&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nl"&gt;entry:&lt;/span&gt; &lt;span class="n"&gt;appInstanceInfo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getProperties&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;entrySet&lt;/span&gt;&lt;span class="o"&gt;())&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-    &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"Application property: "&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;entry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getKey&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;"="&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;entry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getValue&lt;/span&gt;&lt;span class="o"&gt;());&lt;/span&gt;
-&lt;span class="o"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;When you execute this code in an app running in Cloud Foundry, you get output similar to the following (abbreviated here). If the same app is running in Heroku, it will produce a similar output, however, with a different set of keys:&lt;/p&gt;
-
-&lt;pre&gt;
-Application id: hello-spring-cloud
-Application instance id: 8b523252a9d3478b92750ef27ad4e5b0
-Application property: limits={mem=800, disk=1024, fds=16384}
-Application property: application_version=b1257c57-2a5c-47aa-8ca7-5e8b6d9a7b9c
-Application property: application_name=hello-spring-cloud
-Application property: application_uris=[hello-spring-cloud.cfapps.io]
-Application property: version=b1257c57-2a5c-47aa-8ca7-5e8b6d9a7b9c
-Application property: name=hello-spring-cloud
-Application property: space_name=development
-Application property: space_id=5f629937-1821-4f48-9eb4-8c67c70c0df0
-Application property: application_id=a345f90f-e075-4005-b003-f4ab86ad716a
-Application property: instance_id=8b523252a9d3478b92750ef27ad4e5b0
-Application property: instance_index=0
-Application property: host=0.0.0.0
-Application property: port=61023
-Application property: start=2014-07-15 21:27:34 +0000
-Application property: state_timestamp=1405459654
-&lt;/pre&gt;
-
-&lt;p&gt;That is pretty much all you need to know to use Spring Cloud programmatically. In the next blog, we will shift our focus on the extensibility aspect of Spring Cloud. Stay tuned.&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Batch Admin 1.3.0.RELEASE Is Available</title>
-    <link rel="alternate" href="https://spring.io/blog/2014/07/28/spring-batch-admin-1-3-0-release-is-available" />
-    <category term="releases" label="Releases" />
-    <author>
-      <name>Michael Minella</name>
-    </author>
-    <id>tag:spring.io,2014-07-28:1714</id>
-    <updated>2014-07-28T16:54:15Z</updated>
-    <content type="html">&lt;p&gt;We are pleased to announce that Spring Batch Admin 1.3.0.RELEASE is now available via Maven Central, Github and the SpringSource download repository.  This release provides updates to Spring Batch Admin to make it compatible with Spring Batch 2.2.x and beyond.  In addition to the minor functional updates, this release also provides an overall update to third party dependencies.  As noted previously, this will be the last major version with the spring-batch-integration module included as it has been moved to Spring Batch as of Spring Batch 3.0.  As always, we look forward to your feedback in the comments, &lt;a href="http://jira.spring.io/browse/BATCHADM"&gt;Jira&lt;/a&gt;, &lt;a href="http://stackoverflow.com/questions/tagged/spring-batch-admin"&gt;StackOverflow&lt;/a&gt;, and in person at &lt;a href="http://springone2gx.com"&gt;SpringOne&lt;/a&gt;!&lt;/p&gt;</content>
   </entry>
 </feed>
 

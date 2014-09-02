@@ -12,8 +12,11 @@
 <script src="../js/angular-resource.min.js"></script>
 <script src="../js/angular-route.min.js"></script>
 <script src="../js/app.js"></script>
-
-
+<script src="../js/exercicio-controllers.js"></script>
+<script src="../js/rotas.js"></script>
+<link
+	href="//fonts.googleapis.com/css?family=Open+Sans:300italic,300,400italic,400,600italic,600,700italic,700,800italic,800"
+	rel="stylesheet" type="text/css">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -22,6 +25,10 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 <style type="text/css">
+body {
+	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
 .barra-lateral {
 	height: 200px;
 	overflow-y: scroll;
@@ -44,13 +51,12 @@
 #editor {
 	position: relative;
 	width: 450px;
-	height: 400px;
+	height: 260px;
 }
 </style>
 
 </head>
 <body>
-<div>
 	<div class="container">
 		<div id="header">
 			<div class="row">
@@ -64,10 +70,27 @@
 			<div class="row">
 				<div class="col-md-12">
 					<ul class="nav nav-tabs">
-						<li class="active"><a href="#/home/{{Usuario.getLogin()}}">Home</a></li>
-						<li><a href="#/modulos">Módulos</a></li>
-						<li><a href="#/sair">Sair</a></li>
+						<li ng-class="{active: activetab == '/home/'}"><a
+							href="#/home/{{Usuario.getLogin()}}">Home</a></li>
+						<li ng-class="{active: activetab == '/modulos'}"><a
+							href="#/modulos">Módulos</a></li>
+						<li ng-class="{active: activetab == '/sair'}"><a
+							href="#/sair">Sair</a></li>
 					</ul>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<ol class="breadcrumb" style="background-color: white">
+						<li><a href="">Home</a></li>
+						<li><a href="">Módulos</a></li>
+						<li class="active">Conhecendo Java</li>
+					</ol>
+				</div>
+				<div class="col-md-2 col-md-offset-4">
+					<p class="lead">
+						<span class="label label-default">igmarcelo</span>
+					</p>
 				</div>
 			</div>
 		</div>
@@ -83,10 +106,11 @@
 
 			</div>
 			<script src="../ace/src-noconflict/ace.js" type="text/javascript"
-				charset="utf-8"></script>
+				charset="utf-8">
+				
+			</script>
 		</div>
 
 	</div>
-	
 </body>
 </html>

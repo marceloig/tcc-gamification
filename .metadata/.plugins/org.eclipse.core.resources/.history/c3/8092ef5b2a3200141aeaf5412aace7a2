@@ -1,0 +1,43 @@
+var appController = angular.module('appController');
+
+appController.controller('UmlController', function ($scope, $http) {
+
+    $scope.exercicio = {};
+    $scope.alternativa = {};
+    $scope.resposta = "";
+    $scope.respostaUml = {};
+
+    $http.get('http://localhost:8080/TCC-GamificationJava/uml/exercicio/get')
+        .success(function (data) {
+            $scope.exercicio = data;
+            $scope.alternativa = data.alternativas;
+            $scope.modulo = data.assunto.modulo;
+        });
+
+    $scope.enviarResposta = function () {
+        $scope.mensagem = verificarReposta($scope.resposta, $scope.exercicio.respostaUml);
+        $('#umlModal').modal();
+
+    };
+
+    function verificarReposta(resposta, respostaCorreta) {
+        var mensagem = "";
+        if (resposta === respostaCorreta) {
+            mensagem = "Parabéns você acertou!";
+            if ($scope.exercicio.tentativas === 0) {
+                $scope.exercicio.pontos = $scope.exercicio.pontos - 20;
+            }
+            var pontuacao = {"pontos": $scope.exercicio.pontos};
+            $http.post('http://localhost:8080/TCC-GamificationJava/usuario/pontos/put', pontuacao)
+                .success(function (data) {
+                    console.log("Foi e voltou");
+                });
+        } else {
+            if ($scope.exercicio.tentativas !== 0) {
+                $scope.exercicio.tentativas = $scope.exercicio.tentativas - 1;
+            }
+            mensagem = "Que pena você errou! Tente novamente";
+        }
+        return mensagem;
+    }
+});

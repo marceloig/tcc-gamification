@@ -2,12 +2,12 @@
 <div id="content">
 	<div class="row">
 		<div class="col-md-3">
-			<p>Pontos: {{usuario.pontos}}</p>
+			<p><b>Pontos:</b> {{usuario.pontos}}</p>
 			<div class="row">
 				<div class="col-md-8">
-				Próximo Nivel
+					Próximo Nivel
 					<div class="progress">
-						<div class="progress-bar" role="progressbar" aria-valuenow="60"
+						<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60"
 							aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
 							60%</div>
 					</div>
@@ -18,7 +18,9 @@
 			<h2>Olá {{usuario.nome}}</h2>
 		</div>
 		<div class="col-md-2">
-			<h2><span class="label label-primary">1ª</span></h2>
+			<h2>
+				<span class="label label-default">1ª</span>
+			</h2>
 		</div>
 	</div>
 	<hr class="divisao divisao-margin-bottom">
@@ -49,7 +51,7 @@
 		<div class="col-md-3">
 			<div class="row">
 				<div class="col-md-10 col-md-offset-2">
-					<p>Nível: {{usuario.nivel.nome}}</p>
+					<p><b>Nível:</b> {{usuario.nivel.nome}}</p>
 				</div>
 			</div>
 			<div class="row">
@@ -60,8 +62,9 @@
 			</div>
 			<hr class="divisao">
 			<div class="row">
-				<div class="col-md-9 col-md-offset-3">
-					<a href="#/java/exercicios"><button class="btn btn-primary btn-lg">Jogar</button></a>
+				<div class="col-md-10 col-md-offset-2">
+					<a href="#/java/exercicios"><button
+							class="btn btn-primary btn-lg">Jogar</button></a>
 				</div>
 			</div>
 		</div>
@@ -88,9 +91,6 @@
 					<img src="http://placehold.it/300x200" class="img-responsive"
 						alt="">
 				</div>
-			</div>
-
-			<div class="row">
 				<div class="col-md-3 col-xs-3 badges">
 					<img src="http://placehold.it/300x200" class="img-responsive"
 						alt="">
