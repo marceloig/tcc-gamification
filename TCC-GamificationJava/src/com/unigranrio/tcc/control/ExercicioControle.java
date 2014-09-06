@@ -66,15 +66,18 @@ public class ExercicioControle {
 		
 		return exUmlBean;
 	}
-	
-	@RequestMapping(value = "/usuario/pontos/put", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/usuario/put", method = RequestMethod.POST)
 	public @ResponseBody
-	RespostaBean receberPontuacaoUsuario(@RequestBody UsuarioBean pontuacao) {
-		
+	RespostaBean atualizarUsuario(@RequestBody UsuarioBean pontuacao) {
 		Usuario usuario = usuarioDAO.buscarUsuarioByLogin(pontuacao.getLogin());
 		usuario.setPontos(usuario.getPontos() + pontuacao.getPontos());
-		//usuario.setLogin(pontuacao.getLogin());
-		usuarioDAO.atualizarUsuario(usuario);
+		usuarioDAO.atualizarPontosUsuario(usuario);
+		
+		Usuario usuarioAtualizado = usuarioDAO.buscarUsuarioByLogin(pontuacao.getLogin());
+		long posicao = usuarioDAO.buscarPosicaoUsuario(usuarioAtualizado.getPontos());
+		usuarioAtualizado.setPosicao((int) posicao);
+		usuarioDAO.atualizarPosicaoUsuario(usuarioAtualizado);
 		
 		return null;
 	}

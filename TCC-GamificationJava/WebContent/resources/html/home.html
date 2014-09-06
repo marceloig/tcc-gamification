@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="row">
 		<div class="col-md-3">
-			<p><b>Pontos:</b> {{usuario.pontos}}</p>
+			<p><strong>Pontos:</strong> {{usuario.pontos}}</p>
 			<div class="row">
 				<div class="col-md-8">
 					Próximo Nivel
@@ -19,7 +19,7 @@
 		</div>
 		<div class="col-md-2">
 			<h2>
-				<span class="label label-default">1ª</span>
+				<span class="label label-default">{{usuario.posicao}}º</span>
 			</h2>
 		</div>
 	</div>
@@ -37,6 +37,7 @@
 								<tr
 									ng-repeat="usuarioTop in usuariosTop | orderBy:'pontos':true"
 									ng-class='{info: usuario.login == usuarioTop.login}'>
+									<td>{{usuarioTop.posicao}}º</td>
 									<td>{{usuarioTop.login}}</td>
 									<td>{{usuarioTop.pontos}}</td>
 									<td>{{usuarioTop.nivel.nome}}</td>
@@ -51,7 +52,7 @@
 		<div class="col-md-3">
 			<div class="row">
 				<div class="col-md-10 col-md-offset-2">
-					<p><b>Nível:</b> {{usuario.nivel.nome}}</p>
+					<p><strong>Nível:</strong> {{usuario.nivel.nome}}</p>
 				</div>
 			</div>
 			<div class="row">

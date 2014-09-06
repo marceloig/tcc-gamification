@@ -1,7 +1,7 @@
 'use strict';
 var appController = angular.module('app');
 
-appController.controller('JavaController', function ($scope, $http, Usuario) {
+appController.controller('JavaController', function ($scope, $http, usuario) {
 
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/eclipse");
@@ -61,8 +61,8 @@ appController.controller('JavaController', function ($scope, $http, Usuario) {
             if ($scope.exercicioJava.tentativas === 0) {
                 $scope.exercicioJava.pontos = $scope.exercicioJava.pontos - 20;
             }
-            var pontuacao = {"login": Usuario.getLogin(), "pontos": $scope.exercicioJava.pontos};
-            $http.post('http://localhost:8080/TCC-GamificationJava/usuario/pontos/put', pontuacao)
+            var pontuacao = {"login": usuario.getLogin(), "pontos": $scope.exercicioJava.pontos};
+            $http.post('http://localhost:8080/TCC-GamificationJava/usuario/put', pontuacao)
                 .success(function (data) {
                     console.log("Enviado");
                 });
@@ -79,7 +79,7 @@ appController.controller('JavaController', function ($scope, $http, Usuario) {
 
 });
 
-appController.controller('UmlController', function ($scope, $http) {
+appController.controller('UmlController', function ($scope, $http, usuario) {
 
     $scope.exercicio = {};
     $scope.alternativa = {};
@@ -106,8 +106,8 @@ appController.controller('UmlController', function ($scope, $http) {
             if ($scope.exercicio.tentativas === 0) {
                 $scope.exercicio.pontos = $scope.exercicio.pontos - 20;
             }
-            var pontuacao = {"pontos": $scope.exercicio.pontos};
-            $http.post('http://localhost:8080/TCC-GamificationJava/usuario/pontos/put', pontuacao)
+            var pontuacao = {"login": usuario.getLogin(), "pontos": $scope.exercicio.pontos};
+            $http.post('http://localhost:8080/TCC-GamificationJava/usuario/put', pontuacao)
                 .success(function (data) {
                     console.log("Foi e voltou");
                 });

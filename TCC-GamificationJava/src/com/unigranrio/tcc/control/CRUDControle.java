@@ -50,6 +50,7 @@ public class CRUDControle {
 		// inserirNivel();
 		//cadastrarExercicio();
 		//inserirExercicioJava();
+		//alterarAssunto();
 	}
 
 	
@@ -137,7 +138,8 @@ public class CRUDControle {
 		moduloDAO.alterarModulo(modulo2);
 
 	}
-
+	
+	
 	public void inserirNivel() {
 		Nivel nivel1 = new Nivel();
 		nivel1.setNome("Novato");

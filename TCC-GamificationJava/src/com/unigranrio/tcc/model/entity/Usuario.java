@@ -18,14 +18,11 @@ import com.unigranrio.tcc.model.UsuarioBean;
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
-		@NamedQuery(name = "Usuario.findMaiorEIgual", query = "SELECT u FROM Usuario u WHERE u.pontos >= :pontos "
-				+ "ORDER BY u.pontos ASC"),
-		@NamedQuery(name = "Usuario.findMenor", query = "SELECT u FROM Usuario u WHERE u.pontos < :pontos "
-				+ "ORDER BY u.pontos DESC"),
+		@NamedQuery(name = "Usuario.getPosicao", query = "SELECT COUNT(*) FROM Usuario u WHERE u.pontos > :pontos"),
 		@NamedQuery(name = "Usuario.listByPontuacao", query = "SELECT u FROM Usuario u "
 				+ "ORDER BY u.pontos DESC"),
-		@NamedQuery(name = "Usuario.setPontos", query = "UPDATE Usuario u SET u.pontos = :pontos WHERE u.login = :login"),
-
+		@NamedQuery(name = "Usuario.updatePontos", query = "UPDATE Usuario u SET u.pontos = :pontos WHERE u.login = :login"),
+		@NamedQuery(name = "Usuario.updatePosicao", query = "UPDATE Usuario u SET u.posicao = :posicao WHERE u.login = :login"),
 })
 public class Usuario {
 

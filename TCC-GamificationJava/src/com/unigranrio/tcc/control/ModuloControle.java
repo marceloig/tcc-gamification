@@ -1,20 +1,22 @@
 package com.unigranrio.tcc.control;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.unigranrio.tcc.dao.ExercicioDAO;
 import com.unigranrio.tcc.dao.ModuloDAO;
-import com.unigranrio.tcc.model.AssuntoBean;
+import com.unigranrio.tcc.model.ExercicioBean;
 import com.unigranrio.tcc.model.ModuloBean;
 import com.unigranrio.tcc.model.entity.Assunto;
+import com.unigranrio.tcc.model.entity.Exercicio;
 import com.unigranrio.tcc.model.entity.Modulo;
 
 @Transactional
@@ -22,26 +24,40 @@ import com.unigranrio.tcc.model.entity.Modulo;
 public class ModuloControle {
 
 	private ModuloDAO moduloDAO = new ModuloDAO();
-	
-	@Autowired
-    public void setModuloDAO(ModuloDAO moduloDAO) {
-      this.moduloDAO = moduloDAO;
-    }
+	private ExercicioDAO exercicioDAO = new ExercicioDAO();
 
-	@RequestMapping(value = "/modulos/get", method = RequestMethod.GET)
-	public @ResponseBody
-	List<ModuloBean> listarModulos() {
-		
+	@Autowired
+	public void setModuloDAOeExercicioDAO(ModuloDAO moduloDAO, ExercicioDAO exercicioDAO) {
+		this.moduloDAO = moduloDAO;
+		this.exercicioDAO = exercicioDAO;
+	}
+
+	@RequestMapping(value = "/modulo", method = RequestMethod.GET)
+	public @ResponseBody List<ModuloBean> listarModulos() {
+
 		List<ModuloBean> modulosBean = new LinkedList<ModuloBean>();
 		for (Modulo modulo : moduloDAO.listarModulos()) {
 			ModuloBean moduloBean = modulo.getModuloBean();
 			moduloBean.setAssuntos(modulo.getAssuntosBean());
 			moduloBean.setHistorico(modulo.getProgressosBean());
-			
+
 			modulosBean.add(moduloBean);
 		}
-		
+
 		return modulosBean;
+	}
+	
+	@RequestMapping(value = "/modulo/{assunto}", method = RequestMethod.GET)
+	public @ResponseBody List<ExercicioBean> listarExercicios(@PathVariable int assunto) {
+		Assunto assunto1 = new Assunto();
+		assunto1.setId((long) assunto);
+		List<Exercicio> exercicios = exercicioDAO.buscarExerciciosByAssunto(assunto1);
+		for(Exercicio exercicio : exercicios){
+			System.out.println("Nome Exercicio: " + exercicio.getNome());
+			System.out.println("Descricao Exercicio: " + exercicio.getDescricao());
+		}
+		
+		return null;
 	}
 
 }

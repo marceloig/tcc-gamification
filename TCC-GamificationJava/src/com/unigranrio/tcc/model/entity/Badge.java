@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.unigranrio.tcc.model.BadgeBean;
 import com.unigranrio.tcc.model.ConquistaBean;
 

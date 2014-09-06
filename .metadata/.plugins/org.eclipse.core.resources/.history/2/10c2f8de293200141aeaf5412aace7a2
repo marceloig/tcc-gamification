@@ -1,2 +1,0 @@
-var appModule = angular.module('appController');
-

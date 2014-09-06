@@ -4,16 +4,25 @@ import java.util.List;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.unigranrio.tcc.model.ExercicioBean;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@NamedQueries({
+		@NamedQuery(name = "Exercicio.ExercicioByAssunto", query = "SELECT e FROM Exercicio e WHERE e.assunto = :assunto ORDER BY e.id ASC"),
+		@NamedQuery(name = "Exercicio.ExercicioById", query = "SELECT e FROM Exercicio e WHERE e.id = :id"), })
 public class Exercicio {
 
 	@Id
@@ -24,11 +33,11 @@ public class Exercicio {
 	private String descricao;
 	private int tentativas;
 	private int pontos;
-	
+
 	@ElementCollection
 	private List<String> dicas;
 
-	//@ManyToOne(optional = false)
+	// @ManyToOne(optional = false)
 	@ManyToOne
 	private Assunto assunto;
 
@@ -87,8 +96,8 @@ public class Exercicio {
 	public void setAssunto(Assunto assunto) {
 		this.assunto = assunto;
 	}
-	
-	public ExercicioBean getExercicioBean(){
+
+	public ExercicioBean getExercicioBean() {
 		ExercicioBean exercicioBean = new ExercicioBean();
 		exercicioBean.setId(id);
 		exercicioBean.setNome(nome);
@@ -96,7 +105,7 @@ public class Exercicio {
 		exercicioBean.setTentativas(tentativas);
 		exercicioBean.setPontos(pontos);
 		exercicioBean.setAssunto(assunto.getAssuntoBean());
-		
+
 		return exercicioBean;
 	}
 

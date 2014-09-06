@@ -28,9 +28,16 @@ public class UsuarioDAO {
 		return usuario;
 	}
 
-	public void atualizarUsuario(Usuario usuario) {
-		Query query = manager.createNamedQuery("Usuario.setPontos");
+	public void atualizarPontosUsuario(Usuario usuario) {
+		Query query = manager.createNamedQuery("Usuario.updatePontos");
 		query.setParameter("pontos", usuario.getPontos());
+		query.setParameter("login", usuario.getLogin());
+		query.executeUpdate();
+	}
+	
+	public void atualizarPosicaoUsuario(Usuario usuario) {
+		Query query = manager.createNamedQuery("Usuario.updatePosicao");
+		query.setParameter("posicao", usuario.getPosicao());
 		query.setParameter("login", usuario.getLogin());
 		query.executeUpdate();
 	}
@@ -50,19 +57,14 @@ public class UsuarioDAO {
 
 		return usuarios;
 	}
+	
+	public long buscarPosicaoUsuario(int pontos) {
 
-	public List<Usuario> listarUsuariosMaiorMenorEIgual(int pontos) {
-
-		Query query1 = manager.createNamedQuery("Usuario.findMaiorEIgual");
-		query1.setParameter("pontos", pontos);
-		query1.setMaxResults(3);
-		List<Usuario> usuarios = query1.getResultList();
-
-		Query query2 = manager.createNamedQuery("Usuario.findMenor");
-		query2.setParameter("pontos", pontos);
-		query2.setMaxResults(2);
-		usuarios.addAll(query2.getResultList());
-
-		return usuarios;
+		Query query = manager.createNamedQuery("Usuario.getPosicao");
+		query.setParameter("pontos", pontos);
+		long posicao =  (long) query.getSingleResult();
+		posicao = posicao + 1;
+		return posicao;
 	}
+
 }

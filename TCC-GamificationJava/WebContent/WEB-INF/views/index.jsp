@@ -25,9 +25,9 @@
 		<div class="row">
 			<div class="col-md-12">
 				<ul class="nav nav-pills nav-justified">
-					<li><a href="modulo">Módulo</a></li>
-					<li><a href="assunto">Assunto</a></li>
-					<li><a href="exercicio">Exercicio</a></li>
+					<li><a href="modulos">Módulo</a></li>
+					<li><a href="assuntos">Assunto</a></li>
+					<li><a href="exercicios">Exercicio</a></li>
 				</ul>
 			</div>
 		</div>

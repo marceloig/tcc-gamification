@@ -3,7 +3,16 @@
 <fullyQualifiedTypeName name="com.unigranrio.tcc.dao.ModuloDAO"/>
 <fullyQualifiedTypeName name="com.unigranrio.tcc.model.entity.Modulo"/>
 <fullyQualifiedTypeName name="com.unigranrio.tcc.model.ModuloBean"/>
-<fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="com.unigranrio.tcc.model.AssuntoBean"/>
+<fullyQualifiedTypeName name="com.unigranrio.tcc.model.RespostaBean"/>
+<fullyQualifiedTypeName name="javax.persistence.Transient"/>
+<fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonIgnoreType"/>
+<fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonBackReference"/>
+<fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonIgnore"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="org.codehaus.jackson.annotate.JsonIgnore"/>
+<fullyQualifiedTypeName name="org.codehaus.jackson.map.ObjectMapper"/>
+<fullyQualifiedTypeName name="com.fasterxml.jackson.databind.ObjectMapper"/>
+<fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonManagedReference"/>
 </qualifiedTypeNameHistroy>

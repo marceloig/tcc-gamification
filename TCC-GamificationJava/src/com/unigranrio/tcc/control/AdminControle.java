@@ -43,12 +43,12 @@ public class AdminControle {
 		return "index";
 	}
 	
-	@RequestMapping(value = "modulo", method = RequestMethod.GET)
+	@RequestMapping(value = "modulos", method = RequestMethod.GET)
 	public String homeModulo() {
 		return "modulo/home";
 	}
 	
-	@RequestMapping("assunto")
+	@RequestMapping("assuntos")
 	public String homeAssunto(Model model) {
 		List<Modulo> modulos = moduloDAO.listarModulos();
 		model.addAttribute("modulos", modulos);
@@ -56,7 +56,7 @@ public class AdminControle {
 		return "assunto/home";
 	}
 	
-	@RequestMapping(value = "exercicio", method = RequestMethod.GET)
+	@RequestMapping(value = "exercicios", method = RequestMethod.GET)
 	public String homeExercicio() {
 		return "exercicio/home";
 	}
@@ -73,9 +73,9 @@ public class AdminControle {
 		
 		Modulo modulo = moduloDAO.buscarModuloById(assunto.getModulo().getId());
 		assunto.setModulo(modulo);
-		modulo.setAssuntos(assuntoDAO.listarAssuntosByModulo(modulo));
-		
 		assuntoDAO.gravarAssunto(assunto);
+		
+		modulo.setAssuntos(assuntoDAO.listarAssuntosByModulo(modulo));
 		moduloDAO.alterarModulo(modulo);
 		
 		return "forward:assunto";

@@ -5,11 +5,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.unigranrio.tcc.model.AssuntoBean;
 import com.unigranrio.tcc.model.ConquistaBean;
 import com.unigranrio.tcc.model.ExercicioBean;
@@ -23,9 +27,11 @@ public class Assunto {
 	private String nome;
 
 	@ManyToOne
+	@JsonBackReference
 	private Modulo modulo;
 
 	@OneToMany
+	@JsonManagedReference
 	private List<Exercicio> exercicios;
 
 	@OneToMany
@@ -84,15 +90,15 @@ public class Assunto {
 
 		return conquistasBean;
 	}
-	
-	public List<ExercicioBean> getExercicioBean(){
+
+	public List<ExercicioBean> getExercicioBean() {
 		List<ExercicioBean> exerciciosBean = new LinkedList<ExercicioBean>();
-		for(Exercicio exercicio : exercicios){
+		for (Exercicio exercicio : exercicios) {
 			ExercicioBean exercicioBean = exercicio.getExercicioBean();
-			
+
 			exerciciosBean.add(exercicioBean);
 		}
-		
+
 		return exerciciosBean;
 	}
 
@@ -101,7 +107,7 @@ public class Assunto {
 		assuntoBean.setId(id);
 		assuntoBean.setNome(nome);
 		assuntoBean.setModulo(modulo.getModuloBean());
-		
+
 		return assuntoBean;
 	}
 
