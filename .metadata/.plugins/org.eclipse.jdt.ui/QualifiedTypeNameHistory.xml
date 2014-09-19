@@ -3,7 +3,6 @@
 <fullyQualifiedTypeName name="com.unigranrio.tcc.dao.ModuloDAO"/>
 <fullyQualifiedTypeName name="com.unigranrio.tcc.model.entity.Modulo"/>
 <fullyQualifiedTypeName name="com.unigranrio.tcc.model.ModuloBean"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="com.unigranrio.tcc.model.AssuntoBean"/>
 <fullyQualifiedTypeName name="com.unigranrio.tcc.model.RespostaBean"/>
 <fullyQualifiedTypeName name="javax.persistence.Transient"/>
@@ -15,4 +14,17 @@
 <fullyQualifiedTypeName name="org.codehaus.jackson.map.ObjectMapper"/>
 <fullyQualifiedTypeName name="com.fasterxml.jackson.databind.ObjectMapper"/>
 <fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonManagedReference"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="com.unigranrio.tcc.model.ExercicioBean"/>
+<fullyQualifiedTypeName name="com.unigranrio.tcc.model.entity.ExercicioUml"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PathVariable"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ResponseBody"/>
+<fullyQualifiedTypeName name="com.unigranrio.tcc.model.UsuarioBean"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
+<fullyQualifiedTypeName name="com.unigranrio.tcc.control.CRUDControle"/>
+<fullyQualifiedTypeName name="com.unigranrio.tcc.dao.BadgeDAO"/>
+<fullyQualifiedTypeName name="com.unigranrio.tcc.model.entity.Conquista"/>
+<fullyQualifiedTypeName name="com.unigranrio.tcc.dao.ConquistaDAO"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestParam"/>
+<fullyQualifiedTypeName name="java.util.Collection"/>
 </qualifiedTypeNameHistroy>

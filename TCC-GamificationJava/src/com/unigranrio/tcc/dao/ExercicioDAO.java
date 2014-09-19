@@ -82,6 +82,7 @@ public class ExercicioDAO {
 
 		return exercicios;
 	}
+	
 
 	public Exercicio buscarExerciciosById(long id) {
 

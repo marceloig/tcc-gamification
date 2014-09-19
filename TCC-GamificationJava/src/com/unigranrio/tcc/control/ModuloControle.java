@@ -1,5 +1,6 @@
 package com.unigranrio.tcc.control;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -32,14 +33,13 @@ public class ModuloControle {
 		this.exercicioDAO = exercicioDAO;
 	}
 
-	@RequestMapping(value = "/modulo", method = RequestMethod.GET)
+	@RequestMapping(value = "/modulo/assunto/exercicio", method = RequestMethod.GET)
 	public @ResponseBody List<ModuloBean> listarModulos() {
 
 		List<ModuloBean> modulosBean = new LinkedList<ModuloBean>();
 		for (Modulo modulo : moduloDAO.listarModulos()) {
 			ModuloBean moduloBean = modulo.getModuloBean();
 			moduloBean.setAssuntos(modulo.getAssuntosBean());
-			moduloBean.setHistorico(modulo.getProgressosBean());
 
 			modulosBean.add(moduloBean);
 		}
@@ -47,17 +47,18 @@ public class ModuloControle {
 		return modulosBean;
 	}
 	
-	@RequestMapping(value = "/modulo/{assunto}", method = RequestMethod.GET)
-	public @ResponseBody List<ExercicioBean> listarExercicios(@PathVariable int assunto) {
+	@RequestMapping(value = "/modulo/assunto/{assunto}/exercicio", method = RequestMethod.GET)
+	public @ResponseBody List<ExercicioBean> listarExercicios(@PathVariable long assunto) {
+		List<ExercicioBean> exerciciosBean = new ArrayList<ExercicioBean>();
 		Assunto assunto1 = new Assunto();
-		assunto1.setId((long) assunto);
-		List<Exercicio> exercicios = exercicioDAO.buscarExerciciosByAssunto(assunto1);
-		for(Exercicio exercicio : exercicios){
-			System.out.println("Nome Exercicio: " + exercicio.getNome());
-			System.out.println("Descricao Exercicio: " + exercicio.getDescricao());
+		assunto1.setId(assunto);
+		for(Exercicio exercicio : exercicioDAO.buscarExerciciosByAssunto(assunto1)){
+			ExercicioBean exercicioBean = exercicio.getExercicioBean();
+			exerciciosBean.add(exercicioBean);
 		}
-		
-		return null;
+		return exerciciosBean;
 	}
+	
+	
 
 }

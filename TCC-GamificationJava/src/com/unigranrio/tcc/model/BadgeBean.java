@@ -1,6 +1,5 @@
 package com.unigranrio.tcc.model;
 
-import java.util.List;
 
 public class BadgeBean {
 	
@@ -8,7 +7,7 @@ public class BadgeBean {
 	private String nome;
 	private String descricao;
 	private String nomeImagem;
-	private List<ConquistaBean> conquistas;
+	private ConquistaBean conquista;
 
 	public Long getId() {
 		return id;
@@ -42,12 +41,12 @@ public class BadgeBean {
 		this.nomeImagem = nomeImagem;
 	}
 
-	public List<ConquistaBean> getConquistas() {
-		return conquistas;
+	public ConquistaBean getConquista() {
+		return conquista;
 	}
 
-	public void setConquistas(List<ConquistaBean> conquistas) {
-		this.conquistas = conquistas;
+	public void setConquista(ConquistaBean conquista) {
+		this.conquista = conquista;
 	}
 
 }

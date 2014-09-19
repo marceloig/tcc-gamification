@@ -11,6 +11,7 @@ public class ExercicioBean {
 	private int pontos;
 	private List<String> dicas;
 	private AssuntoBean assunto;
+	private List<ProgressoBean> historico;
 
 	public Long getId() {
 		return id;
@@ -67,5 +68,14 @@ public class ExercicioBean {
 	public void setAssunto(AssuntoBean assunto) {
 		this.assunto = assunto;
 	}
+
+	public List<ProgressoBean> getHistorico() {
+		return historico;
+	}
+
+	public void setHistorico(List<ProgressoBean> historico) {
+		this.historico = historico;
+	}
+	
 	
 }

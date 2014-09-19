@@ -1,6 +1,7 @@
 package com.unigranrio.tcc.model.entity;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -22,7 +23,9 @@ import com.unigranrio.tcc.model.UsuarioBean;
 		@NamedQuery(name = "Usuario.listByPontuacao", query = "SELECT u FROM Usuario u "
 				+ "ORDER BY u.pontos DESC"),
 		@NamedQuery(name = "Usuario.updatePontos", query = "UPDATE Usuario u SET u.pontos = :pontos WHERE u.login = :login"),
-		@NamedQuery(name = "Usuario.updatePosicao", query = "UPDATE Usuario u SET u.posicao = :posicao WHERE u.login = :login"),
+		@NamedQuery(name = "Usuario.updateProgresso", query = "UPDATE Usuario u SET u.posicao = :posicao WHERE u.login = :login"),
+		@NamedQuery(name = "Usuario.allBadges", query = "SELECT u.badges FROM Usuario u WHERE u.login = :login"),
+		@NamedQuery(name = "Usuario.deleteConquistas", query = "DELETE FROM Usuario u WHERE u.badges = :badges"),
 })
 public class Usuario {
 
@@ -43,8 +46,8 @@ public class Usuario {
 
 	private int posicao;
 
-	@OneToMany
-	private List<Conquista> badges;
+	@OneToMany(mappedBy = "usuario")
+	private Collection<Conquista> badges;
 
 	@OneToMany
 	private List<Progresso> progressos;
@@ -97,11 +100,11 @@ public class Usuario {
 		this.posicao = posicao;
 	}
 
-	public List<Conquista> getBadges() {
+	public Collection<Conquista> getBadges() {
 		return badges;
 	}
 
-	public void setBadges(List<Conquista> badges) {
+	public void setBadges(Collection<Conquista> badges) {
 		this.badges = badges;
 	}
 

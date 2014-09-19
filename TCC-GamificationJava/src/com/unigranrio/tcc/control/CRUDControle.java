@@ -2,6 +2,7 @@ package com.unigranrio.tcc.control;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,17 +11,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.unigranrio.tcc.dao.AssuntoDAO;
+import com.unigranrio.tcc.dao.BadgeDAO;
+import com.unigranrio.tcc.dao.ConquistaDAO;
 import com.unigranrio.tcc.dao.ExercicioDAO;
 import com.unigranrio.tcc.dao.ModuloDAO;
 import com.unigranrio.tcc.dao.NivelDAO;
 import com.unigranrio.tcc.dao.UsuarioDAO;
 import com.unigranrio.tcc.model.Alternativa;
 import com.unigranrio.tcc.model.entity.Assunto;
+import com.unigranrio.tcc.model.entity.Badge;
+import com.unigranrio.tcc.model.entity.Conquista;
 import com.unigranrio.tcc.model.entity.ExercicioJava;
 import com.unigranrio.tcc.model.entity.ExercicioUml;
 import com.unigranrio.tcc.model.entity.ImagemExercicio;
 import com.unigranrio.tcc.model.entity.Modulo;
 import com.unigranrio.tcc.model.entity.Nivel;
+import com.unigranrio.tcc.model.entity.Usuario;
 
 @Transactional
 @Controller
@@ -31,50 +37,46 @@ public class CRUDControle {
 	private AssuntoDAO assuntoDAO = new AssuntoDAO();
 	private ModuloDAO moduloDAO = new ModuloDAO();
 	private ExercicioDAO exercicioDAO = new ExercicioDAO();
+	private BadgeDAO badgeDAO = new BadgeDAO();
+	private ConquistaDAO conquistaDAO = new ConquistaDAO();
 
 	@Autowired
 	public void setDAOs(UsuarioDAO usuarioDAO, NivelDAO nivelDAO,
 			AssuntoDAO assuntoDAO, ModuloDAO moduloDAO,
-			ExercicioDAO exercicioDAO) {
+			ExercicioDAO exercicioDAO, BadgeDAO badgeDAO,
+			ConquistaDAO conquistaDAO) {
 		this.usuarioDAO = usuarioDAO;
 		this.nivelDAO = nivelDAO;
 		this.assuntoDAO = assuntoDAO;
 		this.moduloDAO = moduloDAO;
 		this.exercicioDAO = exercicioDAO;
+		this.badgeDAO = badgeDAO;
+		this.conquistaDAO = conquistaDAO;
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public void receberRespostaExercicio() {
-		// buscarModulo();
-		// alterarModulo();
-		// inserirNivel();
-		//cadastrarExercicio();
-		//inserirExercicioJava();
-		//alterarAssunto();
+		//inserirConquista();
 	}
 
-	
-	
-	 
-	
-	public void inserirExercicioJava(){
-		ArrayList<String> dicas = new  ArrayList<String>();
+	public void inserirExercicioJava() {
+		ArrayList<String> dicas = new ArrayList<String>();
 		dicas.add("Use as dicas quando estiver com dificuldade de resolver algum exercicio");
 		dicas.add("Mas cuidado, cada uso de dica diminui 10 pontos do exercicio");
 		dicas.add("E se ultrapassar o número de tentativas perde 20 pontos do exercicio.");
-		
+
 		ExercicioJava exJava = new ExercicioJava();
 		exJava.setNome("Exercicio 1: Olá Mundo");
 		exJava.setDescricao(" O seu primeiro programa é bem simples,"
 				+ " digite dentro dos parênteses no comando Java ao lado a frase junto com as aspas duplas \"Olá Mundo\"."
-                + " Clique no botão “Enviar” e veja o resultado da execução do seu primeiro programa");
+				+ " Clique no botão “Enviar” e veja o resultado da execução do seu primeiro programa");
 		exJava.setTentativas(3);
 		exJava.setPontos(130);
 		exJava.setDicas(dicas);
 		exJava.setCodigoReferencia("System.out.println();");
-		exJava.setAssunto(assuntoDAO.buscarAssuntoByNome("Primeiro Programa"));
+		exJava.setAssunto(assuntoDAO.buscarAssuntoById(9999));
 		exJava.setRespostaJava("Olá Mundo");
-		
+
 		exercicioDAO.gravarExercicioJava(exJava);
 	}
 
@@ -123,7 +125,7 @@ public class CRUDControle {
 		exUml.setNome("Exercicio 1");
 		exUml.setDescricao("Qual desses desenhos representa corretamente um ator do sistema.");
 		exUml.setAssunto(assuntoDAO
-				.buscarAssuntoByNome("Diagrama de Casos de Uso"));
+				.buscarAssuntoById(99999));
 		exUml.setAlternativas(alternativas);
 		exUml.setRespostaUml(Alternativa.B);
 
@@ -138,9 +140,9 @@ public class CRUDControle {
 		moduloDAO.alterarModulo(modulo2);
 
 	}
-	
-	
+
 	public void inserirNivel() {
+
 		Nivel nivel1 = new Nivel();
 		nivel1.setNome("Novato");
 		nivel1.setPontos(0);
@@ -167,4 +169,27 @@ public class CRUDControle {
 		nivelDAO.gravarNivel(nivel4);
 		nivelDAO.gravarNivel(nivel5);
 	}
+
+	public void inserirBadge() {
+		Badge badge = new Badge();
+		badge.setNome("1º Programa");
+		badge.setDescricao("Primeiro programa do primeiro modulo de Java");
+		badge.setNomeImagem("imagens/badge/conhecendo_java/primeiro_programa.png");
+		badgeDAO.gravarBadge(badge);
+
+	}
+
+	public void inserirConquista() {
+		Conquista conquista = new Conquista();
+		Assunto assunto = assuntoDAO.buscarAssuntoById(5);
+		conquista.setBadge(badgeDAO.buscarBadgeById(59));
+		conquista.setAssunto(assunto);
+		conquista.setNumeroDeBadges(1);
+		conquistaDAO.gravarConquista(conquista);
+		
+		List<Conquista> conquistas = conquistaDAO.listarBadges(assunto);
+		assunto.setConquistas(conquistas);
+		assuntoDAO.alterarAssunto(assunto);
+	}
+
 }

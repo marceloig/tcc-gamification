@@ -92,6 +92,7 @@ public class UsuarioControle {
 			usuario.setLogin(usuarioBean.getLogin());
 			usuario.setSenha(usuarioBean.getSenha());
 			usuario.setNivel(nivel);
+			usuario.setPontos(usuarioBean.getPontos());
 			usuarioDAO.gravarUsuario(usuario);
 			mensagem = true;
 		} else {

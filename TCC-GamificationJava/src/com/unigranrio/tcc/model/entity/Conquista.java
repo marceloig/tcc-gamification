@@ -4,18 +4,27 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.unigranrio.tcc.model.ConquistaBean;
 @Entity
+@NamedQueries({
+	@NamedQuery(name = "Conquista.allBadges", query = "SELECT c FROM Conquista c WHERE c.assunto = :assunto"),
+	@NamedQuery(name = "Conquista.getBadge", query = "SELECT c FROM Conquista c WHERE c.id = :id"),
+})
 public class Conquista {
 
 	@Id 
 	@GeneratedValue
 	private Long id;
 	
-	@ManyToOne(optional = false)
+	@OneToOne(optional = false)
 	private Badge badge;
+	
+	@ManyToOne
+	private Usuario usuario;
 	
 	@ManyToOne(optional = false)
 	private Assunto assunto;
@@ -36,6 +45,15 @@ public class Conquista {
 
 	public void setBadge(Badge badge) {
 		this.badge = badge;
+	}
+
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public Assunto getAssunto() {

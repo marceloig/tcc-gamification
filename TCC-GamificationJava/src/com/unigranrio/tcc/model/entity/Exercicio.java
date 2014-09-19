@@ -1,5 +1,6 @@
 package com.unigranrio.tcc.model.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.ElementCollection;
@@ -12,11 +13,10 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.unigranrio.tcc.model.ExercicioBean;
+import com.unigranrio.tcc.model.ProgressoBean;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -34,13 +34,16 @@ public class Exercicio {
 	private int tentativas;
 	private int pontos;
 
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	private List<String> dicas;
 
 	// @ManyToOne(optional = false)
 	@ManyToOne
 	private Assunto assunto;
-
+	
+	@OneToMany
+	private List<Progresso> historico;
+	
 	public Long getId() {
 		return id;
 	}
@@ -96,7 +99,25 @@ public class Exercicio {
 	public void setAssunto(Assunto assunto) {
 		this.assunto = assunto;
 	}
+	
+	public List<Progresso> getHistorico() {
+		return historico;
+	}
 
+	public void setHistorico(List<Progresso> historico) {
+		this.historico = historico;
+	}
+
+	public List<ProgressoBean> getProgressosBean(){
+		List<ProgressoBean> progressosBean = new ArrayList<ProgressoBean>();
+		for(Progresso progresso : historico){
+			ProgressoBean progressoBean = progresso.getProgressoBean();
+			
+			progressosBean.add(progressoBean);
+		}
+		
+		return progressosBean;
+	}
 	public ExercicioBean getExercicioBean() {
 		ExercicioBean exercicioBean = new ExercicioBean();
 		exercicioBean.setId(id);

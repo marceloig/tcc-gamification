@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -19,6 +21,9 @@ import com.unigranrio.tcc.model.ConquistaBean;
 import com.unigranrio.tcc.model.ExercicioBean;
 
 @Entity
+@NamedQueries({
+	@NamedQuery(name = "Assunto.allBadges", query = "SELECT a FROM Assunto a WHERE a.id = :id"),
+})
 public class Assunto {
 
 	@Id
@@ -34,7 +39,7 @@ public class Assunto {
 	@JsonManagedReference
 	private List<Exercicio> exercicios;
 
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	private List<Conquista> conquistas;
 
 	public Long getId() {

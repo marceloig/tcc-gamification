@@ -36,9 +36,6 @@ public class Modulo {
 	@JsonManagedReference
 	private List<Assunto> assuntos;
 	
-	
-	@OneToMany
-	private List<Progresso> historico;
 
 	public Long getId() {
 		return id;
@@ -64,35 +61,17 @@ public class Modulo {
 		this.assuntos = assuntos;
 	}
 	
-	public List<Progresso> getHistorico() {
-		return historico;
-	}
-
-	public void setHistorico(List<Progresso> historico) {
-		this.historico = historico;
-	}
-	
 	public List<AssuntoBean> getAssuntosBean(){
 		List<AssuntoBean> assuntosBean = new LinkedList<AssuntoBean>();
 		for(Assunto assunto : assuntos){
 			AssuntoBean assuntoBean = assunto.getAssuntoBean();
-			
+			assuntoBean.setConquistas(assunto.getConquistasBean());
 			assuntosBean.add(assuntoBean);
 		}
 		
 		return assuntosBean;
 	}
 	
-	public List<ProgressoBean> getProgressosBean(){
-		List<ProgressoBean> progressosBean = new ArrayList<ProgressoBean>();
-		for(Progresso progresso : historico){
-			ProgressoBean progressoBean = progresso.getProgressoBean();
-			
-			progressosBean.add(progressoBean);
-		}
-		
-		return progressosBean;
-	}
 	
 	public ModuloBean getModuloBean(){
 		ModuloBean modulo = new ModuloBean();

@@ -1,0 +1,158 @@
+
+<div id="content">
+	<div class="row">
+		<div id="infoExercicioJava">
+			<div class="col-md-5 col-md-offset-1">
+				<h3>{{exercicioJava.nome}}</h3>
+			</div>
+			<div class="col-md-2 col-md-offset-">
+				<p>
+					<b>Tentativas:</b> {{exercicioJava.tentativas}}
+				</p>
+			</div>
+			<div class="col-md-2">
+				<p>
+					<b>Pontos:</b> {{exercicioJava.pontos}}
+				</p>
+			</div>
+		</div>
+		<div class="col-md-2">
+			<p>
+				<b>Pontuação:</b> 000
+			</p>
+			<div class="row">
+				<div class=col-md-12>
+					<div id="barra-modulo" class="progress" data-toggle="tooltip"
+						data-placement="bottom"
+						title="Progresso do Módulo {{modulo.nome}}">
+						<div
+							class="progress-bar progress-bar-success progress-bar-striped active"
+							role="progressbar" aria-valuenow="40" aria-valuemin="0"
+							aria-valuemax="100" style="width: 40%">
+							<span class="sr-only">40% Complete (success)</span>
+							<script>
+								$('#barra-modulo').tooltip()
+							</script>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<p>{{exercicioJava.descricao}}</p>
+		</div>
+
+		<div class="col-md-6">
+			<div id="codigo">
+				<div id="editor"></div>
+				<p></p>
+				<p></p>
+				<form name="resposta" ng-submit="enviarExercicio()">
+					<button class="btn btn-small btn-primary" type="submit">Enviar
+						Exercicio</button>
+				</form>
+			</div>
+			<p></p>
+			<p></p>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="console well well-lg">
+						<samp>{{retornoJava.resposta}}</samp>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+<div class="modal fade" id="javaModalErro">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+				<h4 class="modal-title">{{exercicioJava.nome}}</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-info" role="alert"><b>{{mensagem}}</b></div>
+
+				<p>Tá dificil de resolver esse exercicio? Você pode usar as
+					dicas abaixo para te ajudar</p>
+				<p>Mas cada uso de dica você perde 10 pontos do exercicio então
+					use com cautela</p>
+				<p>
+					<button type="button" class="btn btn-info" id="dica1"
+						data-container="body" data-toggle="popover"
+						data-placement="bottom" data-content="{{exercicioJava.dicas.0}}"
+						ng-model="dica1" ng-hide="dica1.hidden" ng-click="dicas(dica1)">Dica</button>
+					<button type="button" class="btn btn-info" id="dica2"
+						data-container="body" data-toggle="popover"
+						data-placement="bottom" data-content="{{exercicioJava.dicas.1}}"
+						ng-model="dica2" ng-hide="dica2.hidden" ng-click="dicas(dica2)">Dica</button>
+					<button type="button" class="btn btn-info" id="dica3"
+						data-container="body" data-toggle="popover"
+						data-placement="bottom" data-content="{{exercicioJava.dicas.2}}"
+						ng-model="dica3" ng-hide="dica3.hidden" ng-click="dicas(dica3)">Dica</button>
+				</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+	<script>
+		$('#dica1').popover();
+		$('#dica2').popover();
+		$('#dica3').popover();
+	</script>
+</div>
+<!-- /.modal -->
+<div class="modal fade" id="javaModalAcerto">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+				<h4 class="modal-title">{{exercicioJava.nome}}</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-info" role="alert"><b>{{mensagem}}</b></div>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<div class="modal fade" id="javaModalFim">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+				<h4 class="modal-title">{{exercicioJava.nome}}</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-success" role="alert"><b>{{mensagem}}</b></div>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

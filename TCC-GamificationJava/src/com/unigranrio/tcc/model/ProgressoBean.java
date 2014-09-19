@@ -5,7 +5,7 @@ public class ProgressoBean {
 	
 	private Long id;
 	private UsuarioBean usuario;
-	private ModuloBean modulo;
+	private ExercicioBean exercicio;
 
 	public Long getId() {
 		return id;
@@ -23,12 +23,14 @@ public class ProgressoBean {
 		this.usuario = usuario;
 	}
 
-	public ModuloBean getModulo() {
-		return modulo;
+	public ExercicioBean getExercicio() {
+		return exercicio;
 	}
 
-	public void setModulo(ModuloBean modulo) {
-		this.modulo = modulo;
+	public void setExercicio(ExercicioBean exercicio) {
+		this.exercicio = exercicio;
 	}
+
+	
 	
 }

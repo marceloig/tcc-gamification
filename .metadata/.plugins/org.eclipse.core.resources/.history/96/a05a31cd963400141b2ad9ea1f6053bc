@@ -1,5 +1,0 @@
-package com.unigranrio.tcc.config;
-
-public class HibernateAwareObjectMapper {
-
-}
