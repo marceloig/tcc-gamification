@@ -21,7 +21,7 @@ appRoute.config([ '$routeProvider',
 				templateUrl : 'java/exercicios.html',
 				controller : 'JavaController'
 			}).when('/uml/exercicios', {
-				templateUrl : 'uml/exercicios.html',
+				templateUrl : 'uml/exercicios-teste.html',
 				controller : 'UmlController'
 			}).when('/sair', {
 				templateUrl : 'login.html',

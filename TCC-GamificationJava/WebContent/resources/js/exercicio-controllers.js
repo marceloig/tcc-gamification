@@ -133,9 +133,40 @@ appController.controller('JavaController', function ($scope, $http, $location, u
     $scope.voltarModulos = function() {
     	exercicios.setProxEx(0);
     };
+    $scope.enviarResposta = function (size) {
+
+        var modalInstance = $modal.open({
+          templateUrl: 'myModalContent.html',
+          controller: ModalInstanceCtrl,
+          size: size,
+          resolve: {
+            items: function () {
+              return $scope.items;
+            },
+            respostaEx: function () {
+              return $scope.resposta;
+            },
+            respostaCerta: function () {
+              return $scope.exercicio.respostaUml;
+            },
+            tentativas: function () {
+              return $scope.exercicio.tentativas
+            },
+            pontos: function () {
+              return $scope.exercicio.pontos;
+            },
+          }
+        });
+
+        modalInstance.result.then(function (selectedItem) {
+          $scope.selected = selectedItem;
+        }, function () {
+          $log.info('Modal dismissed at: ' + new Date());
+        });
+      };
 });
 
-appController.controller('UmlController', function ($scope, usuario, Modulo, Usuario, exercicios, resposta) {
+appController.controller('UmlController', function ($scope, $modal, $log, usuario, Modulo, Usuario, exercicios, resposta) {
 
     $scope.resposta = "";
     $scope.respostaUml = {};
@@ -147,7 +178,7 @@ appController.controller('UmlController', function ($scope, usuario, Modulo, Usu
     	$scope.modulo = data.assunto.modulo;
     });
 
-    $scope.enviarResposta = function () {
+    $scope.enviarRespostaT = function () {
        
     	var retorno = resposta.verificarResposta($scope.resposta, $scope.exercicio.respostaUml);
     	if(retorno === true){
@@ -186,4 +217,69 @@ appController.controller('UmlController', function ($scope, usuario, Modulo, Usu
     $scope.voltarModulos = function() {
     	exercicios.setProxEx(0);
     };
+    
+    $scope.items = ['item1', 'item2', 'item3'];
+
+    $scope.enviarResposta = function (size) {
+
+      var modalInstance = $modal.open({
+        templateUrl: 'myModalContent.html',
+        controller: ModalInstanceCtrl,
+        size: size,
+        resolve: {
+          respostaEx: function () {
+            return $scope.resposta;
+          },
+          exercicio: function () {
+            return $scope.exercicio;
+          },
+        }
+      });
+
+      modalInstance.result.then(function (resultado) {
+    	if(resultado.fim === true){
+    		resultado.location.path('/modulos');
+    	 }else{
+    		resultado.location.path('/uml/exercicios');
+    	 }
+         
+      }, function () {
+        $log.info('Modal dismissed at: ' + new Date());
+        $scope.exercicio.tentativas = resposta.verificarTentativa($scope.exercicio.tentativas);
+		$scope.exercicio.pontos = resposta.verificarPontos($scope.exercicio.pontos);
+      });
+    };
+    
 });
+
+var ModalInstanceCtrl = function ($scope, $location, $modalInstance, Usuario, usuario, resposta, exercicios, respostaEx, exercicio) {
+	  
+	  $scope.resultado = {fim: false, erro: false, location: $location};
+	  $scope.modal = {alert: "", mensagem: ""};
+	  var retorno = resposta.verificarResposta(exercicio.respostaUml, respostaEx);
+  	  if(retorno === true){
+  		Usuario.save({login: usuario.getUsuario().login}, {pontos: exercicio.pontos});
+  		if(exercicios.salvarConquista){
+  			$scope.modal.alert = "success";
+  			$scope.modal.mensagem = "Parabéns! você chegou ao fim dos exercicios";
+  			$scope.resultado.fim = true;
+  		}else{
+  			$scope.modal.alert = "success";
+  			$scope.modal.mensagem = "Parabéns você acertou!";
+  			$scope.resultado.fim = false;
+  		}
+  	  }else{
+  		$scope.resultado.erro = true;
+  		$scope.modal.alert = "danger";
+  		$scope.modal.mensagem = "Que pena você errou!";
+  		
+  	  }
+
+	  $scope.ok = function () {
+	    $modalInstance.close($scope.resultado);
+	  };
+
+	  $scope.cancel = function () {
+	    $modalInstance.dismiss('cancel');
+	  };
+	};

@@ -13,16 +13,16 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="Modulo" key="selection"/>
+		<item value="usuario" key="selection"/>
 		<list key="findhistory">
+			<item value="usuario"/>
+			<item value="setBadges"/>
+			<item value="badges"/>
+			<item value="Usuario"/>
+			<item value="progresso"/>
 			<item value="Modulo"/>
 			<item value="modulo"/>
 			<item value="console"/>
-			<item value="annot"/>
-			<item value="usuario"/>
-			<item value="info"/>
-			<item value="lead"/>
-			<item value="accordion"/>
 		</list>
 		<list key="replacehistory">
 			<item value="usuarioDAO"/>

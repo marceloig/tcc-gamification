@@ -1,26 +1,46 @@
 'use strict';
 var appController = angular.module('app');
 
-appModule.factory('exercicios', function () {
+appModule.factory('exercicios',['Modulo', 'Usuario', 'usuario', function (Modulo, Usuario, usuario) {
 
-    var data = {exercicios: {}, qtd: 0};
+    var dataEx = {exercicios: {}, qtd: 0, proxEx: 0, badges: []};
     
     return { 
     	getExercicios: function () {
-        	return data.exercicios;
+        	return dataEx.exercicios;
     	},
     	setExercicios: function (exercicios) {
-        	data.exercicios = exercicios;
+        	dataEx.exercicios = exercicios;
     	},
     	getQuantidade: function () {  		
     	    var x;
-    	    for (x in data.exercicios) {
-    	    	data.qtd =+ 1;
+    	    for (x in dataEx.exercicios) {
+    	    	dataEx.qtd =+ 1;
     	    }
-        	return data.qtd;
+        	return dataEx.qtd;
+    	},
+    	getProxEx: function () {
+        	return dataEx.proxEx;
+    	},
+    	setProxEx: function (reset) {
+        	dataEx.proxEx = reset;
+    	},
+    	setBadges: function (conquistas) {
+        	dataEx.badges = conquistas;
+    	},
+    	salvarConquista: function () {
+    		dataEx.proxEx = dataEx.proxEx + 1;
+    		if (dataEx.exercicios[dataEx.proxEx] == undefined) {
+    			var badge = dataEx.badges[0];
+	     	    Usuario.update({login: usuario.getLogin()}, {id: badge.id});
+    			
+    			return true;
+    		}else{
+    			return false;
+    		}
     	},
     };
-});
+}]);
 
 appModule.factory('resposta', function () {
 	var data = {resposta: false, tentativas: 0, pontos: 0};
@@ -31,6 +51,7 @@ appModule.factory('resposta', function () {
     			data.resposta = true;
     			return data.resposta;
     		}else{
+    			data.resposta = false;
     			return data.resposta;
     		}
     	},verificarTentativa: function (tentativa) {
@@ -44,13 +65,13 @@ appModule.factory('resposta', function () {
     			data.pontos = pontos - 20;
     			return data.pontos;
     		}else{
-    			return data.pontos;
+    			return pontos;
     		}
     	},
     };
 });
 
-appController.controller('JavaController', function ($scope, $http, usuario, exercicios, Modulo, Usuario) {
+appController.controller('JavaController', function ($scope, $http, $location, usuario, exercicios, resposta, Modulo, Usuario) {
 
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/eclipse");
@@ -60,7 +81,7 @@ appController.controller('JavaController', function ($scope, $http, usuario, exe
     var codigo = "";
     
     var exercicio = exercicios.getExercicios();
-    var ex = exercicios.getQuantidade() - 1;
+    var ex = exercicios.getProxEx();
     Modulo.get({ modulo:'java', exercicio: exercicio[ex].id }, function(data) {
             $scope.exercicioJava = data;
             $scope.modulo = data.assunto.modulo;
@@ -70,12 +91,22 @@ appController.controller('JavaController', function ($scope, $http, usuario, exe
 
     $scope.enviarExercicio = function () {
         codigo = editor.getSession().getValue();
-        Modulo.save({ modulo:'java', exercicio: exercicio[0].id }, {codigo: codigo}, function(data) {
+        Modulo.save({ modulo:'java', exercicio: exercicio[ex].id }, {codigo: codigo}, function(data) {
                 $scope.retornoJava = data;
-                var retorno = data.resposta;
-                var resposta = $scope.exercicioJava.respostaJava;
-                $scope.mensagem = verificarResposta(retorno, resposta);
-                $('#javaModal').modal();
+                var retorno = resposta.verificarResposta(data.resposta, $scope.exercicioJava.respostaJava);
+            	if(retorno === true){    		
+            		Usuario.save({login: usuario.getLogin()}, {pontos: $scope.exercicioJava.pontos});
+            		if(exercicios.salvarConquista() == true){
+                		$('#javaModalFim').modal();
+            		}else{
+                		$('#javaModalAcerto').modal();
+            		}
+            		
+            	}else{
+            		$scope.exercicioJava.tentativas = resposta.verificarTentativa($scope.exercicioJava.tentativas);
+            		$scope.exercicioJava.pontos = resposta.verificarPontos($scope.exercicioJava.pontos);
+            		$('#javaModalErro').modal();
+            	}
 
             });
     };
@@ -98,46 +129,39 @@ appController.controller('JavaController', function ($scope, $http, usuario, exe
             $scope.dica3.status = false;
         }
     };
-    function verificarResposta(retorno, resposta) {
-        var mensagem = "";
-        if (retorno === resposta) {
-            mensagem = "Parabéns você acertou!";
-            if ($scope.exercicioJava.tentativas == 0) {
-                $scope.exercicioJava.pontos = $scope.exercicioJava.pontos - 20;
-            }
-           
-            Usuario.update({login: usuario.getLogin()}, {pontos: $scope.exercicioJava.pontos}, function(data) {
-                    console.log("Enviado");
-                });
-            console.log("Acertou!!!");
-        } else {
-            if ($scope.exercicioJava.tentativas !== 0) {
-                $scope.exercicioJava.tentativas = $scope.exercicioJava.tentativas - 1;
-            }
-            mensagem = "Você errou, tente novamente";
-            console.log("Errou!!!");
-        }
-        return mensagem;
-    }
-
+    
+    $scope.voltarModulos = function() {
+    	exercicios.setProxEx(0);
+    };
 });
 
-appController.controller('UmlController', function ($scope, usuario, Modulo, Usuario, exercicios) {
+appController.controller('UmlController', function ($scope, usuario, Modulo, Usuario, exercicios, resposta) {
 
     $scope.resposta = "";
     $scope.respostaUml = {};
     var exercicio = exercicios.getExercicios();
-    
-    Modulo.get({ modulo:'uml', exercicio: exercicio[0].id }, function(data) {
+    var ex = exercicios.getProxEx();
+    Modulo.get({ modulo:'uml', exercicio: exercicio[ex].id }, function(data) {
     	$scope.exercicio = data;
     	$scope.alternativa = data.alternativas;
     	$scope.modulo = data.assunto.modulo;
     });
 
     $scope.enviarResposta = function () {
-    	
-        $scope.mensagem = verificarResposta($scope.resposta, $scope.exercicio.respostaUml);
-        $('#umlModal').modal();
+       
+    	var retorno = resposta.verificarResposta($scope.resposta, $scope.exercicio.respostaUml);
+    	if(retorno === true){
+    		Usuario.save({login: usuario.getLogin()}, {pontos: $scope.exercicioJava.pontos});
+    		if(exercicios.salvarConquista() == true){
+        		$('#umlModalFim').modal();
+    		}else{
+        		$('#umlModalAcerto').modal();
+    		}
+    	}else{
+    		$scope.exercicio.tentativas = resposta.verificarTentativa($scope.exercicio.tentativas);
+    		$scope.exercicio.pontos = resposta.verificarPontos($scope.exercicio.pontos);
+    		$('#javaModalErro').modal();
+    	}
 
     };
     $scope.dica1 = {"status": true, "id": 1, "hidden": false};
@@ -158,24 +182,10 @@ appController.controller('UmlController', function ($scope, usuario, Modulo, Usu
             $scope.dica3.status = false;
         }
     };
-
-    function verificarResposta(resposta, respostaCorreta) {
-        var mensagem = "";
-        if (resposta === respostaCorreta) {
-            mensagem = "Parabéns você acertou!";
-            if ($scope.exercicio.tentativas == 0) {
-                $scope.exercicio.pontos = $scope.exercicio.pontos - 20;
-            }
-            
-            Usuario.update({login: usuario.getLogin()}, {pontos: $scope.exercicio.pontos}, function(data) {
-            	console.log("Teste");
-            });
-        } else {
-            if ($scope.exercicio.tentativas !== 0) {
-                $scope.exercicio.tentativas = $scope.exercicio.tentativas - 1;
-            }
-            mensagem = "Que pena você errou! Tente novamente";
-        }
-        return mensagem;
-    }
+    
+    $scope.voltarModulos = function() {
+    	exercicios.setProxEx(0);
+    };
+    
+    
 });

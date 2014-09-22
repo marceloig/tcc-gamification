@@ -1,5 +1,5 @@
 'use strict';
-var appModule = angular.module('app', [ 'ngRoute','ngResource' ]);
+var appModule = angular.module('app', [ 'ngRoute','ngResource', 'ui.bootstrap' ]);
 
 var appModule = angular.module('app').factory('Usuario', function ($resource) {
     return $resource('http://localhost:8080/TCC-GamificationJava/usuario/:login', {}, {
@@ -26,8 +26,16 @@ appModule.factory('usuario', function () {
         pontos: 0,
         posicao: 0
     };
+    
+    var usuario = {};
 
     return {
+    	getUsuario: function () {
+            return usuario;
+        },
+        setUsuario: function (data) {
+            usuario = data;
+        },
         getLogin: function () {
             return data.login;
         },
@@ -64,6 +72,7 @@ appModule.controller('LoginController', function ($rootScope, $scope, $http, $lo
             if (status === true) {
                 usuario.setLogin($scope.usuario.login);
                 usuario.setPontos($scope.usuario.senha);
+                usuario.setUsuario($scope.usuario);
                 $location.path('/home');
                 $location.replace();
             } else {
@@ -77,20 +86,16 @@ appModule.controller('LoginController', function ($rootScope, $scope, $http, $lo
 
 appModule.controller('UsuarioController', function ($rootScope, $location, $scope, $http, usuario, Usuario) {
     $rootScope.activetab = $location.path();
-    $scope.pontuacao = 0;
-    var usuarioLogin = {
-        "login": usuario.getLogin(),
-        "pontos": 0
-    };
-
+    $scope.usuario = {};
     Usuario.query(function(data) {
         $scope.usuariosTop = data;
     });
     
-    Usuario.get({ login: usuario.getLogin() }, function(data) {
-       $scope.usuario = data;
+    Usuario.get({ login: usuario.getUsuario().login }, function(data) {
+    	$scope.usuario = data;
+    	usuario.setUsuario($scope.usuario);
    });
-
+    
 });
 
 appModule.controller('ModuloController', function ($rootScope, $location, $scope, Modulo, exercicios) {
