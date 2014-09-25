@@ -1,5 +1,6 @@
 package com.unigranrio.tcc.dao;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -9,6 +10,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 import com.unigranrio.tcc.model.entity.Conquista;
+import com.unigranrio.tcc.model.entity.Progresso;
 import com.unigranrio.tcc.model.entity.Usuario;
 
 @Repository
@@ -36,15 +38,8 @@ public class UsuarioDAO {
 		query.executeUpdate();
 	}
 
+
 	public void atualizarProgressoUsuario(Usuario usuario) {
-
-		Query query = manager.createNamedQuery("Usuario.updateProgresso");
-		query.setParameter("posicao", usuario.getPosicao());
-		query.setParameter("login", usuario.getLogin());
-		query.executeUpdate();
-	}
-
-	public void atualizarConquistasUsuario(Usuario usuario) {
 		manager.merge(usuario);
 	}
 	
@@ -74,6 +69,14 @@ public class UsuarioDAO {
 		query.setParameter("login", login);
 		List<Conquista> badges = query.getResultList();
 		return badges;
+	}
+	
+	public List<Progresso> listarProgressosUsuario(String login) {
+
+		Query query = manager.createNamedQuery("Usuario.allProgressos");
+		query.setParameter("login", login);
+		List<Progresso> progresso = query.getResultList();
+		return progresso;
 	}
 
 	public long buscarPosicaoUsuario(int pontos) {

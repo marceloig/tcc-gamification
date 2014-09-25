@@ -59,6 +59,7 @@ public class ExercicioUml extends Exercicio {
 		exercicicoUmlBean.setNome(this.getNome());
 		exercicicoUmlBean.setDescricao(this.getDescricao());
 		exercicicoUmlBean.setPontos(this.getPontos());
+		exercicicoUmlBean.setDicas(this.getDicas());
 		exercicicoUmlBean.setTentativas(this.getTentativas());
 		exercicicoUmlBean.setAssunto(this.getAssunto().getAssuntoBean());
 		exercicicoUmlBean.setRespostaUml(respostaUml);

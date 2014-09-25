@@ -71,6 +71,60 @@ appModule.factory('resposta', function () {
     };
 });
 
+appModule.factory('dicas', function () {
+	var data = [];
+	var dicas = [];
+	var pontosDicas = [10, 10, 10];
+    return { 
+    	setDicas: function (dica) {
+    		data = dica;
+    	},
+    	getDicas: function () {
+    		return data;
+    	},
+    	tirarPontos: function (index) {
+    		var pontos = 0;
+    		if(index === 0 && pontosDicas[0] === 10){
+  				pontos = pontosDicas[0];
+  				pontosDicas[0] = 0;
+  				return pontos;
+  			}
+  			if(index === 1 && pontosDicas[1] === 10){
+  				pontos = pontosDicas[1];
+  				pontosDicas[1] = 0;
+  				return pontos;
+  			}
+  			if(index === 2 && pontosDicas[2] === 10){
+  				pontos = pontosDicas[2];
+  				pontosDicas[2] = 0;
+  				return pontos;
+  			}
+    		return pontos;
+    	},
+    	getDica: function (tentativas) {
+    		switch (tentativas) {
+    	    case 3:
+    	        dicas[0] = data[0];
+    	        return dicas;
+    	        break; 
+    	    case 2:
+    	    	dicas[0] = data[0];
+    	    	dicas[1] = data[1];
+    	        return dicas;
+    	        break;
+    	    case 1:
+    	    	dicas[0] = data[0];
+    	    	dicas[1] = data[1];
+    	    	dicas[2] = data[2];
+    	        return dicas;
+    	        break;
+    	    default: 
+    	        return data;
+    		}
+    	},
+    };
+});
+
 appController.controller('JavaController', function ($scope, $http, $location, usuario, exercicios, resposta, Modulo, Usuario) {
 
     var editor = ace.edit("editor");
@@ -111,28 +165,6 @@ appController.controller('JavaController', function ($scope, $http, $location, u
             });
     };
     
-    $scope.dica1 = {"status": true, "id": 1, "hidden": false};
-    $scope.dica2 = {"status": true, "id": 2, "hidden": false};
-    $scope.dica3 = {"status": true, "id": 3, "hidden": false};
-
-    $scope.dicas = function (dica) {
-        if (dica.status === true && dica.id === 1) {
-            $scope.exercicioJava.pontos = $scope.exercicioJava.pontos - 10;
-            $scope.dica1.status = false;
-        }
-        if (dica.status === true && dica.id === 2) {
-            $scope.exercicioJava.pontos = $scope.exercicioJava.pontos - 10;
-            $scope.dica2.status = false;
-        }
-        if (dica.status === true && dica.id === 3) {
-            $scope.exercicioJava.pontos = $scope.exercicioJava.pontos - 10;
-            $scope.dica3.status = false;
-        }
-    };
-    
-    $scope.voltarModulos = function() {
-    	exercicios.setProxEx(0);
-    };
     $scope.enviarResposta = function (size) {
 
         var modalInstance = $modal.open({
@@ -166,8 +198,9 @@ appController.controller('JavaController', function ($scope, $http, $location, u
       };
 });
 
-appController.controller('UmlController', function ($scope, $modal, $log, usuario, Modulo, Usuario, exercicios, resposta) {
-
+appController.controller('UmlController', function ($scope, $modal, $log, usuario, Modulo, Usuario, exercicios, resposta, dicas) {
+	
+	$scope.usuario = usuario.getUsuario();
     $scope.resposta = "";
     $scope.respostaUml = {};
     var exercicio = exercicios.getExercicios();
@@ -178,53 +211,12 @@ appController.controller('UmlController', function ($scope, $modal, $log, usuari
     	$scope.modulo = data.assunto.modulo;
     });
 
-    $scope.enviarRespostaT = function () {
-       
-    	var retorno = resposta.verificarResposta($scope.resposta, $scope.exercicio.respostaUml);
-    	if(retorno === true){
-    		Usuario.save({login: usuario.getLogin()}, {pontos: $scope.exercicioJava.pontos});
-    		if(exercicios.salvarConquista() == true){
-        		$('#umlModalFim').modal();
-    		}else{
-        		$('#umlModalAcerto').modal();
-    		}
-    	}else{
-    		$scope.exercicio.tentativas = resposta.verificarTentativa($scope.exercicio.tentativas);
-    		$scope.exercicio.pontos = resposta.verificarPontos($scope.exercicio.pontos);
-    		$('#javaModalErro').modal();
-    	}
-
-    };
-    $scope.dica1 = {"status": true, "id": 1, "hidden": false};
-    $scope.dica2 = {"status": true, "id": 2, "hidden": false};
-    $scope.dica3 = {"status": true, "id": 3, "hidden": false};
-
-    $scope.dicas = function (dica) {
-        if (dica.status === true && dica.id === 1) {
-            $scope.exercicioJava.pontos = $scope.exercicioJava.pontos - 10;
-            $scope.dica1.status = false;
-        }
-        if (dica.status === true && dica.id === 2) {
-            $scope.exercicioJava.pontos = $scope.exercicioJava.pontos - 10;
-            $scope.dica2.status = false;
-        }
-        if (dica.status === true && dica.id === 3) {
-            $scope.exercicioJava.pontos = $scope.exercicioJava.pontos - 10;
-            $scope.dica3.status = false;
-        }
-    };
-    
-    $scope.voltarModulos = function() {
-    	exercicios.setProxEx(0);
-    };
-    
-    $scope.items = ['item1', 'item2', 'item3'];
-
     $scope.enviarResposta = function (size) {
-
+      $scope.exercicio.dicas = ["Teste1", "Teste2", "Teste3"];
+      dicas.setDicas($scope.exercicio.dicas);
       var modalInstance = $modal.open({
         templateUrl: 'myModalContent.html',
-        controller: ModalInstanceCtrl,
+        controller: ModalInstanceCtrlUml,
         size: size,
         resolve: {
           respostaEx: function () {
@@ -243,22 +235,26 @@ appController.controller('UmlController', function ($scope, $modal, $log, usuari
     		resultado.location.path('/uml/exercicios');
     	 }
          
-      }, function () {
-        $log.info('Modal dismissed at: ' + new Date());
+      }, function (pontos) {
         $scope.exercicio.tentativas = resposta.verificarTentativa($scope.exercicio.tentativas);
 		$scope.exercicio.pontos = resposta.verificarPontos($scope.exercicio.pontos);
+		$scope.exercicio.pontos -= pontos;
       });
     };
     
 });
 
-var ModalInstanceCtrl = function ($scope, $location, $modalInstance, Usuario, usuario, resposta, exercicios, respostaEx, exercicio) {
+var ModalInstanceCtrlUml = function ($scope, $location, $position,  $modalInstance, Usuario, Progresso, usuario, resposta, exercicios, respostaEx, exercicio, dicas) {
 	  
 	  $scope.resultado = {fim: false, erro: false, location: $location};
 	  $scope.modal = {alert: "", mensagem: ""};
+	  $scope.exercicio = exercicio;
+	  $scope.exercicio.dicas = dicas.getDica(exercicio.tentativas);
+	  
+	  var pontos = 0;
 	  var retorno = resposta.verificarResposta(exercicio.respostaUml, respostaEx);
   	  if(retorno === true){
-  		Usuario.save({login: usuario.getUsuario().login}, {pontos: exercicio.pontos});
+  		Usuario.save({login: usuario.getUsuario().login, exercicioId: $scope.exercicio.id}, {pontos: exercicio.pontos});
   		if(exercicios.salvarConquista){
   			$scope.modal.alert = "success";
   			$scope.modal.mensagem = "Parabéns! você chegou ao fim dos exercicios";
@@ -269,17 +265,21 @@ var ModalInstanceCtrl = function ($scope, $location, $modalInstance, Usuario, us
   			$scope.resultado.fim = false;
   		}
   	  }else{
+  		
   		$scope.resultado.erro = true;
   		$scope.modal.alert = "danger";
   		$scope.modal.mensagem = "Que pena você errou!";
   		
   	  }
+  	  $scope.tirarPontos = function (index) {
+			pontos += dicas.tirarPontos(index, $scope.exercicio.pontos);
+		};
 
 	  $scope.ok = function () {
 	    $modalInstance.close($scope.resultado);
 	  };
 
 	  $scope.cancel = function () {
-	    $modalInstance.dismiss('cancel');
+	    $modalInstance.dismiss(pontos);
 	  };
 	};

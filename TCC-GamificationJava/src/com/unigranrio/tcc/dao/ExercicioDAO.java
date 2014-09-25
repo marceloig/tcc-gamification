@@ -84,7 +84,7 @@ public class ExercicioDAO {
 	}
 	
 
-	public Exercicio buscarExerciciosById(long id) {
+	public Exercicio buscarExercicioById(long id) {
 
 		Query query = manager.createNamedQuery("Exercicio.ExercicioById");
 		query.setParameter("id", id);

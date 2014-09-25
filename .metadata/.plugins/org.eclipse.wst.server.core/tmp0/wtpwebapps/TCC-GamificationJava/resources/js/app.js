@@ -13,6 +13,10 @@ var appModule = angular.module('app').factory('Login', function ($resource) {
     return $resource('http://localhost:8080/TCC-GamificationJava/usuario/login');
 });
 
+var appModule = angular.module('app').factory('Progresso', function ($resource) {
+    return $resource('http://localhost:8080/TCC-GamificationJava/progresso/:progresso/usuario/:usuario/exercicio/:exercicio');
+});
+
 var appModule = angular.module('app').factory('Modulo', function ($resource) {
 	return $resource('http://localhost:8080/TCC-GamificationJava/modulo/:modulo/assunto/:assunto/exercicio/:exercicio', {}, {
         query: { method: "GET", isArray: true }
@@ -21,39 +25,15 @@ var appModule = angular.module('app').factory('Modulo', function ($resource) {
 
 appModule.factory('usuario', function () {
 
-    var data = {
-        login: "",
-        pontos: 0,
-        posicao: 0
-    };
-    
-    var usuario = {};
+    var data = {};
 
     return {
     	getUsuario: function () {
-            return usuario;
+            return data;
         },
-        setUsuario: function (data) {
-            usuario = data;
+        setUsuario: function (usuario) {
+            data = usuario;
         },
-        getLogin: function () {
-            return data.login;
-        },
-        setLogin: function (login) {
-            data.login = login;
-        },
-        getPontos: function () {
-            return data.pontos;
-        },
-        setPontos: function (pontos) {
-            data.pontos = pontos;
-        },
-        getPosicao: function () {
-            return data.posicao;
-        },
-        setPosicao: function (posicao) {
-            data.posicao = posicao;
-        }
     };
 });
 
@@ -70,8 +50,6 @@ appModule.controller('LoginController', function ($rootScope, $scope, $http, $lo
         Login.save(data, function(response) {
             var status = response.retorno;
             if (status === true) {
-                usuario.setLogin($scope.usuario.login);
-                usuario.setPontos($scope.usuario.senha);
                 usuario.setUsuario($scope.usuario);
                 $location.path('/home');
                 $location.replace();

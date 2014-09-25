@@ -4,22 +4,25 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.unigranrio.tcc.model.ProgressoBean;
 
 
 @Entity
+@NamedQueries({ @NamedQuery(name = "Progresso.findByUsuario", query = "SELECT p FROM Progresso p WHERE p.usuario = :usuario ORDER BY p.id DESC" ), })
 public class Progresso {
 	
 	@Id 
 	@GeneratedValue
 	private Long id;
 	
-	@ManyToOne(optional = false)
+	@ManyToOne
 	private Usuario usuario;
 	
-	@ManyToOne(optional = false)
+	@ManyToOne
 	private Exercicio exercicio;
 	
 	public Long getId() {

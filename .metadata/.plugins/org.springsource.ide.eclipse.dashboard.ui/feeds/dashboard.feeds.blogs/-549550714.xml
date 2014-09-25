@@ -5,7 +5,37 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2014-09-17T18:30:00Z</updated>
+  <updated>2014-09-23T21:50:00Z</updated>
+  <entry>
+    <title>This Week in Spring - Tuesday September 23rd, 2014</title>
+    <link rel="alternate" href="https://spring.io/blog/2014/09/23/this-week-in-spring-tuesday-september-23rd-2014" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Josh Long</name>
+    </author>
+    <id>tag:spring.io,2014-09-24:1768</id>
+    <updated>2014-09-23T21:50:00Z</updated>
+    <content type="html">&lt;p&gt;Welcome to another installment of &lt;em&gt;This Week in Spring&lt;/em&gt;! This morning, I had the joy of presenting with my pal &lt;a href="http://twitter.com/jbarrez"&gt;Joram Barrez&lt;/a&gt; on using the &lt;a href="http://activiti.org"&gt;Activiti BPMN workflow engine&lt;/a&gt; with Spring (and Spring Boot). That talk should be online in the next few weeks or so. I'll also be co-presenting with Joram this week at the &lt;a href="http://summit.alfresco.com/"&gt;Alfresco Summit&lt;/a&gt; (on the very same topic).   If you missed SpringOne2GX 2014, check out the &lt;a href="http://spring.io/blog/2014/09/10/springone2gx-2014-day-1"&gt;Day 1&lt;/a&gt; and &lt;a href="http://spring.io/blog/2014/09/15/springone2gx-2014-day-2"&gt;Day 2&lt;/a&gt; wrap ups where can learn about NetFlix, Spring Boot and microservice architecture, among many other things.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;The replay of the webinar talk that I gave last week, &lt;a href="http://www.youtube.com/watch?v=VPtlZLdm7Nc&amp;amp;list=PLgGXSWYM2FpNmY5a1MuomSvvovSWHWoAR"&gt;&lt;em&gt;Bootiful Microservices with Spring Boot (and Spring Cloud)&lt;/em&gt;&lt;/a&gt;, is now available online. This talk - because of Boot and the subject matter - got a &lt;em&gt;lot&lt;/em&gt; of attention and so this was actually available online within a few &lt;em&gt;days&lt;/em&gt; (not the usual week or two) of my having presented it! Enjoy! &lt;/li&gt;
+&lt;li&gt;I'm really digging some of the posts that've come out of the Codeleak.pl blog of late! First up, this post on &lt;a href="http://blog.codeleak.pl/2014/09/testing-mail-code-in-spring-boot.html"&gt;unit testing e-mail integration code written atop Spring Boot&lt;/a&gt; - check it out!&lt;/li&gt;
+&lt;li&gt;Shortly after the microservice talk, I received a tweet pointing me to a recently &lt;a href="http://www.youtube.com/watch?v=f_fGwa2-rMk&amp;amp;list=UUwAKjrTAPEbBzJ-tSWwGPMQ"&gt;added talk on how a Polish company builds microservices with Spring&lt;/a&gt;. The talk's &lt;em&gt;mostly&lt;/em&gt; high level, with a spattering of Spring here and there. This is a cool talk and, at 30 minutes, easy to consume quickly).&lt;br&gt;
+&lt;/li&gt;
+&lt;li&gt;Rafa? Borowiec over on the Codeleak.pl site has done a really nice job! &lt;a href="http://blog.codeleak.pl/2014/09/using-configurationproperties-in-spring.html"&gt;He followed up his previous post (on unit testing e-mail) with a look at Spring Boot's &lt;code&gt;@ConfigurationProperties&lt;/code&gt; support&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;Rafa? &lt;em&gt;also&lt;/em&gt; put together this nice post &lt;a href="http://blog.codeleak.pl/2014/08/validation-groups-in-spring-mvc.html"&gt;on using &lt;em&gt;validation groups&lt;/em&gt; to validate Spring MVC models&lt;/a&gt; and this other post on testing that &lt;a href="http://blog.codeleak.pl/2014/08/spring-mvc-test-assert-given-model-attribute-global-errors.html"&gt;a given Spring MVC model has registered global errors&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;Biju Kunjummen  has put together a nice post &lt;a href="http://www.javacodegeeks.com/2014/09/customizing-httpmessageconverters-with-spring-boot-and-spring-mvc.html"&gt;on customizing &lt;code&gt;HttpMessageConverter&lt;/code&gt;s in a Spring Boot application&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;Adrian Matei has put together a &lt;em&gt;very&lt;/em&gt; nice post on &lt;a href="http://www.javacodegeeks.com/2014/09/spring-batch-tutorial-with-spring-boot-and-java-configuration.html"&gt;building Spring Batch applications with Java configuration and Spring Boot&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;Netflix's (and our pal) Tomas Lin has just published a nice post on &lt;a href="http://fbflex.wordpress.com/2014/09/22/spring-boot-and-webjars-overwriting-configuration-during-runtime/"&gt;how to expose static resources (like JavaScript assets) from &lt;em&gt;different environments&lt;/em&gt; in a configurable way&lt;/a&gt;&lt;br&gt;
+&lt;/li&gt;
+&lt;li&gt;My pal and Spring ninja Greg Turnquist has a nice post looking at his &lt;a href="http://blog.greglturnquist.com/category/learning-spring-boot"&gt;very  &lt;em&gt;imminent&lt;/em&gt; book on Spring Boot&lt;/a&gt;. I can't wait! Greg's a smart and passionate guy, and if you ever read his &lt;em&gt;Spring Python&lt;/em&gt; book, you know he's a fun read, too! &lt;/li&gt;
+&lt;li&gt;The &lt;em&gt;Develop and Conquer&lt;/em&gt; blog has a great post on consuming &lt;a href="http://raymondhlee.wordpress.com/2014/09/20/setup-spring-security-with-active-directory-ldap-in-spring-boot-web-application/"&gt;Active Directory LDAP from Spring Security in a Spring Boot application&lt;/a&gt; - check it out! He has quite a few nice posts (like using ActiveMQ and STOMP support behind Spring 4's websocket support) on other topics, too, so do check it out! &lt;/li&gt;
+&lt;/ol&gt;</content>
+  </entry>
   <entry>
     <title>Webinar Replay: Building "Bootiful" Microservices with Spring Boot</title>
     <link rel="alternate" href="https://spring.io/blog/2014/09/17/webinar-replay-building-bootiful-microservices-with-spring-boot" />
@@ -1095,17 +1125,6 @@ to learn more about these and other Spring Integration improvements added in the
 &lt;p&gt;After reading over a guide, do you need Gradle or Maven build steps? No problem! Just click on the appropriate header, and the steps will expand and show you the extra bits. To top it off, the website uses HTML local storage to remember the choice you made. Surf to another guide and you'll see the same perspective. &lt;/p&gt;
 
 &lt;p&gt;Hopefully, this slims things down to your preference.&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Security OAuth 2.0.3 Available Now</title>
-    <link rel="alternate" href="https://spring.io/blog/2014/09/01/spring-security-oauth-2-0-3-available-now" />
-    <category term="releases" label="Releases" />
-    <author>
-      <name>Dave Syer</name>
-    </author>
-    <id>tag:spring.io,2014-09-01:1745</id>
-    <updated>2014-09-01T07:39:00Z</updated>
-    <content type="html">&lt;p&gt;Spring Security OAuth 2.0.3 is available now in all the usual Maven repositories. It's a bug fix release, nothing major, so upgrading from 2.0.x should be painless (and is recommended). Some people were having issues getting JWT tokens to work properly, and those should be fixed. The only noteworthy functional change is that Resource Servers (if configured with &lt;code&gt;@Configuration&lt;/code&gt;) will now check the validity of the client and scopes before allowing access to protected resources. This means that client privileges can be revoked quickly, but may also lead to a performance penalty (so caching the &lt;code&gt;ClientDetailsService&lt;/code&gt; results would be recommended).&lt;/p&gt;</content>
   </entry>
 </feed>
 

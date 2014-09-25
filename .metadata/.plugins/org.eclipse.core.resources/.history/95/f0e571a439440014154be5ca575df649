@@ -1,0 +1,29 @@
+package com.unigranrio.tcc.dao;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.springframework.stereotype.Repository;
+
+import com.unigranrio.tcc.model.entity.Nivel;
+import com.unigranrio.tcc.model.entity.Progresso;
+
+@Repository
+public class ProgressoDAO {
+	
+	@PersistenceContext
+	private EntityManager manager;
+
+	public void gravarProgresso(Progresso progresso) {
+		
+		manager.persist(progresso);
+	
+	}
+
+	public Progresso buscarProgressoById(long id) {
+		
+		Progresso progresso = manager.find(Progresso.class, id);
+
+		return progresso;
+	}
+}

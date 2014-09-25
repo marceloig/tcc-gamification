@@ -18,7 +18,7 @@
 		</div>
 		<div class="col-md-2">
 			<p>
-				<b>Pontuação:</b> 000
+				<b>Pontuação:</b> {{usuario.pontos}}
 			</p>
 			<div class="row">
 				<div class=col-md-12>
@@ -93,13 +93,21 @@
 </div>
 <script type="text/ng-template" id="myModalContent.html">
         <div class="modal-header">
-            <h3 class="modal-title">I'm a modal!</h3>
+            <h3 class="modal-title">{{exercicio.nome}}</h3>
         </div>
         <div class="modal-body">
 			<div class="alert alert-{{modal.alert}}" role="alert">{{modal.mensagem}}</div>
+			<div ng-hide= "resultado.fim">
+				<p>Está dificil de acertar? A cada tentativa você ganha dicas para te ajudar.<br>
+				   Mas cuidado, cada dica custa menos 10 pontos, então use com cautela<p>
+				<button type="button" class="btn btn-info" ng-repeat= "dica in exercicio.dicas" ng-click= "tirarPontos($index)"popover="{{dica}}" >
+				Dica {{$index + 1}}</button>
+				
+			</div>
+
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" ng-show = "resultado.fim" ng-click="ok()">OK</button>
-            <button class="btn btn-default" ng-hide = "resultado.fim" ng-click="cancel()">Cancelar</button>
+            <button class="btn btn-primary" ng-show= "resultado.fim" ng-click="ok()">OK</button>
+            <button class="btn btn-default" ng-hide= "resultado.fim" ng-click="cancel()">Fechar</button>
         </div>
     </script>

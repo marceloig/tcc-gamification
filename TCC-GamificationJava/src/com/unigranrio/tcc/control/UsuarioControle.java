@@ -18,6 +18,7 @@ import com.unigranrio.tcc.model.NivelBean;
 import com.unigranrio.tcc.model.RespostaBean;
 import com.unigranrio.tcc.model.UsuarioBean;
 import com.unigranrio.tcc.model.entity.Nivel;
+import com.unigranrio.tcc.model.entity.Progresso;
 import com.unigranrio.tcc.model.entity.Usuario;
 
 @Transactional
@@ -28,7 +29,7 @@ public class UsuarioControle {
 	private NivelDAO nivelDAO = new NivelDAO();
 
 	@Autowired
-	public void setUsuarioDAOeNivelDAO(UsuarioDAO usuarioDAO, NivelDAO nivelDAO) {
+	public void setDAOs(UsuarioDAO usuarioDAO, NivelDAO nivelDAO) {
 		this.usuarioDAO = usuarioDAO;
 		this.nivelDAO = nivelDAO;
 	}
@@ -59,11 +60,9 @@ public class UsuarioControle {
 	public @ResponseBody UsuarioBean getUsuario(@PathVariable String login) {
 
 		Usuario usuario = usuarioDAO.buscarUsuarioByLogin(login);
-		
 		usuarioBean = usuario.getUsuarioBean();
 		usuarioBean.setBadges(usuario.getBadgesBean());
 		usuarioBean.setProgressos(usuario.getProgressosBean());
-
 		return usuarioBean;
 	}
 

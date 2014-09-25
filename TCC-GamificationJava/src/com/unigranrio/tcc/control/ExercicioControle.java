@@ -3,7 +3,9 @@ package com.unigranrio.tcc.control;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,10 +14,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.unigranrio.tcc.dao.ConquistaDAO;
 import com.unigranrio.tcc.dao.ExercicioDAO;
+import com.unigranrio.tcc.dao.ProgressoDAO;
 import com.unigranrio.tcc.dao.UsuarioDAO;
 import com.unigranrio.tcc.exercicio.Programa;
 import com.unigranrio.tcc.model.ConquistaBean;
@@ -25,8 +29,10 @@ import com.unigranrio.tcc.model.RespostaBean;
 import com.unigranrio.tcc.model.UsuarioBean;
 import com.unigranrio.tcc.model.entity.Assunto;
 import com.unigranrio.tcc.model.entity.Conquista;
+import com.unigranrio.tcc.model.entity.Exercicio;
 import com.unigranrio.tcc.model.entity.ExercicioJava;
 import com.unigranrio.tcc.model.entity.ExercicioUml;
+import com.unigranrio.tcc.model.entity.Progresso;
 import com.unigranrio.tcc.model.entity.Usuario;
 
 @Transactional
@@ -37,15 +43,17 @@ public class ExercicioControle {
 	private ExercicioDAO exercicioDAO = new ExercicioDAO();
 	private UsuarioDAO usuarioDAO = new UsuarioDAO();
 	private ConquistaDAO conquistaDAO = new ConquistaDAO();
+	private ProgressoDAO progressoDAO = new ProgressoDAO();
 	private RespostaBean retornoJava = new RespostaBean();
 
 	@Autowired
-	public void seExercicioDAOeUsuarioDAOeConquistaDAO(
+	public void setDAOs(
 			ExercicioDAO exercicioDAO, UsuarioDAO usuarioDAO,
-			ConquistaDAO conquistaDAO) {
+			ConquistaDAO conquistaDAO, ProgressoDAO progressoDAO) {
 		this.exercicioDAO = exercicioDAO;
 		this.usuarioDAO = usuarioDAO;
 		this.conquistaDAO = conquistaDAO;
+		this.progressoDAO = progressoDAO;
 	}
 
 	@RequestMapping(value = "/modulo/java/assunto/exercicio/{exercicioJava}", method = RequestMethod.GET)
@@ -113,22 +121,36 @@ public class ExercicioControle {
 		usuario.setBadges(conquistas);
 		
 		conquistaDAO.atualizarConquista(conquista);
-		usuarioDAO.atualizarConquistasUsuario(usuario);	
+		usuarioDAO.atualizarProgressoUsuario(usuario);	
 
 		return null;
 	}
 
 	@RequestMapping(value = "/usuario/{login}", method = RequestMethod.POST)
 	public @ResponseBody RespostaBean atualizarUsuario(
-			@PathVariable String login, @RequestBody UsuarioBean pontos) {
+			@PathVariable String login, @RequestParam("exercicioId") long exercicioId, @RequestBody UsuarioBean pontos) {
 		Usuario usuario = usuarioDAO.buscarUsuarioByLogin(login);
 		usuario.setPontos(usuario.getPontos() + pontos.getPontos());
 		usuarioDAO.atualizarPontosUsuario(usuario);
 
 		Usuario usuarioAtualizado = usuarioDAO.buscarUsuarioByLogin(login);
+		Exercicio exercicio = exercicioDAO.buscarExercicioById(exercicioId);
+		Progresso progresso = new Progresso();
+		progresso.setExercicio(exercicio);
+		progresso.setUsuario(usuarioAtualizado);
+		progressoDAO.gravarProgresso(progresso);
+		
+		List<Progresso> progressos = new LinkedList<Progresso>();
+		if(!usuarioDAO.listarProgressosUsuario(login).isEmpty()){
+			progressos = usuarioDAO.listarProgressosUsuario(login);
+			progressos.add(progressoDAO.buscarProgressoByUsuario(usuarioAtualizado));
+		}else{
+			progressos.add(progressoDAO.buscarProgressoByUsuario(usuarioAtualizado));
+		}
 		long posicao = usuarioDAO.buscarPosicaoUsuario(usuarioAtualizado
 				.getPontos());
 		usuarioAtualizado.setPosicao((int) posicao);
+		usuarioAtualizado.setProgressos(progressos);
 		usuarioDAO.atualizarProgressoUsuario(usuarioAtualizado);
 
 		return null;
