@@ -5,7 +5,22 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2014-09-23T21:50:00Z</updated>
+  <updated>2014-09-24T20:59:00Z</updated>
+  <entry>
+    <title>Demo: IoT Realized with Spring XD - The Connected Car</title>
+    <link rel="alternate" href="https://spring.io/blog/2014/09/24/demo-iot-realized-with-spring-xd-the-connected-car" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Pieter Humphrey</name>
+    </author>
+    <id>tag:spring.io,2014-09-25:1769</id>
+    <updated>2014-09-24T20:59:00Z</updated>
+    <content type="html">&lt;p&gt;Speaker: Derek Beauregard
+Contributors: Phil Berman, Darrel Sharpe, Michael Minella
+In this demo we will explore the power of Spring XD in the context of the Internet of Things (IoT). We will look at a solution developed with Spring XD to stream real time analytics from a moving car using open standards. Ingestion of the real time data (location, speed, engine diagnostics, etc), analyzing it to provide highly accurate MPG and vehicle range prediction, as well as providing real time dashboards will all be covered. Watch this demo to get a sense of how Spring XD can serve as a critical building block for the IoT.&lt;/p&gt;
+
+&lt;iframe width="420" height="315" src="//www.youtube.com/embed/qkm2GV57hzY" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;</content>
+  </entry>
   <entry>
     <title>This Week in Spring - Tuesday September 23rd, 2014</title>
     <link rel="alternate" href="https://spring.io/blog/2014/09/23/this-week-in-spring-tuesday-september-23rd-2014" />
@@ -1106,25 +1121,6 @@ to learn more about these and other Spring Integration improvements added in the
 &lt;li&gt; Our pals at the Jayway blog are back at it again! This week, &lt;a href="http://www.jayway.com/2014/07/22/spring-boot-custom-healthindicator/"&gt;they've introduced how to build a custom Spring Boot &lt;code&gt;HealthIndicator&lt;/code&gt;s&lt;/a&gt; &lt;/li&gt;
 &lt;li&gt;The &lt;code&gt;IT Hood&lt;/code&gt; chimes in with a helpful hint: if you're getting mysterious errors like &lt;a href="http://ithood.blogspot.com/2014/08/java-spring-mvc-networkerror-406-not.html"&gt;HTTP status code &lt;code&gt;406 Not Acceptable&lt;/code&gt; results when calling a Spring MVC-powered REST endpoint, you might check that you have the right dependencies on the CLASSPATH&lt;/a&gt;. Simple, but easy to forget! (unless, of course, you're using the &lt;a href="https://spring.io/blog/2014/06/26/introducing-the-spring-io-platform"&gt;Spring IO Platform BOM&lt;/a&gt; or &lt;a href="http://start.spring.io/"&gt;Spring Boot's starter dependencies&lt;/a&gt;!).&lt;/li&gt;
 &lt;/ul&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring guides make it easier to jump to core content</title>
-    <link rel="alternate" href="https://spring.io/blog/2014/09/02/spring-guides-make-it-easier-to-jump-to-core-content" />
-    <category term="engineering" label="Engineering" />
-    <author>
-      <name>Greg Turnquist</name>
-    </author>
-    <id>tag:spring.io,2014-09-02:1746</id>
-    <updated>2014-09-02T20:01:00Z</updated>
-    <content type="html">&lt;p&gt;If you remember last year, we rolled out a &lt;a href="http://spring.io/blog/2013/10/23/the-spring-io-site"&gt;powerful new website&lt;/a&gt; built top-to-bottom with Spring. It was fresh, new, and loaded with gobs of &lt;a href="http://spring.io/guides"&gt;getting started guides&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Since then, the feedback has been overwhelmingly positive. We've had record traffic with a large portion visiting the guides. So what's new?&lt;/p&gt;
-
-&lt;p&gt;We recently added the ability to hide/show the build steps. Many people expressed the desire to skip project setup steps and instead jump to the core content. We listened and responded.&lt;/p&gt;
-
-&lt;p&gt;After reading over a guide, do you need Gradle or Maven build steps? No problem! Just click on the appropriate header, and the steps will expand and show you the extra bits. To top it off, the website uses HTML local storage to remember the choice you made. Surf to another guide and you'll see the same perspective. &lt;/p&gt;
-
-&lt;p&gt;Hopefully, this slims things down to your preference.&lt;/p&gt;</content>
   </entry>
 </feed>
 

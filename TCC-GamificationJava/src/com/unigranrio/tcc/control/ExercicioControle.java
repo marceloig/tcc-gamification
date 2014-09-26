@@ -142,15 +142,21 @@ public class ExercicioControle {
 		
 		List<Progresso> progressos = new LinkedList<Progresso>();
 		if(!usuarioDAO.listarProgressosUsuario(login).isEmpty()){
-			progressos = usuarioDAO.listarProgressosUsuario(login);
-			progressos.add(progressoDAO.buscarProgressoByUsuario(usuarioAtualizado));
+			progressos =  usuarioDAO.listarProgressosUsuario(login);
+			Progresso progressoUsuario = progressoDAO.buscarProgressoByUsuario(usuarioAtualizado);
+			
+			if(!exercicio.equals(progressoUsuario.getExercicio())){
+				progressos.add(progressoUsuario);
+				usuarioAtualizado.setProgressos(progressos);
+			}	
 		}else{
 			progressos.add(progressoDAO.buscarProgressoByUsuario(usuarioAtualizado));
+			usuarioAtualizado.setProgressos(progressos);
 		}
 		long posicao = usuarioDAO.buscarPosicaoUsuario(usuarioAtualizado
 				.getPontos());
 		usuarioAtualizado.setPosicao((int) posicao);
-		usuarioAtualizado.setProgressos(progressos);
+		
 		usuarioDAO.atualizarProgressoUsuario(usuarioAtualizado);
 
 		return null;
