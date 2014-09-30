@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.unigranrio.tcc.dao.ConquistaDAO;
 import com.unigranrio.tcc.dao.ExercicioDAO;
+import com.unigranrio.tcc.dao.NivelDAO;
 import com.unigranrio.tcc.dao.ProgressoDAO;
 import com.unigranrio.tcc.dao.UsuarioDAO;
 import com.unigranrio.tcc.exercicio.Programa;
@@ -32,28 +32,32 @@ import com.unigranrio.tcc.model.entity.Conquista;
 import com.unigranrio.tcc.model.entity.Exercicio;
 import com.unigranrio.tcc.model.entity.ExercicioJava;
 import com.unigranrio.tcc.model.entity.ExercicioUml;
+import com.unigranrio.tcc.model.entity.Nivel;
 import com.unigranrio.tcc.model.entity.Progresso;
 import com.unigranrio.tcc.model.entity.Usuario;
+import com.unigranrio.tcc.security.CodigoValidator;
 
 @Transactional
 @Controller
 public class ExercicioControle {
 
 	private Programa programa = new Programa();
-	private ExercicioDAO exercicioDAO = new ExercicioDAO();
-	private UsuarioDAO usuarioDAO = new UsuarioDAO();
-	private ConquistaDAO conquistaDAO = new ConquistaDAO();
-	private ProgressoDAO progressoDAO = new ProgressoDAO();
-	private RespostaBean retornoJava = new RespostaBean();
+	private ExercicioDAO exercicioDAO;
+	private UsuarioDAO usuarioDAO;
+	private ConquistaDAO conquistaDAO;
+	private ProgressoDAO progressoDAO;
+	private NivelDAO nivelDAO;
+	private RespostaBean retornoJava;
 
 	@Autowired
-	public void setDAOs(
-			ExercicioDAO exercicioDAO, UsuarioDAO usuarioDAO,
-			ConquistaDAO conquistaDAO, ProgressoDAO progressoDAO) {
+	public void setDAOs(ExercicioDAO exercicioDAO, UsuarioDAO usuarioDAO,
+			ConquistaDAO conquistaDAO, ProgressoDAO progressoDAO,
+			NivelDAO nivelDAO) {
 		this.exercicioDAO = exercicioDAO;
 		this.usuarioDAO = usuarioDAO;
 		this.conquistaDAO = conquistaDAO;
 		this.progressoDAO = progressoDAO;
+		this.nivelDAO = nivelDAO;
 	}
 
 	@RequestMapping(value = "/modulo/java/assunto/exercicio/{exercicioJava}", method = RequestMethod.GET)
@@ -70,10 +74,19 @@ public class ExercicioControle {
 	public @ResponseBody RespostaBean receberRespostaExercicioJava(
 			@RequestBody RespostaBean codigo) {
 		System.out.println("Codigo Recebido: " + codigo.getCodigo());
+		String respostaCodigo = codigo.getCodigo().trim();
+		respostaCodigo = respostaCodigo.replace("\n", "");
+		respostaCodigo = respostaCodigo.replace(" ", "");
+		CodigoValidator validar = new CodigoValidator();
+
+		if (validar.validarCodigo(respostaCodigo) == false) {
+			codigo.setResposta("Codigo Malicioso");
+			return codigo;
+		}
 
 		String respostaConsole = programa.executar(codigo.getCodigo());
 		System.out.println("Resposta da Compilação: " + respostaConsole);
-
+		RespostaBean retornoJava = codigo;
 		retornoJava.setResposta(respostaConsole);
 		return retornoJava;
 	}
@@ -107,7 +120,7 @@ public class ExercicioControle {
 	public @ResponseBody RespostaBean atualizarBadgeUsuario(
 			@PathVariable String login, @RequestBody ConquistaBean conquistaBean) {
 		Collection<Conquista> conquistas = new HashSet<Conquista>();
-		
+
 		Conquista conquista = conquistaDAO.buscarBadge(conquistaBean.getId());
 		Usuario usuario = usuarioDAO.buscarUsuarioByLogin(login);
 		if (!usuarioDAO.listarBadgesUsuario(login).isEmpty()) {
@@ -119,44 +132,53 @@ public class ExercicioControle {
 		}
 		conquista.setUsuario(usuario);
 		usuario.setBadges(conquistas);
-		
+
 		conquistaDAO.atualizarConquista(conquista);
-		usuarioDAO.atualizarProgressoUsuario(usuario);	
+		usuarioDAO.atualizarProgressoUsuario(usuario);
 
 		return null;
 	}
 
 	@RequestMapping(value = "/usuario/{login}", method = RequestMethod.POST)
 	public @ResponseBody RespostaBean atualizarUsuario(
-			@PathVariable String login, @RequestParam("exercicioId") long exercicioId, @RequestBody UsuarioBean pontos) {
+			@PathVariable String login,
+			@RequestParam("exercicioId") long exercicioId,
+			@RequestBody UsuarioBean pontos) {
 		Usuario usuario = usuarioDAO.buscarUsuarioByLogin(login);
 		usuario.setPontos(usuario.getPontos() + pontos.getPontos());
 		usuarioDAO.atualizarPontosUsuario(usuario);
 
 		Usuario usuarioAtualizado = usuarioDAO.buscarUsuarioByLogin(login);
+
 		Exercicio exercicio = exercicioDAO.buscarExercicioById(exercicioId);
 		Progresso progresso = new Progresso();
 		progresso.setExercicio(exercicio);
 		progresso.setUsuario(usuarioAtualizado);
 		progressoDAO.gravarProgresso(progresso);
-		
+
 		List<Progresso> progressos = new LinkedList<Progresso>();
-		if(!usuarioDAO.listarProgressosUsuario(login).isEmpty()){
-			progressos =  usuarioDAO.listarProgressosUsuario(login);
-			Progresso progressoUsuario = progressoDAO.buscarProgressoByUsuario(usuarioAtualizado);
-			
-			if(!exercicio.equals(progressoUsuario.getExercicio())){
+		if (!usuarioDAO.listarProgressosUsuario(login).isEmpty()) {
+			progressos = usuarioDAO.listarProgressosUsuario(login);
+			Progresso progressoUsuario = progressoDAO
+					.buscarProgressoByUsuario(usuarioAtualizado);
+
+			if (!exercicio.equals(progressoUsuario.getExercicio())) {
 				progressos.add(progressoUsuario);
 				usuarioAtualizado.setProgressos(progressos);
-			}	
-		}else{
-			progressos.add(progressoDAO.buscarProgressoByUsuario(usuarioAtualizado));
+			}
+		} else {
+			progressos.add(progressoDAO
+					.buscarProgressoByUsuario(usuarioAtualizado));
 			usuarioAtualizado.setProgressos(progressos);
 		}
 		long posicao = usuarioDAO.buscarPosicaoUsuario(usuarioAtualizado
 				.getPontos());
 		usuarioAtualizado.setPosicao((int) posicao);
 		
+		Nivel proxNivel = nivelDAO.buscarProximoNivel(usuarioAtualizado.getNivel().getId());
+		if(proxNivel != null && usuarioAtualizado.getPontos() > proxNivel.getPontos()){
+			usuarioAtualizado.setNivel(proxNivel);
+		}
 		usuarioDAO.atualizarProgressoUsuario(usuarioAtualizado);
 
 		return null;

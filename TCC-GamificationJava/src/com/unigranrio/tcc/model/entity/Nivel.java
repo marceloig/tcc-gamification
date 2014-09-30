@@ -9,7 +9,9 @@ import javax.persistence.NamedQuery;
 import com.unigranrio.tcc.model.NivelBean;
 
 @Entity
-@NamedQueries({ @NamedQuery(name = "Nivel.findByNome", query = "SELECT n FROM Nivel n WHERE n.nome = :nome"), })
+@NamedQueries({
+		@NamedQuery(name = "Nivel.findByNome", query = "SELECT n FROM Nivel n WHERE n.nome = :nome"),
+		@NamedQuery(name = "Nivel.findByProxNivel", query = "SELECT n FROM Nivel n WHERE n.id > :id"), })
 public class Nivel {
 
 	@Id

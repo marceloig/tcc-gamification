@@ -34,15 +34,14 @@ appModule.factory('exercicios', [ 'Modulo', 'Usuario', 'usuario',
             setBadges: function (conquistas) {
                 dataEx.badges = conquistas;
             },
+            getBadges: function () {
+                return dataEx.badges;
+            },
             salvarConquista: function () {
                 dataEx.proxEx = dataEx.proxEx + 1;
                 if (dataEx.exercicios[dataEx.proxEx] == undefined) {
                     var badge = dataEx.badges[0];
-                    Usuario.update({
-                        login: usuario.getUsuario().login
-                    }, {
-                        id: badge.id
-                    });
+                    Usuario.update({ login: usuario.getUsuario().login }, { id: badge.id });
 
                     return true;
                 } else {
@@ -208,7 +207,7 @@ appController.controller('JavaController', function ($scope, $modal, $log, usuar
 });
 
 var ModalInstanceCtrlJava = function ($scope, $location, $position, $modalInstance, Usuario, Progresso, usuario, resposta, exercicios, respostaEx, exercicio, dicas) {
-
+	$scope.conquistas = exercicios.getBadges();
     $scope.resultado = {
         fim: false,
         erro: false,

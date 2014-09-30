@@ -1,15 +1,8 @@
 INDEX VERSION 1.3+C:\Users\Igor\git\tcc-gamification\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-2260640407.index
-3669560124.index
-3683844985.index
-1905713810.index
-3898566513.index
-1117825313.index
-144984845.index
-971931374.index
-971931374.index
-2417225861.index
-342334185.index
 510778164.index
-764847489.index
 3226771924.index
+342334185.index
+764847489.index
+3898566513.index
+144984845.index
+1117825313.index

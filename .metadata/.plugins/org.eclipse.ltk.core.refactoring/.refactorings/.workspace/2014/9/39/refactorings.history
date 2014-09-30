@@ -1,4 +1,3 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Delete resource &apos;TCC-GamificationJava&apos;" deleteContents="false" description="Delete resource &apos;TCC-GamificationJava&apos;" element1="/TCC-GamificationJava" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1411597096253"/>
+<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;TCC-GamificationJava&apos;" deleteContents="false" description="Delete resource &apos;TCC-GamificationJava&apos;" element1="/TCC-GamificationJava" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1411597096253"/>&#x0A;<refactoring comment="Delete resource &apos;apache-ofbiz-12.04.05&apos;" deleteContents="false" description="Delete resource &apos;apache-ofbiz-12.04.05&apos;" element1="/apache-ofbiz-12.04.05" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1411845033627"/>
 </session>

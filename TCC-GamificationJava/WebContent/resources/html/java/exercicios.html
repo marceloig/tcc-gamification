@@ -64,6 +64,14 @@
         </div>
         <div class="modal-body">
 			<div class="alert alert-{{modal.alert}}" role="alert">{{modal.mensagem}}</div>
+			<div ng-show= "resultado.fim">
+				<div class= "row">
+					<div class="col-md-3" ng-repeat= "conquista in conquistas">
+						<p>Você ganhou a conquista {{conquista.badge.nome}}</p>
+						<img ng-src="../{{conquista.badge.nomeImagem}}" class="img-responsive">
+					</div>
+				</div>
+			</div>
 			<div ng-hide= "resultado.fim">
 				<p>Está dificil de acertar? A cada tentativa você ganha dicas para te ajudar.<br>
 				   Mas cuidado, cada dica custa menos 10 pontos, então use com cautela<p>

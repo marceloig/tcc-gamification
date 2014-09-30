@@ -1,0 +1,5 @@
+package com.unigranrio.tcc.security;
+
+public class CodigoValidator {
+
+}
