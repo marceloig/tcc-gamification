@@ -22,7 +22,8 @@ import com.unigranrio.tcc.model.ProgressoBean;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @NamedQueries({
 		@NamedQuery(name = "Exercicio.ExercicioByAssunto", query = "SELECT e FROM Exercicio e WHERE e.assunto = :assunto ORDER BY e.id ASC"),
-		@NamedQuery(name = "Exercicio.ExercicioById", query = "SELECT e FROM Exercicio e WHERE e.id = :id"), })
+		@NamedQuery(name = "Exercicio.ExercicioById", query = "SELECT e FROM Exercicio e WHERE e.id = :id"),
+		@NamedQuery(name = "Exercicio.ExercicioAll", query = "SELECT e FROM Exercicio e"),})
 public class Exercicio {
 
 	@Id

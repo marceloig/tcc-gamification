@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.unigranrio.tcc.dao.NivelDAO;
@@ -64,6 +65,19 @@ public class UsuarioControle {
 		usuarioBean.setBadges(usuario.getBadgesBean());
 		usuarioBean.setProgressos(usuario.getProgressosBean());
 		return usuarioBean;
+	}
+	
+	@RequestMapping(value = "/progresso/nivel/{id}", method = RequestMethod.GET)
+	public @ResponseBody NivelBean getProxNivel(@PathVariable long id) {
+		Nivel nivel = nivelDAO.buscarProximoNivel(id);
+		NivelBean nivelBean;
+		if(nivel != null){
+			nivelBean = nivel.getNivelBean();
+		}else{
+			nivelBean = null;
+		}
+		
+		return nivelBean;
 	}
 
 	@RequestMapping(value = "/usuario", method = RequestMethod.GET)

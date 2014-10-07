@@ -14,7 +14,7 @@ var appModule = angular.module('app').factory('Login', function ($resource) {
 });
 
 var appModule = angular.module('app').factory('Progresso', function ($resource) {
-    return $resource('http://localhost:8080/TCC-GamificationJava/progresso/:progresso/usuario/:usuario/exercicio/:exercicio');
+    return $resource('http://localhost:8080/TCC-GamificationJava/progresso/:progresso/nivel/:nivel');
 });
 
 var appModule = angular.module('app').factory('Modulo', function ($resource) {
@@ -62,8 +62,9 @@ appModule.controller('LoginController', function ($rootScope, $scope, $http, $lo
     };
 });
 
-appModule.controller('UsuarioController', function ($rootScope, $location, $scope, $http, usuario, Usuario) {
+appModule.controller('UsuarioController', function ($rootScope, $location, $scope, $http, usuario, Usuario, Progresso) {
     $rootScope.activetab = $location.path();
+    $rootScope.usuarioLogado = usuario.getUsuario().login;
     $scope.usuario = {};
     Usuario.query(function (data) {
         $scope.usuariosTop = data;
@@ -72,30 +73,46 @@ appModule.controller('UsuarioController', function ($rootScope, $location, $scop
     Usuario.get({ login: usuario.getUsuario().login }, function (data) {
         $scope.usuario = data;
         usuario.setUsuario($scope.usuario);
+        
+        Progresso.get({ nivel: $scope.usuario.nivel.id }, function (data) {
+            var proxNivel = data;
+            if(proxNivel != null){
+	            var percentMaxima =  proxNivel.pontos - $scope.usuario.nivel.pontos;
+	            var percentAtual = $scope.usuario.pontos - $scope.usuario.nivel.pontos;
+	            var resultPercent = (percentAtual / percentMaxima) * 100;
+	            $scope.percentNivel = parseInt(resultPercent.toFixed(0));
+            }else{
+            	$scope.percentNivel = 100;
+            }
+        });
     });
+    
+    
 
 });
 
-appModule.controller('ModuloController', function ($rootScope, $location, $scope, Modulo, exercicios) {
+appModule.controller('ModuloController', function ($rootScope, $location, $scope, Modulo, ExerciciosFactory, usuario) {
     $rootScope.activetab = $location.path();
-
-    Modulo.query(function (data) {
-        $scope.modulos = data;
+    var progressos = usuario.getUsuario().progressos;
+    $scope.progresso = progressos[progressos.length - 1];
+    
+    Modulo.query(function(data) {
+    	$scope.modulos = data;
     });
 
     $scope.escolherAssunto = function (assunto) {
         if (assunto.modulo.nome == "UML") {
             Modulo.query({ assunto: assunto.id }, function (data) {
-                exercicios.setExercicios(data);
-                exercicios.setBadges(assunto.conquistas);
-                exercicios.setProxEx(0);
+                ExerciciosFactory.setExercicios(data);
+                ExerciciosFactory.setBadges(assunto.conquistas);
+                ExerciciosFactory.setProxEx(0);
                 $location.path("/uml/exercicios");
             });
         } else {
             Modulo.query({ assunto: assunto.id }, function (data) {
-                exercicios.setExercicios(data);
-                exercicios.setBadges(assunto.conquistas);
-                exercicios.setProxEx(0);
+                ExerciciosFactory.setExercicios(data);
+                ExerciciosFactory.setBadges(assunto.conquistas);
+                ExerciciosFactory.setProxEx(0);
                 $location.path("/java/exercicios");
             });
         }

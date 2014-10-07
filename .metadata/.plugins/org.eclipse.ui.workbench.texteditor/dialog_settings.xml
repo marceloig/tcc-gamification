@@ -13,8 +13,9 @@
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="location" key="selection"/>
+		<item value="Jogar" key="selection"/>
 		<list key="findhistory">
+			<item value="jogar"/>
 			<item value="location"/>
 			<item value="badges"/>
 			<item value="all"/>
@@ -22,7 +23,6 @@
 			<item value="login"/>
 			<item value="pontos"/>
 			<item value="usuario"/>
-			<item value="setBadges"/>
 		</list>
 		<list key="replacehistory">
 			<item value="usuarioDAO"/>

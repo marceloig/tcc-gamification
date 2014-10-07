@@ -23,9 +23,13 @@
 <fullyQualifiedTypeName name="com.unigranrio.tcc.dao.BadgeDAO"/>
 <fullyQualifiedTypeName name="com.unigranrio.tcc.model.entity.Conquista"/>
 <fullyQualifiedTypeName name="com.unigranrio.tcc.dao.ConquistaDAO"/>
-<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestParam"/>
 <fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonIgnore"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.util.Set"/>
 <fullyQualifiedTypeName name="java.util.Collection"/>
+<fullyQualifiedTypeName name="javax.persistence.NoResultException"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestParam"/>
+<fullyQualifiedTypeName name="com.unigranrio.tcc.model.entity.Assunto"/>
+<fullyQualifiedTypeName name="java.util.LinkedList"/>
+<fullyQualifiedTypeName name="java.lang.Float"/>
 </qualifiedTypeNameHistroy>

@@ -83,6 +83,14 @@ public class ExercicioDAO {
 		return exercicios;
 	}
 	
+	public List<Exercicio> buscarTodosExercicios() {
+
+		Query query = manager.createNamedQuery("Exercicio.ExercicioAll");
+		List<Exercicio> exercicios = query.getResultList();
+
+		return exercicios;
+	}
+	
 
 	public Exercicio buscarExercicioById(long id) {
 

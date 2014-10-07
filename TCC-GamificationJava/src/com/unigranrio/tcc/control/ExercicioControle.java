@@ -119,7 +119,7 @@ public class ExercicioControle {
 	@RequestMapping(value = "/usuario/{login}", method = RequestMethod.PUT)
 	public @ResponseBody RespostaBean atualizarBadgeUsuario(
 			@PathVariable String login, @RequestBody ConquistaBean conquistaBean) {
-		Collection<Conquista> conquistas = new HashSet<Conquista>();
+		Collection<Conquista> conquistas = new ArrayList<Conquista>();
 
 		Conquista conquista = conquistaDAO.buscarBadge(conquistaBean.getId());
 		Usuario usuario = usuarioDAO.buscarUsuarioByLogin(login);
@@ -144,6 +144,7 @@ public class ExercicioControle {
 			@PathVariable String login,
 			@RequestParam("exercicioId") long exercicioId,
 			@RequestBody UsuarioBean pontos) {
+
 		Usuario usuario = usuarioDAO.buscarUsuarioByLogin(login);
 		usuario.setPontos(usuario.getPontos() + pontos.getPontos());
 		usuarioDAO.atualizarPontosUsuario(usuario);
@@ -156,31 +157,54 @@ public class ExercicioControle {
 		progresso.setUsuario(usuarioAtualizado);
 		progressoDAO.gravarProgresso(progresso);
 
-		List<Progresso> progressos = new LinkedList<Progresso>();
-		if (!usuarioDAO.listarProgressosUsuario(login).isEmpty()) {
-			progressos = usuarioDAO.listarProgressosUsuario(login);
-			Progresso progressoUsuario = progressoDAO
-					.buscarProgressoByUsuario(usuarioAtualizado);
+		List<Progresso> progressos = gerarProgresso(usuarioAtualizado,
+				exercicio);
+		usuarioAtualizado.setProgressos(progressos);
 
-			if (!exercicio.equals(progressoUsuario.getExercicio())) {
-				progressos.add(progressoUsuario);
-				usuarioAtualizado.setProgressos(progressos);
-			}
-		} else {
-			progressos.add(progressoDAO
-					.buscarProgressoByUsuario(usuarioAtualizado));
-			usuarioAtualizado.setProgressos(progressos);
-		}
 		long posicao = usuarioDAO.buscarPosicaoUsuario(usuarioAtualizado
 				.getPontos());
 		usuarioAtualizado.setPosicao((int) posicao);
-		
-		Nivel proxNivel = nivelDAO.buscarProximoNivel(usuarioAtualizado.getNivel().getId());
-		if(proxNivel != null && usuarioAtualizado.getPontos() > proxNivel.getPontos()){
+
+		Nivel proxNivel = nivelDAO.buscarProximoNivel(usuarioAtualizado
+				.getNivel().getId());
+		if (proxNivel != null
+				&& usuarioAtualizado.getPontos() > proxNivel.getPontos()) {
 			usuarioAtualizado.setNivel(proxNivel);
 		}
 		usuarioDAO.atualizarProgressoUsuario(usuarioAtualizado);
 
 		return null;
+	}
+
+	public List<Progresso> gerarProgresso(Usuario usuario, Exercicio exercicio) {
+		List<Progresso> progressos = new LinkedList<Progresso>();
+
+		if (!usuarioDAO.listarProgressosUsuario(usuario.getLogin()).isEmpty()) {
+			progressos = usuarioDAO.listarProgressosUsuario(usuario.getLogin());
+			Progresso progressoUsuario = progressoDAO
+					.buscarProgressoByUsuario(usuario);
+
+			float totalExercicios = exercicioDAO.buscarTodosExercicios().size();
+			float totalExerciciosUsuario = usuario.getProgressos().size() + 1;
+			float porcentagem = (totalExerciciosUsuario / totalExercicios) * 100;
+			progressoUsuario.setPorcentagem(porcentagem);
+			Progresso progresso = progressos.get(progressos.size() - 1);
+
+			if (!progresso.getExercicio().equals(
+					progressoUsuario.getExercicio())) {
+				progressos.add(progressoUsuario);
+			}
+
+			return progressos;
+
+		} else {
+			Progresso progressoUsuario = progressoDAO
+					.buscarProgressoByUsuario(usuario);
+			float totalExercicios = exercicioDAO.buscarTodosExercicios().size();
+			float porcentagem = (1 / totalExercicios) * 100;
+			progressoUsuario.setPorcentagem(porcentagem);
+			progressos.add(progressoUsuario);
+			return progressos;
+		}
 	}
 }

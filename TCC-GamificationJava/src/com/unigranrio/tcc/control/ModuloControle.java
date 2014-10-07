@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.unigranrio.tcc.dao.ExercicioDAO;
 import com.unigranrio.tcc.dao.ModuloDAO;
+import com.unigranrio.tcc.model.AssuntoBean;
 import com.unigranrio.tcc.model.ExercicioBean;
 import com.unigranrio.tcc.model.ModuloBean;
 import com.unigranrio.tcc.model.entity.Assunto;
@@ -24,8 +25,8 @@ import com.unigranrio.tcc.model.entity.Modulo;
 @Controller
 public class ModuloControle {
 
-	private ModuloDAO moduloDAO = new ModuloDAO();
-	private ExercicioDAO exercicioDAO = new ExercicioDAO();
+	private ModuloDAO moduloDAO;
+	private ExercicioDAO exercicioDAO;
 
 	@Autowired
 	public void setModuloDAOeExercicioDAO(ModuloDAO moduloDAO, ExercicioDAO exercicioDAO) {
@@ -39,7 +40,14 @@ public class ModuloControle {
 		List<ModuloBean> modulosBean = new LinkedList<ModuloBean>();
 		for (Modulo modulo : moduloDAO.listarModulos()) {
 			ModuloBean moduloBean = modulo.getModuloBean();
-			moduloBean.setAssuntos(modulo.getAssuntosBean());
+			List<AssuntoBean> assuntosBean = new ArrayList<AssuntoBean>();
+			for(Assunto assunto : modulo.getAssuntos()){
+				AssuntoBean assuntoBean = assunto.getAssuntoBean();
+				assuntoBean.setConquistas(assunto.getConquistasBean());
+				assuntoBean.setExercicios(assunto.getExercicioBean());
+				assuntosBean.add(assuntoBean);
+			}
+			moduloBean.setAssuntos(assuntosBean);
 
 			modulosBean.add(moduloBean);
 		}

@@ -91,24 +91,24 @@ public class CRUDControle {
 
 	public void cadastrarExercicio() {
 		ImagemExercicio imExA = new ImagemExercicio();
-		imExA.setId((long) 1);
+		imExA.setId((long) 9);
 		imExA.setNomeImagem("alternativaA.png");
-		imExA.setCaminhoImagem("imagens/exercicios/uml/diagrama_de_caso_de_uso/exercicio1");
+		imExA.setCaminhoImagem("imagens/exercicios/uml/diagrama_de_classes/exercicio1");
 
 		ImagemExercicio imExB = new ImagemExercicio();
-		imExB.setId((long) 2);
+		imExB.setId((long) 10);
 		imExB.setNomeImagem("alternativaB.png");
-		imExB.setCaminhoImagem("imagens/exercicios/uml/diagrama_de_caso_de_uso/exercicio1");
+		imExB.setCaminhoImagem("imagens/exercicios/uml/diagrama_de_classes/exercicio1");
 
 		ImagemExercicio imExC = new ImagemExercicio();
-		imExC.setId((long) 3);
+		imExC.setId((long) 11);
 		imExC.setNomeImagem("alternativaC.png");
-		imExC.setCaminhoImagem("imagens/exercicios/uml/diagrama_de_caso_de_uso/exercicio1");
+		imExC.setCaminhoImagem("imagens/exercicios/uml/diagrama_de_classes/exercicio1");
 
 		ImagemExercicio imExD = new ImagemExercicio();
-		imExD.setId((long) 4);
-		imExD.setNomeImagem("alternativaD..png");
-		imExD.setCaminhoImagem("imagens/exercicios/uml/diagrama_de_caso_de_uso/exercicio1");
+		imExD.setId((long) 12);
+		imExD.setNomeImagem("alternativaD.png");
+		imExD.setCaminhoImagem("imagens/exercicios/uml/diagrama_de_classes/exercicio1");
 
 		exercicioDAO.gravarImagemExercicio(imExA);
 		exercicioDAO.gravarImagemExercicio(imExB);
@@ -122,15 +122,20 @@ public class CRUDControle {
 		alternativas.put(Alternativa.D, imExD);
 
 		ExercicioUml exUml = new ExercicioUml();
-		exUml.setNome("Exercicio 1");
-		exUml.setDescricao("Qual desses desenhos representa corretamente um ator do sistema.");
+		exUml.setNome("Exercicio 3");
+		exUml.setDescricao("Qual desses desenhos representa corretamente um Diagrama de Classe.");
+		exUml.setPontos(100);
+		exUml.setTentativas(3);
 		exUml.setAssunto(assuntoDAO
-				.buscarAssuntoById(99999));
+				.buscarAssuntoById(30));
 		exUml.setAlternativas(alternativas);
-		exUml.setRespostaUml(Alternativa.B);
+		exUml.setRespostaUml(Alternativa.C);
 
 		exercicioDAO.gravarExercicioUml(exUml);
-
+		
+		Assunto assunto = assuntoDAO.buscarAssuntoById(29);
+		assunto.setExercicios(exercicioDAO.buscarExerciciosByAssunto(assunto));
+		assuntoDAO.alterarAssunto(assunto);
 	}
 
 	public void alterarModulo() {
@@ -172,17 +177,18 @@ public class CRUDControle {
 
 	public void inserirBadge() {
 		Badge badge = new Badge();
-		badge.setNome("1º Programa");
-		badge.setDescricao("Primeiro programa do primeiro modulo de Java");
-		badge.setNomeImagem("imagens/badge/conhecendo_java/primeiro_programa.png");
+		badge.setNome("1º Diagrama");
+		badge.setDescricao("Primeiro diagrama do modulo de Uml");
+		badge.setNomeImagem("imagens/badge/diagrama_de_caso_de_uso/primeiro_diagrama.png");
 		badgeDAO.gravarBadge(badge);
+		
 
 	}
 
 	public void inserirConquista() {
 		Conquista conquista = new Conquista();
-		Assunto assunto = assuntoDAO.buscarAssuntoById(5);
-		conquista.setBadge(badgeDAO.buscarBadgeById(59));
+		Assunto assunto = assuntoDAO.buscarAssuntoById(29);
+		conquista.setBadge(badgeDAO.buscarBadgeById(122));
 		conquista.setAssunto(assunto);
 		conquista.setNumeroDeBadges(1);
 		conquistaDAO.gravarConquista(conquista);

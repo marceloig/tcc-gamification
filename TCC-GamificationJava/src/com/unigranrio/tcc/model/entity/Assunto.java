@@ -32,7 +32,6 @@ public class Assunto {
 	private String nome;
 
 	@ManyToOne
-	@JsonBackReference
 	private Modulo modulo;
 
 	@OneToMany

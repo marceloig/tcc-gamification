@@ -10,7 +10,6 @@ import com.unigranrio.tcc.model.ImagemExercicioBean;
 public class ImagemExercicio {
 	
 	@Id
-	@GeneratedValue
 	private Long id;
 	
 	private String caminhoImagem;

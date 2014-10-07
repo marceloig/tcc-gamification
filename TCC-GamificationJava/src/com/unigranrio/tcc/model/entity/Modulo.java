@@ -33,7 +33,6 @@ public class Modulo {
 	private String nome;
 	
 	@OneToMany
-	@JsonManagedReference
 	private List<Assunto> assuntos;
 	
 

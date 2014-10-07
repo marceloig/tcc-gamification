@@ -22,7 +22,7 @@
 			</p>
 			<div class="row">
 				<div class=col-md-12>
-					<a href="" tooltip-placement="bottom" tooltip="Progresso do Módulo {{modulo.nome}}">
+					<a href="" tooltip="Progresso do Módulo {{modulo.nome}}">
 						<progressbar class="progress-striped active" max="100" value="20"
 							type="success">20%</progressbar>
 					</a>
@@ -65,9 +65,9 @@
         <div class="modal-body">
 			<div class="alert alert-{{modal.alert}}" role="alert">{{modal.mensagem}}</div>
 			<div ng-show= "resultado.fim">
-				<div class= "row">
-					<div class="col-md-3" ng-repeat= "conquista in conquistas">
-						<p>Você ganhou a conquista {{conquista.badge.nome}}</p>
+				<div class= "row" ng-repeat= "conquista in conquistas">
+					<p>Você ganhou a conquista {{conquista.badge.nome}}</p>
+					<div class="col-md-3">
 						<img ng-src="../{{conquista.badge.nomeImagem}}" class="img-responsive">
 					</div>
 				</div>

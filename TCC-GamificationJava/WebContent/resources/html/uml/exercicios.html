@@ -22,7 +22,7 @@
 			</p>
 			<div class="row">
 				<div class=col-md-12>
-					<a href="" tooltip-placement="bottom" tooltip="Progresso do Módulo {{modulo.nome}}">
+					<a href="" tooltip="Progresso do Módulo {{modulo.nome}}">
 						<progressbar class="progress-striped active" max="100" value="20"
 							type="success">20%</progressbar>
 					</a>
@@ -88,7 +88,15 @@
         </div>
         <div class="modal-body">
 			<div class="alert alert-{{modal.alert}}" role="alert">{{modal.mensagem}}</div>
-			<div ng-hide= "resultado.fim">
+			<div ng-if= "resultado.status == 'fim'">
+				<div class= "row" ng-repeat= "conquista in conquistas">
+					<p>Você ganhou a conquista {{conquista.badge.nome}}</p>
+					<div class="col-md-3">
+						<img ng-src="../{{conquista.badge.nomeImagem}}" class="img-responsive">
+					</div>
+				</div>
+			</div>
+			<div ng-if= "resultado.status == 'erro'">
 				<p>Está dificil de acertar? A cada tentativa você ganha dicas para te ajudar.<br>
 				   Mas cuidado, cada dica custa menos 10 pontos, então use com cautela<p>
 				<button type="button" class="btn btn-info" ng-repeat= "dica in exercicio.dicas" ng-click= "tirarPontos($index)"popover="{{dica}}" >
@@ -98,7 +106,8 @@
 
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" ng-show= "resultado.fim" ng-click="ok()">OK</button>
-            <button class="btn btn-default" ng-hide= "resultado.fim" ng-click="cancel()">Fechar</button>
+            <button class="btn btn-primary" ng-if= "resultado.status == 'fim'" ng-click="ok()">OK</button>
+			<button class="btn btn-primary" ng-if= "resultado.status == 'proximo'" ng-click="ok()">Proximo</button>
+            <button class="btn btn-default" ng-if= "resultado.status == 'erro'" ng-click="cancel()">Fechar</button>
         </div>
 </script>

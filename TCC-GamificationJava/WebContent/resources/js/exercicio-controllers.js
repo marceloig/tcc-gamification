@@ -1,7 +1,7 @@
 'use strict';
 var appController = angular.module('app');
 
-appModule.factory('exercicios', [ 'Modulo', 'Usuario', 'usuario',
+appModule.factory('ExerciciosFactory', [ 'Modulo', 'Usuario', 'usuario',
     function (Modulo, Usuario, usuario) {
 
         var dataEx = {
@@ -41,8 +41,9 @@ appModule.factory('exercicios', [ 'Modulo', 'Usuario', 'usuario',
                 dataEx.proxEx = dataEx.proxEx + 1;
                 if (dataEx.exercicios[dataEx.proxEx] == undefined) {
                     var badge = dataEx.badges[0];
-                    Usuario.update({ login: usuario.getUsuario().login }, { id: badge.id });
-
+                    if(badge != undefined){
+                    	Usuario.update({ login: usuario.getUsuario().login }, { id: badge.id });
+                    }
                     return true;
                 } else {
                     return false;
@@ -51,7 +52,7 @@ appModule.factory('exercicios', [ 'Modulo', 'Usuario', 'usuario',
         };
     } ]);
 
-appModule.factory('resposta', function () {
+appModule.factory('RespostaFactory', function () {
     var data = {
         resposta: false,
         tentativas: 0,
@@ -86,18 +87,22 @@ appModule.factory('resposta', function () {
     };
 });
 
-appModule.factory('dicas', function () {
+appModule.service('DicasService', function () {
     var data = [];
     var dicas = [];
     var pontosDicas = [ 10, 10, 10 ];
-    return {
-        setDicas: function (dica) {
+    
+        this.setDicas = function (dica) {
             data = dica;
-        },
-        getDicas: function () {
+            pontosDicas[0] = 10;
+            pontosDicas[1] = 10;
+            pontosDicas[2] = 10;
+            dicas = [];
+        };
+        this.getDicas = function () {
             return data;
-        },
-        tirarPontos: function (index) {
+        };
+        this.tirarPontos = function (index) {
             var pontos = 0;
             if (index === 0 && pontosDicas[0] === 10) {
                 pontos = pontosDicas[0];
@@ -115,8 +120,8 @@ appModule.factory('dicas', function () {
                 return pontos;
             }
             return pontos;
-        },
-        getDica: function (tentativas) {
+        };
+        this.getDica = function (tentativas) {
             switch (tentativas) {
                 case 3:
                     dicas[0] = data[0];
@@ -136,11 +141,11 @@ appModule.factory('dicas', function () {
                 default:
                     return data;
             }
-        }
-    };
+        };
+    
 });
 
-appController.controller('JavaController', function ($scope, $modal, $log, usuario, Modulo, Usuario, exercicios, resposta, dicas) {
+appController.controller('JavaController', function ($scope, $modal, $log, usuario, Modulo, Usuario, ExerciciosFactory, RespostaFactory, DicasService) {
 
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/eclipse");
@@ -149,14 +154,14 @@ appController.controller('JavaController', function ($scope, $modal, $log, usuar
     $scope.exercicioJava = {};
     var codigo = "";
 
-    var exercicio = exercicios.getExercicios();
-    var ex = exercicios.getProxEx();
+    var exercicio = ExerciciosFactory.getExercicios();
+    var ex = ExerciciosFactory.getProxEx();
     Modulo.get({modulo: 'java', exercicio: exercicio[ex].id}, function (data) {
         $scope.exercicioJava = data;
         $scope.modulo = data.assunto.modulo;
         codigo = $scope.exercicioJava.codigoReferencia;
         editor.setValue(codigo);
-        dicas.setDicas($scope.exercicioJava.dicas);
+        DicasService.setDicas($scope.exercicioJava.dicas);
     });
     
     $scope.enviarResposta = function (size) {
@@ -186,16 +191,16 @@ appController.controller('JavaController', function ($scope, $modal, $log, usuar
 
                 modalInstance.result.then(function (resultado) {
                     if (resultado.fim === true) {
-                    	exercicios.setProxEx(0);
+                    	ExerciciosFactory.setProxEx(0);
                         resultado.location.path('/modulos');
                     } else {
                         resultado.location.path('/uml/exercicios');
                     }
 
                 }, function (pontos) {
-                    $scope.exercicioJava.tentativas = resposta
+                    $scope.exercicioJava.tentativas = RespostaFactory
                         .verificarTentativa($scope.exercicioJava.tentativas);
-                    $scope.exercicioJava.pontos = resposta
+                    $scope.exercicioJava.pontos = RespostaFactory
                         .verificarPontos($scope.exercicioJava.pontos);
                     $scope.exercicioJava.pontos -= pontos;
                 });
@@ -206,22 +211,24 @@ appController.controller('JavaController', function ($scope, $modal, $log, usuar
     };
 });
 
-var ModalInstanceCtrlJava = function ($scope, $location, $position, $modalInstance, Usuario, Progresso, usuario, resposta, exercicios, respostaEx, exercicio, dicas) {
-	$scope.conquistas = exercicios.getBadges();
+var ModalInstanceCtrlJava = function ($scope, $location, $route, $position, $modalInstance, Usuario, Progresso, usuario, RespostaFactory, ExerciciosFactory, respostaEx, exercicio, DicasService) {
+	$scope.conquistas = ExerciciosFactory.getBadges();
     $scope.resultado = {
         fim: false,
         erro: false,
-        location: $location
+        status: "",
+        location: $location,
+        route: $route
     };
     $scope.modal = {
         alert: "",
         mensagem: ""
     };
     $scope.exercicio = exercicio;
-    $scope.exercicio.dicas = dicas.getDica(exercicio.tentativas);
+    $scope.exercicio.dicas = DicasService.getDica(exercicio.tentativas);
 
     var pontos = 0;
-    var retorno = resposta.verificarResposta(exercicio.respostaJava, respostaEx);
+    var retorno = RespostaFactory.verificarResposta(exercicio.respostaJava, respostaEx);
     if (retorno === true) {
         Usuario.save({
             login: usuario.getUsuario().login,
@@ -229,7 +236,7 @@ var ModalInstanceCtrlJava = function ($scope, $location, $position, $modalInstan
         }, {
             pontos: exercicio.pontos
         });
-        if (exercicios.salvarConquista()) {
+        if (ExerciciosFactory.salvarConquista()) {
             $scope.modal.alert = "success";
             $scope.modal.mensagem = "Parabéns! você chegou ao fim dos exercicios";
             $scope.resultado.fim = true;
@@ -246,7 +253,7 @@ var ModalInstanceCtrlJava = function ($scope, $location, $position, $modalInstan
 
     }
     $scope.tirarPontos = function (index) {
-        pontos += dicas.tirarPontos(index, $scope.exercicio.pontos);
+        pontos += DicasService.tirarPontos(index, $scope.exercicio.pontos);
     };
 
     $scope.ok = function () {
@@ -258,13 +265,13 @@ var ModalInstanceCtrlJava = function ($scope, $location, $position, $modalInstan
     };
 };
 
-appController.controller('UmlController', function ($scope, $modal, $log, usuario, Modulo, Usuario, exercicios, resposta, dicas) {
+appController.controller('UmlController', function ($scope, $modal, $log, usuario, Modulo, Usuario, ExerciciosFactory, RespostaFactory, DicasService) {
 
     $scope.usuario = usuario.getUsuario();
     $scope.resposta = "";
     $scope.respostaUml = {};
-    var exercicio = exercicios.getExercicios();
-    var ex = exercicios.getProxEx();
+    var exercicio = ExerciciosFactory.getExercicios();
+    var ex = ExerciciosFactory.getProxEx();
     Modulo.get({
         modulo: 'uml',
         exercicio: exercicio[ex].id
@@ -273,7 +280,7 @@ appController.controller('UmlController', function ($scope, $modal, $log, usuari
         $scope.alternativa = data.alternativas;
         $scope.modulo = data.assunto.modulo;
         $scope.exercicio.dicas = [ "Teste1", "Teste2", "Teste3" ];
-        dicas.setDicas($scope.exercicio.dicas);
+        DicasService.setDicas($scope.exercicio.dicas);
     });
     
     
@@ -294,16 +301,17 @@ appController.controller('UmlController', function ($scope, $modal, $log, usuari
 
         modalInstance.result.then(function (resultado) {
             if (resultado.fim === true) {
-            	exercicios.setProxEx(0);
+            	ExerciciosFactory.setProxEx(0);
                 resultado.location.path('/modulos');
             } else {
-                resultado.location.path('/uml/exercicios');
+                //resultado.location.path('/uml/exercicios');
+            	resultado.route.reload();
             }
 
         }, function (pontos) {
-            $scope.exercicio.tentativas = resposta
+            $scope.exercicio.tentativas = RespostaFactory
                 .verificarTentativa($scope.exercicio.tentativas);
-            $scope.exercicio.pontos = resposta
+            $scope.exercicio.pontos = RespostaFactory
                 .verificarPontos($scope.exercicio.pontos);
             $scope.exercicio.pontos -= pontos;
         });
@@ -311,23 +319,26 @@ appController.controller('UmlController', function ($scope, $modal, $log, usuari
 
 });
 
-var ModalInstanceCtrlUml = function ($scope, $location, $position, $modalInstance, Usuario, Progresso,
-                                     usuario, resposta, exercicios, respostaEx, exercicio, dicas) {
-
+var ModalInstanceCtrlUml = function ($scope, $location, $route, $position, $modalInstance, Usuario, Progresso,
+                                     usuario, RespostaFactory, ExerciciosFactory, respostaEx, exercicio, DicasService) {
+	
+	$scope.conquistas = ExerciciosFactory.getBadges();
     $scope.resultado = {
         fim: false,
         erro: false,
-        location: $location
+        status: "",
+        location: $location,
+        route: $route
     };
     $scope.modal = {
         alert: "",
         mensagem: ""
     };
     $scope.exercicio = exercicio;
-    $scope.exercicio.dicas = dicas.getDica(exercicio.tentativas);
+    $scope.exercicio.dicas = DicasService.getDica(exercicio.tentativas);
 
     var pontos = 0;
-    var retorno = resposta.verificarResposta(exercicio.respostaUml, respostaEx);
+    var retorno = RespostaFactory.verificarResposta(exercicio.respostaUml, respostaEx);
     if (retorno === true) {
         Usuario.save({
             login: usuario.getUsuario().login,
@@ -335,24 +346,26 @@ var ModalInstanceCtrlUml = function ($scope, $location, $position, $modalInstanc
         }, {
             pontos: exercicio.pontos
         });
-        if (exercicios.salvarConquista()) {
+        if (ExerciciosFactory.salvarConquista()) {
             $scope.modal.alert = "success";
             $scope.modal.mensagem = "Parabéns! você chegou ao fim dos exercicios";
             $scope.resultado.fim = true;
+            $scope.resultado.status = "fim";
         } else {
             $scope.modal.alert = "success";
             $scope.modal.mensagem = "Parabéns você acertou!";
             $scope.resultado.fim = false;
+            $scope.resultado.status = "proximo";
         }
     } else {
 
         $scope.resultado.erro = true;
         $scope.modal.alert = "danger";
         $scope.modal.mensagem = "Que pena você errou!";
-
+        $scope.resultado.status= "erro";
     }
     $scope.tirarPontos = function (index) {
-        pontos += dicas.tirarPontos(index, $scope.exercicio.pontos);
+        pontos += DicasService.tirarPontos(index, $scope.exercicio.pontos);
     };
 
     $scope.ok = function () {
