@@ -1,5 +1,5 @@
 'use strict';
-var appModule = angular.module('app', [ 'ngRoute', 'ngResource', 'ui.bootstrap' ]);
+var appModule = angular.module('app', [ 'ngResource', 'ui.bootstrap', 'route']);
 
 var appModule = angular.module('app').factory('Usuario', function ($resource) {
     return $resource('http://localhost:8080/TCC-GamificationJava/usuario/:login', {}, {
@@ -37,8 +37,9 @@ appModule.factory('usuario', function () {
     };
 });
 
-appModule.controller('LoginController', function ($rootScope, $scope, $http, $location, usuario, Login) {
-    $rootScope.activetab = $location.path();
+appModule.controller('LoginController', function ($rootScope, $scope, $location, usuario, breadcrumbs, Login) {
+	$rootScope.breadcrumbs = breadcrumbs;
+	$rootScope.activetab = $location.path();
     $scope.usuario = {
         "login": "",
         "senha": ""
@@ -51,8 +52,7 @@ appModule.controller('LoginController', function ($rootScope, $scope, $http, $lo
             var status = response.retorno;
             if (status === true) {
                 usuario.setUsuario($scope.usuario);
-                $location.path('/home');
-                $location.replace();
+                $location.path('/home/');
             } else {
                 $scope.mensagem = "Usuário ou senha incorreto";
                 console.log(status);
@@ -62,8 +62,9 @@ appModule.controller('LoginController', function ($rootScope, $scope, $http, $lo
     };
 });
 
-appModule.controller('UsuarioController', function ($rootScope, $location, $scope, $http, usuario, Usuario, Progresso) {
-    $rootScope.activetab = $location.path();
+appModule.controller('UsuarioController', function ($rootScope, $location, $scope, $http, usuario, breadcrumbs, Usuario, Progresso) {
+	$scope.breadcrumbs = breadcrumbs;
+	$rootScope.activetab = $location.path();
     $rootScope.usuarioLogado = usuario.getUsuario().login;
     $scope.usuario = {};
     Usuario.query(function (data) {
@@ -91,29 +92,88 @@ appModule.controller('UsuarioController', function ($rootScope, $location, $scop
 
 });
 
-appModule.controller('ModuloController', function ($rootScope, $location, $scope, Modulo, ExerciciosFactory, usuario) {
-    $rootScope.activetab = $location.path();
+appModule.controller('ModuloController', function ($rootScope, $location, $scope, Modulo, ExerciciosFactory, usuario, breadcrumbs) {
+	$scope.breadcrumbs = breadcrumbs;
+	$rootScope.activetab = $location.path();
+	
     var progressos = usuario.getUsuario().progressos;
     $scope.progresso = progressos[progressos.length - 1];
+    progressos = progressos.sort();
     
-    Modulo.query(function(data) {
+    var contadorExercicio = 0;
+    var contadorAssunto = 0;
+    var contExercicioPorAssunto = [];
+    var contAssuntoPorModulo = [];
+    for(var p in progressos){
+    	var progresso = progressos[p];
+    	contadorExercicio += 1;
+    	var progr = progressos[contadorExercicio];
+    	if(progresso.exercicio.assunto.id != progr.exercicio.assunto.id){
+    		contExercicioPorAssunto.push({'assuntoId': progresso.exercicio.assunto.id, 'totalExercicios': contadorExercicio});
+    		contadorExercicio = 0;
+    	}
+    }
+    for(var p in progressos){
+    	var progresso = progressos[p];
+    	contadorAssunto += 1;
+    	var progr = progressos[contadorAssunto];
+    	if(progresso.exercicio.assunto.modulo.id != progr.exercicio.assunto.modulo.id){
+    		contAssuntoPorModulo.push({'moduloId': progresso.exercicio.assunto.modulo.id, 'totalAssuntos': contadorAssunto});
+    		contadorAssunto = 0;
+    	}
+    }
+    console.log(contAssuntoPorModulo);
+    
+    $scope.percentualAssunto = [];
+    $scope.percentualModulo = [];
+    
+    Modulo.query()
+    .$promise.then(function(data) {
     	$scope.modulos = data;
+        var modulos = data;
+        for(var index in modulos){
+        	var modulo = modulos[index];
+        	$scope.percentualModulo[modulo.id] = 0;
+        	for(var a in modulo.assuntos){
+        		var assunto = modulo.assuntos[a];
+        		$scope.percentualAssunto[assunto.id] = 0;
+        		for(var e in contExercicioPorAssunto){
+    				var assuntoProgresso = contExercicioPorAssunto[e];
+    				var moduloProgresso = contAssuntoPorModulo[e];
+    				
+    				if(modulo.id == moduloProgresso.moduloId){
+    					if(modulo.assuntos.length !== 0)
+    						$scope.percentualModulo[modulo.id] = (moduloProgresso.totalAssuntos / modulo.assuntos.length) * 100;
+    					else
+    						$scope.percentualModulo[modulo.id] = 100;
+    				}
+    				
+    				if(assunto.id == assuntoProgresso.assuntoId){
+    					if(assunto.exercicios.length !== 0)
+    						$scope.percentualAssunto[assunto.id] = (assuntoProgresso.totalExercicios / assunto.exercicios.length) * 100;
+    					else
+    						$scope.percentualAssunto[assunto.id] = 100;
+    				}
+    			}
+        	}
+        }
     });
-
-    $scope.escolherAssunto = function (assunto) {
+    
+    $scope.escolherAssunto = function (assunto, index) {
+    	
         if (assunto.modulo.nome == "UML") {
             Modulo.query({ assunto: assunto.id }, function (data) {
                 ExerciciosFactory.setExercicios(data);
                 ExerciciosFactory.setBadges(assunto.conquistas);
                 ExerciciosFactory.setProxEx(0);
-                $location.path("/uml/exercicios");
+                $location.path("/home/modulos/uml/exercicios");
             });
         } else {
             Modulo.query({ assunto: assunto.id }, function (data) {
                 ExerciciosFactory.setExercicios(data);
                 ExerciciosFactory.setBadges(assunto.conquistas);
                 ExerciciosFactory.setProxEx(0);
-                $location.path("/java/exercicios");
+                $location.path("/home/modulos/java/exercicios");
             });
         }
 
@@ -121,8 +181,9 @@ appModule.controller('ModuloController', function ($rootScope, $location, $scope
 
 });
 
-appModule.controller('CadastroController', function ($scope, $http, Usuario) {
-    $scope.usuario = {
+appModule.controller('CadastroController', function ($scope, $http, Usuario, breadcrumbs) {
+	$scope.breadcrumbs = breadcrumbs;
+	$scope.usuario = {
         "nome": "",
         "login": "",
         "senha": ""

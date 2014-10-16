@@ -183,21 +183,23 @@ public class ExercicioControle {
 			progressos = usuarioDAO.listarProgressosUsuario(usuario.getLogin());
 			Progresso progressoUsuario = progressoDAO
 					.buscarProgressoByUsuario(usuario);
-
-			float totalExercicios = exercicioDAO.buscarTodosExercicios().size();
-			float totalExerciciosUsuario = usuario.getProgressos().size() + 1;
-			float porcentagem = (totalExerciciosUsuario / totalExercicios) * 100;
-			progressoUsuario.setPorcentagem(porcentagem);
-			Progresso progresso = progressos.get(progressos.size() - 1);
-
-			if (!progresso.getExercicio().equals(
-					progressoUsuario.getExercicio())) {
+			
+			ArrayList<Exercicio> exercicios = new ArrayList<Exercicio>();
+			for(Progresso progresso : progressos){
+				exercicios.add(progresso.getExercicio());
+			}
+			if(!exercicios.contains(progressoUsuario.getExercicio())){
+				float totalExercicios = exercicioDAO.buscarTodosExercicios().size();
+				float totalExerciciosUsuario = usuario.getProgressos().size() + 1;
+				float porcentagem = (totalExerciciosUsuario / totalExercicios) * 100;
+				progressoUsuario.setPorcentagem(porcentagem);
 				progressos.add(progressoUsuario);
 			}
-
+			
 			return progressos;
 
 		} else {
+			
 			Progresso progressoUsuario = progressoDAO
 					.buscarProgressoByUsuario(usuario);
 			float totalExercicios = exercicioDAO.buscarTodosExercicios().size();

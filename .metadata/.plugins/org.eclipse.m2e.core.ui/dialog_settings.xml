@@ -2,6 +2,7 @@
 <section name="Workbench">
 	<section name="org.eclipse.m2e.core.pom.overview">
 		<list key="issueManagementUrl">
+			<item value="http://jira.codehaus.org/browse/JACKSON"/>
 		</list>
 		<list key="issueManagementSystem">
 		</list>

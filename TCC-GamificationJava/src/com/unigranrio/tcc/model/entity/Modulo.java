@@ -64,6 +64,7 @@ public class Modulo {
 		List<AssuntoBean> assuntosBean = new LinkedList<AssuntoBean>();
 		for(Assunto assunto : assuntos){
 			AssuntoBean assuntoBean = assunto.getAssuntoBean();
+			assuntoBean.setExercicios(assunto.getExerciciosBean());
 			assuntoBean.setConquistas(assunto.getConquistasBean());
 			assuntosBean.add(assuntoBean);
 		}

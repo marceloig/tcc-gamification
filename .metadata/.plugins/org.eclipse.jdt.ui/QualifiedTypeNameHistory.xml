@@ -12,8 +12,6 @@
 <fullyQualifiedTypeName name="org.codehaus.jackson.map.ObjectMapper"/>
 <fullyQualifiedTypeName name="com.fasterxml.jackson.databind.ObjectMapper"/>
 <fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonManagedReference"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
-<fullyQualifiedTypeName name="com.unigranrio.tcc.model.ExercicioBean"/>
 <fullyQualifiedTypeName name="com.unigranrio.tcc.model.entity.ExercicioUml"/>
 <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PathVariable"/>
 <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ResponseBody"/>
@@ -32,4 +30,6 @@
 <fullyQualifiedTypeName name="com.unigranrio.tcc.model.entity.Assunto"/>
 <fullyQualifiedTypeName name="java.util.LinkedList"/>
 <fullyQualifiedTypeName name="java.lang.Float"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="com.unigranrio.tcc.model.ExercicioBean"/>
 </qualifiedTypeNameHistroy>

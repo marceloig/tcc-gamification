@@ -12,9 +12,12 @@
 <script src="../js/angular-resource.min.js"></script>
 <script src="../js/angular-route.min.js"></script>
 <script src="../js/ui-bootstrap-tpls-0.11.0.min.js"></script>
+<script src="../js/ng-breadcrumbs.min.js"></script>
+<script src="../js/rotas.js"></script>
 <script src="../js/app.js"></script>
 <script src="../js/exercicio-controllers.js"></script>
-<script src="../js/rotas.js"></script>
+
+
 <link
 	href="//fonts.googleapis.com/css?family=Open+Sans:300italic,300,400italic,400,600italic,600,700italic,700,800italic,800"
 	rel="stylesheet" type="text/css">
@@ -80,22 +83,26 @@ body {
 				<div class="col-md-12">
 					<ul class="nav nav-tabs">
 						<li ng-class="{active: activetab == '/home/'}"><a
-							href="#/home/{{Usuario.getLogin()}}">Home</a></li>
-						<li ng-class="{active: activetab == '/modulos'}"><a
-							href="#/modulos">Módulos</a></li>
-						<li ng-class="{active: activetab == '/sair'}"><a
-							href="#/sair">Sair</a></li>
+							href="#/home">Home</a></li>
+						<li ng-class="{active: activetab == '/home/modulos'}"><a
+							href="#/home/modulos">Módulos</a></li>
+						<li ng-class="{active: activetab == '/home/sair'}"><a
+							href="#/home/sair">Sair</a></li>
 					</ul>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-6">
 					<ol class="breadcrumb" style="background-color: white">
-						<li><a href="">Home</a></li>
-						<li><a href="">Módulos</a></li>
-						<li class="active">Conhecendo Java</li>
+						<li
+							ng-repeat="breadcrumb in breadcrumbs.get() track by breadcrumb.path"
+							ng-class="{ active: $last }"><a ng-if="!$last"
+							ng-href="#{{ breadcrumb.path }}" ng-bind="breadcrumb.label"
+							class="margin-right-xs"></a> <span ng-if="$last"
+							ng-bind="breadcrumb.label"></span></li>
 					</ol>
 				</div>
+
 				<div class="col-md-2 col-md-offset-4">
 					<p class="lead">
 						<span class="label label-default"><span

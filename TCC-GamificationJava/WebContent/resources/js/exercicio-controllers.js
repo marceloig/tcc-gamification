@@ -145,8 +145,8 @@ appModule.service('DicasService', function () {
     
 });
 
-appController.controller('JavaController', function ($scope, $modal, $log, usuario, Modulo, Usuario, ExerciciosFactory, RespostaFactory, DicasService) {
-
+appController.controller('JavaController', function ($scope, $modal, $log, usuario, breadcrumbs, Modulo, Usuario, ExerciciosFactory, RespostaFactory, DicasService) {
+	$scope.breadcrumbs = breadcrumbs;
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/eclipse");
     editor.getSession().setMode("ace/mode/java");
@@ -158,7 +158,7 @@ appController.controller('JavaController', function ($scope, $modal, $log, usuar
     var ex = ExerciciosFactory.getProxEx();
     Modulo.get({modulo: 'java', exercicio: exercicio[ex].id}, function (data) {
         $scope.exercicioJava = data;
-        $scope.modulo = data.assunto.modulo;
+        $scope.assunto = data.assunto;
         codigo = $scope.exercicioJava.codigoReferencia;
         editor.setValue(codigo);
         DicasService.setDicas($scope.exercicioJava.dicas);
@@ -265,8 +265,8 @@ var ModalInstanceCtrlJava = function ($scope, $location, $route, $position, $mod
     };
 };
 
-appController.controller('UmlController', function ($scope, $modal, $log, usuario, Modulo, Usuario, ExerciciosFactory, RespostaFactory, DicasService) {
-
+appController.controller('UmlController', function ($scope, $modal, $log, usuario, breadcrumbs, Modulo, Usuario, ExerciciosFactory, RespostaFactory, DicasService) {
+	$scope.breadcrumbs = breadcrumbs;
     $scope.usuario = usuario.getUsuario();
     $scope.resposta = "";
     $scope.respostaUml = {};
@@ -278,7 +278,7 @@ appController.controller('UmlController', function ($scope, $modal, $log, usuari
     }, function (data) {
         $scope.exercicio = data;
         $scope.alternativa = data.alternativas;
-        $scope.modulo = data.assunto.modulo;
+        $scope.assunto = data.assunto;
         $scope.exercicio.dicas = [ "Teste1", "Teste2", "Teste3" ];
         DicasService.setDicas($scope.exercicio.dicas);
     });

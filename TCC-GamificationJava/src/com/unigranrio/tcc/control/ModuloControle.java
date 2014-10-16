@@ -43,8 +43,8 @@ public class ModuloControle {
 			List<AssuntoBean> assuntosBean = new ArrayList<AssuntoBean>();
 			for(Assunto assunto : modulo.getAssuntos()){
 				AssuntoBean assuntoBean = assunto.getAssuntoBean();
+				assuntoBean.setExercicios(assunto.getExerciciosBean());
 				assuntoBean.setConquistas(assunto.getConquistasBean());
-				assuntoBean.setExercicios(assunto.getExercicioBean());
 				assuntosBean.add(assuntoBean);
 			}
 			moduloBean.setAssuntos(assuntosBean);
