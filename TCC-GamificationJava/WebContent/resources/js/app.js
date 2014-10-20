@@ -95,11 +95,12 @@ appModule.controller('UsuarioController', function ($rootScope, $location, $scop
 appModule.controller('ModuloController', function ($rootScope, $location, $scope, Modulo, ExerciciosFactory, usuario, breadcrumbs) {
 	$scope.breadcrumbs = breadcrumbs;
 	$rootScope.activetab = $location.path();
-	
+	$scope.conquistado = [];
     var progressos = usuario.getUsuario().progressos;
     $scope.progresso = progressos[progressos.length - 1];
     progressos = progressos.sort();
     
+    var badges = [];
     var contadorExercicio = 0;
     var contadorAssunto = 0;
     var contExercicioPorAssunto = [];
@@ -108,21 +109,25 @@ appModule.controller('ModuloController', function ($rootScope, $location, $scope
     	var progresso = progressos[p];
     	contadorExercicio += 1;
     	var progr = progressos[contadorExercicio];
-    	if(progresso.exercicio.assunto.id != progr.exercicio.assunto.id){
-    		contExercicioPorAssunto.push({'assuntoId': progresso.exercicio.assunto.id, 'totalExercicios': contadorExercicio});
-    		contadorExercicio = 0;
+    	if(progr != undefined){
+    		if(progresso.exercicio.assunto.id != progr.exercicio.assunto.id){
+        		contExercicioPorAssunto.push({'assuntoId': progresso.exercicio.assunto.id, 'totalExercicios': contadorExercicio});
+        		contadorExercicio = 0;
+        	}
     	}
+    	
     }
     for(var p in progressos){
     	var progresso = progressos[p];
     	contadorAssunto += 1;
     	var progr = progressos[contadorAssunto];
-    	if(progresso.exercicio.assunto.modulo.id != progr.exercicio.assunto.modulo.id){
-    		contAssuntoPorModulo.push({'moduloId': progresso.exercicio.assunto.modulo.id, 'totalAssuntos': contadorAssunto});
-    		contadorAssunto = 0;
+    	if(progr != undefined){
+    		if(progresso.exercicio.assunto.modulo.id != progr.exercicio.assunto.modulo.id){
+        		contAssuntoPorModulo.push({'moduloId': progresso.exercicio.assunto.modulo.id, 'totalAssuntos': contadorAssunto});
+        		contadorAssunto = 0;
+        	}
     	}
     }
-    console.log(contAssuntoPorModulo);
     
     $scope.percentualAssunto = [];
     $scope.percentualModulo = [];
@@ -136,6 +141,7 @@ appModule.controller('ModuloController', function ($rootScope, $location, $scope
         	$scope.percentualModulo[modulo.id] = 0;
         	for(var a in modulo.assuntos){
         		var assunto = modulo.assuntos[a];
+        		badges = badges.concat(assunto.conquistas);
         		$scope.percentualAssunto[assunto.id] = 0;
         		for(var e in contExercicioPorAssunto){
     				var assuntoProgresso = contExercicioPorAssunto[e];
@@ -157,6 +163,8 @@ appModule.controller('ModuloController', function ($rootScope, $location, $scope
     			}
         	}
         }
+        $scope.badges = badges;
+        $scope.badgesConquistados = usuario.getUsuario().badges;
     });
     
     $scope.escolherAssunto = function (assunto, index) {

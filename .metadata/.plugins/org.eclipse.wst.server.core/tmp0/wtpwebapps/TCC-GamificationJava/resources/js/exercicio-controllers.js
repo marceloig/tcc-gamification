@@ -190,11 +190,11 @@ appController.controller('JavaController', function ($scope, $modal, $log, usuar
                 });
 
                 modalInstance.result.then(function (resultado) {
-                    if (resultado.fim === true) {
+                	if (resultado.fim === true) {
                     	ExerciciosFactory.setProxEx(0);
                         resultado.location.path('/modulos');
                     } else {
-                        resultado.location.path('/uml/exercicios');
+                    	resultado.route.reload();
                     }
 
                 }, function (pontos) {
