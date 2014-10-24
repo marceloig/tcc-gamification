@@ -37,8 +37,8 @@ body {
 	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.barra-lateral {
-	height: 200px;
+.barralateral {
+	height: 250px;
 	overflow-y: scroll;
 }
 
@@ -67,12 +67,13 @@ body {
 }
 
 .gray {
-    -webkit-filter: grayscale(100%);
-    -moz-filter: grayscale(100%);
-    -ms-filter: grayscale(100%);
-    -o-filter: grayscale(100%);
-    filter: url(grayscale.svg); /* Firefox 4+ */
-    filter: gray; /* IE 6-9 */
+	max-width: 65%;
+	-webkit-filter: grayscale(100%);
+	-moz-filter: grayscale(100%);
+	-ms-filter: grayscale(100%);
+	-o-filter: grayscale(100%);
+	filter: url(grayscale.svg); /* Firefox 4+ */
+	filter: gray; /* IE 6-9 */
 }
 </style>
 
@@ -115,7 +116,7 @@ body {
 				<div class="col-md-2 col-md-offset-4">
 					<p class="lead">
 						<span class="label label-default"><span
-							class="glyphicon glyphicon-user"> {{usuarioLogado}}</span></span>
+							class="glyphicon glyphicon-user"> {{usuarioLogado.login}}</span></span>
 					</p>
 				</div>
 			</div>

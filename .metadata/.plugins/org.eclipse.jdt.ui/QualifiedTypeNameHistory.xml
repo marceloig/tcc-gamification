@@ -19,7 +19,6 @@
 <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
 <fullyQualifiedTypeName name="com.unigranrio.tcc.control.CRUDControle"/>
 <fullyQualifiedTypeName name="com.unigranrio.tcc.dao.BadgeDAO"/>
-<fullyQualifiedTypeName name="com.unigranrio.tcc.model.entity.Conquista"/>
 <fullyQualifiedTypeName name="com.unigranrio.tcc.dao.ConquistaDAO"/>
 <fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonIgnore"/>
 <fullyQualifiedTypeName name="java.util.List"/>
@@ -32,4 +31,5 @@
 <fullyQualifiedTypeName name="java.lang.Float"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="com.unigranrio.tcc.model.ExercicioBean"/>
+<fullyQualifiedTypeName name="com.unigranrio.tcc.model.entity.Conquista"/>
 </qualifiedTypeNameHistroy>
