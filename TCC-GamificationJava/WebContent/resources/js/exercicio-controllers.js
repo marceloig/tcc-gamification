@@ -1,8 +1,8 @@
 'use strict';
 var appController = angular.module('app');
 
-appModule.factory('ExerciciosFactory', [ 'Modulo', 'Usuario', 'usuario',
-    function (Modulo, Usuario, usuario) {
+appController.factory('ExerciciosFactory', [ 'Modulo', 'Usuario',
+    function (Modulo, Usuario) {
 
         var dataEx = {
             exercicios: {},
@@ -42,7 +42,7 @@ appModule.factory('ExerciciosFactory', [ 'Modulo', 'Usuario', 'usuario',
                 if (dataEx.exercicios[dataEx.proxEx] == undefined) {
                     var badge = dataEx.badges[0];
                     if(badge != undefined){
-                    	Usuario.update({ login: usuario.getUsuario().login }, { id: badge.id });
+                    	Usuario.getUsuario().update({}, { id: badge.id });
                     }
                     return true;
                 } else {
@@ -52,7 +52,7 @@ appModule.factory('ExerciciosFactory', [ 'Modulo', 'Usuario', 'usuario',
         };
     } ]);
 
-appModule.factory('RespostaFactory', function () {
+appController.factory('RespostaFactory', function () {
     var data = {
         resposta: false,
         tentativas: 0,
@@ -87,7 +87,7 @@ appModule.factory('RespostaFactory', function () {
     };
 });
 
-appModule.service('DicasService', function () {
+appController.service('DicasService', function () {
     var data = [];
     var dicas = [];
     var pontosDicas = [ 10, 10, 10 ];
@@ -145,7 +145,7 @@ appModule.service('DicasService', function () {
     
 });
 
-appController.controller('JavaController', function ($scope, $modal, $log, usuario, breadcrumbs, Modulo, Usuario, ExerciciosFactory, RespostaFactory, DicasService) {
+appController.controller('JavaController', function ($scope, $modal, $log, breadcrumbs, Modulo, Usuario, ExerciciosFactory, RespostaFactory, DicasService) {
 	$scope.breadcrumbs = breadcrumbs;
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/eclipse");
@@ -192,7 +192,7 @@ appController.controller('JavaController', function ($scope, $modal, $log, usuar
                 modalInstance.result.then(function (resultado) {
                 	if (resultado.fim === true) {
                     	ExerciciosFactory.setProxEx(0);
-                        resultado.location.path('/modulos');
+                        resultado.location.path('home/modulos');
                     } else {
                     	resultado.route.reload();
                     }
@@ -211,7 +211,7 @@ appController.controller('JavaController', function ($scope, $modal, $log, usuar
     };
 });
 
-var ModalInstanceCtrlJava = function ($scope, $location, $route, $position, $modalInstance, Usuario, Progresso, usuario, RespostaFactory, ExerciciosFactory, respostaEx, exercicio, DicasService) {
+var ModalInstanceCtrlJava = function ($scope, $location, $route, $position, $modalInstance, Usuario, Progresso, RespostaFactory, ExerciciosFactory, respostaEx, exercicio, DicasService) {
 	$scope.conquistas = ExerciciosFactory.getBadges();
     $scope.resultado = {
         fim: false,
@@ -230,12 +230,7 @@ var ModalInstanceCtrlJava = function ($scope, $location, $route, $position, $mod
     var pontos = 0;
     var retorno = RespostaFactory.verificarResposta(exercicio.respostaJava, respostaEx);
     if (retorno === true) {
-        Usuario.save({
-            login: usuario.getUsuario().login,
-            exercicioId: $scope.exercicio.id
-        }, {
-            pontos: exercicio.pontos
-        });
+        Usuario.getUsuario().save( {exercicioId: $scope.exercicio.id}, {pontos: exercicio.pontos});
         if (ExerciciosFactory.salvarConquista()) {
             $scope.modal.alert = "success";
             $scope.modal.mensagem = "Parabéns! você chegou ao fim dos exercicios";
@@ -265,9 +260,9 @@ var ModalInstanceCtrlJava = function ($scope, $location, $route, $position, $mod
     };
 };
 
-appController.controller('UmlController', function ($scope, $modal, $log, usuario, breadcrumbs, Modulo, Usuario, ExerciciosFactory, RespostaFactory, DicasService) {
+appController.controller('UmlController', function ($scope, $modal, $log,  breadcrumbs, Modulo, Usuario, ExerciciosFactory, RespostaFactory, DicasService) {
 	$scope.breadcrumbs = breadcrumbs;
-    $scope.usuario = usuario.getUsuario();
+    $scope.usuario = Usuario.getUsuario().get();
     $scope.resposta = "";
     $scope.respostaUml = {};
     var exercicio = ExerciciosFactory.getExercicios();
@@ -302,9 +297,8 @@ appController.controller('UmlController', function ($scope, $modal, $log, usuari
         modalInstance.result.then(function (resultado) {
             if (resultado.fim === true) {
             	ExerciciosFactory.setProxEx(0);
-                resultado.location.path('/modulos');
+                resultado.location.path('home/modulos');
             } else {
-                //resultado.location.path('/uml/exercicios');
             	resultado.route.reload();
             }
 
@@ -320,7 +314,7 @@ appController.controller('UmlController', function ($scope, $modal, $log, usuari
 });
 
 var ModalInstanceCtrlUml = function ($scope, $location, $route, $position, $modalInstance, Usuario, Progresso,
-                                     usuario, RespostaFactory, ExerciciosFactory, respostaEx, exercicio, DicasService) {
+                                      RespostaFactory, ExerciciosFactory, respostaEx, exercicio, DicasService) {
 	
 	$scope.conquistas = ExerciciosFactory.getBadges();
     $scope.resultado = {
@@ -340,12 +334,7 @@ var ModalInstanceCtrlUml = function ($scope, $location, $route, $position, $moda
     var pontos = 0;
     var retorno = RespostaFactory.verificarResposta(exercicio.respostaUml, respostaEx);
     if (retorno === true) {
-        Usuario.save({
-            login: usuario.getUsuario().login,
-            exercicioId: $scope.exercicio.id
-        }, {
-            pontos: exercicio.pontos
-        });
+        Usuario.getUsuario().save({exercicioId: $scope.exercicio.id}, {pontos: exercicio.pontos});
         if (ExerciciosFactory.salvarConquista()) {
             $scope.modal.alert = "success";
             $scope.modal.mensagem = "Parabéns! você chegou ao fim dos exercicios";

@@ -20,12 +20,12 @@ public class ConquistaDAO {
 	public void gravarConquista(Conquista conquista) {
 
 		manager.persist(conquista);
-
 	}
 
-	public void atualizarConquista(Conquista conquista) {
+	public Conquista atualizarConquista(Conquista conquista) {
 
-		manager.merge(conquista);
+		Conquista conquistaAtualizado = manager.merge(conquista);
+		return conquistaAtualizado;
 
 	}
 	
@@ -40,11 +40,11 @@ public class ConquistaDAO {
 		query.setParameter("assunto", assunto);
 		List<Conquista> conquistas = query.getResultList();
 		return conquistas;
-
+		
 	}
 
-	public Conquista buscarBadge(long id) {
-		Query query = manager.createNamedQuery("Conquista.getBadge");
+	public Conquista buscarConquista(long id) {
+		Query query = manager.createNamedQuery("Conquista.getConquista");
 		query.setParameter("id", id);
 		Conquista badge = (Conquista) query.getSingleResult();
 		return badge;

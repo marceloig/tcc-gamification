@@ -12,7 +12,7 @@ import com.unigranrio.tcc.model.ConquistaBean;
 @Entity
 @NamedQueries({
 	@NamedQuery(name = "Conquista.allBadges", query = "SELECT c FROM Conquista c WHERE c.assunto = :assunto"),
-	@NamedQuery(name = "Conquista.getBadge", query = "SELECT c FROM Conquista c WHERE c.id = :id"),
+	@NamedQuery(name = "Conquista.getConquista", query = "SELECT c FROM Conquista c WHERE c.id = :id"),
 })
 public class Conquista {
 

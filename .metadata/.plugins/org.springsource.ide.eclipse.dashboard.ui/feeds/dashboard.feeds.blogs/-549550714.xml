@@ -5,7 +5,553 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2014-10-15T13:20:00Z</updated>
+  <updated>2014-10-23T18:37:03Z</updated>
+  <entry>
+    <title>Spring AMQP 1.4 RC1 Released</title>
+    <link rel="alternate" href="https://spring.io/blog/2014/10/23/spring-amqp-1-4-rc1-released" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Artem Bilan</name>
+    </author>
+    <id>tag:spring.io,2014-10-23:1794</id>
+    <updated>2014-10-23T18:37:03Z</updated>
+    <content type="html">&lt;p&gt;We are pleased to announce the availability of the Release Candidate for Spring AMQP 1.4; the GA is planned to be released during the first week of November.&lt;/p&gt;
+
+&lt;p&gt;First of all, thank you all who provided feedback for the &lt;a href="https://spring.io/blog/2014/09/05/spring-amqp-for-java-1-4-milestone-1-available"&gt;milestone 1.4 M1 version&lt;/a&gt; and submitted reports (bugs or new features).
+Special thanks to &lt;a href="https://spring.io/team/snicoll/"&gt;Stéphane Nicoll&lt;/a&gt;, who had introduced annotation-based message
+listeners (&lt;code&gt;@RabbitListener&lt;/code&gt;) and the new &lt;code&gt;RabbitMessagingTemplate&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2&gt;
+&lt;a name="user-content-features-and-fixes-included-in-this-release-changes-since-the-milestone" class="anchor" href="#features-and-fixes-included-in-this-release-changes-since-the-milestone" aria-hidden="true"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;Features and fixes included in this release (changes since the milestone)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;With the annotation-based message listener you can use the &lt;code&gt;@SendTo&lt;/code&gt; annotation to send the result of the method as a reply message (when there's no &lt;code&gt;replyTo&lt;/code&gt; in the inbound message):&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class="highlight highlight-java"&gt;&lt;pre&gt;&lt;span class="nd"&gt;@RabbitListener&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;queues&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;"capitalize"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="nd"&gt;@SendTo&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"capitalize.reply"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="nf"&gt;capitalize&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;toUpperCase&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;(Annotation-basd listeners require Spring Framework 4.1.x).&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;A new &lt;code&gt;RabbitMessagingTemplate&lt;/code&gt; has been introduced, allowing the use of the &lt;code&gt;spring-messaging&lt;/code&gt; &lt;code&gt;Message&amp;lt;?&amp;gt;&lt;/code&gt; abstraction as an alternative to the Spring AMQP &lt;code&gt;Message&lt;/code&gt; (Spring Messaging &lt;code&gt;Message&amp;lt;?&amp;gt;&lt;/code&gt; is also supported by the annotated listeners). &lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;The Logback &lt;code&gt;AmqpAppender&lt;/code&gt; is now available, with configuration similar to the existing Log4j &lt;code&gt;AmqpAppender&lt;/code&gt;:&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class="highlight highlight-xml"&gt;&lt;pre&gt;&lt;span class="nt"&gt;&amp;lt;appender&lt;/span&gt; &lt;span class="na"&gt;name=&lt;/span&gt;&lt;span class="s"&gt;"AMQP"&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;"org.springframework.amqp.rabbit.logback.AmqpAppender"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;layout&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;pattern&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;![CDATA[ %d %p %t [%c] - &amp;lt;%m&amp;gt;%n ]]&amp;gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;/pattern&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/layout&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;abbreviation&amp;gt;&lt;/span&gt;36&lt;span class="nt"&gt;&amp;lt;/abbreviation&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;applicationId&amp;gt;&lt;/span&gt;MyApplication&lt;span class="nt"&gt;&amp;lt;/applicationId&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;routingKeyPattern&amp;gt;&lt;/span&gt;%property{applicationId}.%c.%p&lt;span class="nt"&gt;&amp;lt;/routingKeyPattern&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;generateId&amp;gt;&lt;/span&gt;true&lt;span class="nt"&gt;&amp;lt;/generateId&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;charset&amp;gt;&lt;/span&gt;UTF-8&lt;span class="nt"&gt;&amp;lt;/charset&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;durable&amp;gt;&lt;/span&gt;false&lt;span class="nt"&gt;&amp;lt;/durable&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;deliveryMode&amp;gt;&lt;/span&gt;NON_PERSISTENT&lt;span class="nt"&gt;&amp;lt;/deliveryMode&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/appender&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The &lt;code&gt;RabbitTemplate&lt;/code&gt; can now be configured with an &lt;code&gt;AbstractRoutingConnectionFactory&lt;/code&gt; with &lt;code&gt;expression&lt;/code&gt; attributes to determine the target &lt;code&gt;ConnectionFactory&lt;/code&gt; depending on the &lt;code&gt;RabbitTemplate&lt;/code&gt; operation:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class="highlight highlight-xml"&gt;&lt;pre&gt;&lt;span class="nt"&gt;&amp;lt;rabbit:template&lt;/span&gt; &lt;span class="na"&gt;connection-factory=&lt;/span&gt;&lt;span class="s"&gt;"RoutingConnectionFactory"&lt;/span&gt;
+     &lt;span class="na"&gt;send-connection-factory-selector-expression=&lt;/span&gt;&lt;span class="s"&gt;"messageProperties.userId"&lt;/span&gt;
+     &lt;span class="na"&gt;receive-connection-factory-selector-expression=&lt;/span&gt;&lt;span class="s"&gt;"#root == 'fooQueue' ? 'foo' : null"&lt;/span&gt;&lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;In addition, the &lt;code&gt;mandatory-expression&lt;/code&gt; attribute has been added to the &lt;code&gt;RabbitTemplate&lt;/code&gt; to set the &lt;code&gt;mandatory&lt;/code&gt; flag for each sent message:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class="highlight highlight-xml"&gt;&lt;pre&gt;&lt;span class="nt"&gt;&amp;lt;rabbit:template&lt;/span&gt; &lt;span class="na"&gt;connection-factory=&lt;/span&gt;&lt;span class="s"&gt;"connectionFactory"&lt;/span&gt;
+      &lt;span class="na"&gt;mandatory-expression=&lt;/span&gt;&lt;span class="s"&gt;"messageProperties.contentType == 'application/json'"&lt;/span&gt;&lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;(Previously, &lt;code&gt;mandatory&lt;/code&gt; was set at the template level).&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The &lt;code&gt;AbstractRoutingConnectionFactory&lt;/code&gt; is now also supported for the &lt;code&gt;MessageListenerContainer&lt;/code&gt;, where the &lt;code&gt;key&lt;/code&gt; for
+the target &lt;code&gt;ConnectionFactory&lt;/code&gt; is based on the configured &lt;code&gt;queueNames&lt;/code&gt; array&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;See the &lt;a href="https://jira.spring.io/secure/ReleaseNote.jspa?version=14724&amp;amp;projectId=10450"&gt;Release Notes&lt;/a&gt;
+and the &lt;a href="http://projects.spring.io/spring-amqp/"&gt;Project Page&lt;/a&gt; for more information.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>See how to build, test, secure, and add hypermedia with this new tutorial, "Building REST Services with Spring"</title>
+    <link rel="alternate" href="https://spring.io/blog/2014/10/23/see-how-to-build-test-secure-and-add-hypermedia-with-this-new-tutorial-building-rest-services-with-spring" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Greg Turnquist</name>
+    </author>
+    <id>tag:spring.io,2014-10-23:1795</id>
+    <updated>2014-10-23T17:10:33Z</updated>
+    <content type="html">&lt;p&gt;Greetings Spring Community!&lt;/p&gt;
+
+&lt;p&gt;Today we have released a new tutorial written by Spring geek &lt;a href="http://spring.io/team/jlong"&gt;Josh Long&lt;/a&gt;, the man who travels the globe talking about Spring: &lt;a href="http://spring.io/guides/tutorials/bookmarks"&gt;Building REST Services with Spring&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;In this sleek tutorial, you can read about the simplicity and power of building RESTful web services using Spring. You'll also see how to:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Test them with Spring's powerful MockMvc&lt;/li&gt;
+&lt;li&gt;Secure them with &lt;a href="http://projects.spring.io/spring-security"&gt;Spring Security&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;Plugin error handling&lt;/li&gt;
+&lt;li&gt;Add &lt;a href="http://projects.spring.io/spring-hateoas"&gt;hypermedia controls&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;Dabble with &lt;a href="http://projects.spring.io/spring-security-oauth"&gt;OAuth&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;See it all using &lt;a href="http://projects.spring.io/spring-boot"&gt;Spring Boot&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;It's a really good read with LOTS of code (you know, the important stuff). What about the existing REST tutorial? It was a bit dated on concepts we wanted to cover and state-of-the-art, so it has been retired in favor of this one.&lt;/p&gt;
+
+&lt;p&gt;Share and enjoy!&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Introducing Spring Sync</title>
+    <link rel="alternate" href="https://spring.io/blog/2014/10/22/introducing-spring-sync" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Craig Walls</name>
+    </author>
+    <id>tag:spring.io,2014-10-21:1791</id>
+    <updated>2014-10-22T17:05:09Z</updated>
+    <content type="html">&lt;p&gt;Earlier today, I announced the first milestone release of Spring Sync, a new project that addresses efficient communication between client applications and Spring backends by employing patch-based exchanges. As this is a new project, I thought it would be a good time to show you what Spring Sync can do.&lt;/p&gt;
+
+&lt;p&gt;The examples given here refer to the &lt;a href="https://github.com/spring-projects/spring-sync-samples/tree/master/spring-rest-todos"&gt;Spring REST Todos&lt;/a&gt; example and/or the &lt;code&gt;Todo&lt;/code&gt; class in that example project.&lt;/p&gt;
+
+&lt;h2&gt;
+&lt;a name="user-content-creating-and-applying-patches" class="anchor" href="#creating-and-applying-patches" aria-hidden="true"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;Creating and applying patches&lt;/h2&gt;
+
+&lt;p&gt;At its lowest level, Spring Sync provides a library for producing and applying patches to Java objects. The &lt;code&gt;Patch&lt;/code&gt; class is the centerpiece of this library, capturing the changes that can be applied to an object to bring it in sync with another object. &lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;Patch&lt;/code&gt; class aims to be generic, not associated directly with any particular representation of a patch. That said, it is inspired by &lt;a href="https://tools.ietf.org/html/rfc6902"&gt;JSON Patch&lt;/a&gt; and Spring Sync provides support for creating and serializing &lt;code&gt;Patch&lt;/code&gt; instances as JSON Patch. Future versions of Spring Sync may include support for other patch representations.&lt;/p&gt;
+
+&lt;p&gt;The easiest way to create a patch is to perform a difference between two Java objects:&lt;/p&gt;
+
+&lt;div class="highlight highlight-java"&gt;&lt;pre&gt;&lt;span class="n"&gt;Todo&lt;/span&gt; &lt;span class="n"&gt;original&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;...;&lt;/span&gt;
+&lt;span class="n"&gt;Todo&lt;/span&gt; &lt;span class="n"&gt;modified&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;...;&lt;/span&gt;
+&lt;span class="n"&gt;Patch&lt;/span&gt; &lt;span class="n"&gt;patch&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Diff&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;diff&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;original&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;modified&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Here, the &lt;code&gt;Diff.diff()&lt;/code&gt; method will compare the two &lt;code&gt;Todo&lt;/code&gt; objects and produce a &lt;code&gt;Patch&lt;/code&gt; that describes the difference between them.&lt;/p&gt;
+
+&lt;p&gt;Once you have a &lt;code&gt;Patch&lt;/code&gt;, it can be applied to an object by passing in the object to the &lt;code&gt;apply()&lt;/code&gt; method:&lt;/p&gt;
+
+&lt;div class="highlight highlight-java"&gt;&lt;pre&gt;&lt;span class="n"&gt;Todo&lt;/span&gt; &lt;span class="n"&gt;patched&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;patch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;apply&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;original&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Todo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Note that the &lt;code&gt;diff()&lt;/code&gt; and &lt;code&gt;apply()&lt;/code&gt; methods are the inverse of each other. Therefore, the patched &lt;code&gt;Todo&lt;/code&gt; in these examples should be identical to the modified &lt;code&gt;Todo&lt;/code&gt; after applying the patch to the original.&lt;/p&gt;
+
+&lt;p&gt;As I mentioned, &lt;code&gt;Patch&lt;/code&gt; is decoupled from any particular patch representation. But Spring Sync offers &lt;code&gt;JsonPatchMaker&lt;/code&gt; as a utility class to convert &lt;code&gt;Patch&lt;/code&gt; objects to/from Jackson &lt;code&gt;JsonNode&lt;/code&gt; instances where the &lt;code&gt;JsonNode&lt;/code&gt; is an &lt;code&gt;ArrayNode&lt;/code&gt; containing zero or more operations per the JSON Patch specification. For example, to convert a &lt;code&gt;Patch&lt;/code&gt; to a &lt;code&gt;JsonNode&lt;/code&gt; containing JSON Patch:&lt;/p&gt;
+
+&lt;div class="highlight highlight-java"&gt;&lt;pre&gt;&lt;span class="n"&gt;JsonNode&lt;/span&gt; &lt;span class="n"&gt;jsonPatchNode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;JsonPatchMaker&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;toJsonNode&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;patch&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Similarly, a &lt;code&gt;Patch&lt;/code&gt; object can be created from a &lt;code&gt;JsonNode&lt;/code&gt; like this:&lt;/p&gt;
+
+&lt;div class="highlight highlight-java"&gt;&lt;pre&gt;&lt;span class="n"&gt;Patch&lt;/span&gt; &lt;span class="n"&gt;patch&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;JsonPatchMaker&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;fromJsonNode&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;jsonPatchNode&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Note that &lt;code&gt;JsonPatchMaker&lt;/code&gt; is a temporary solution to (de)serializing &lt;code&gt;Patch&lt;/code&gt; objects to/from JSON Patch. It will be replaced with a more permanent solution in a later release.&lt;/p&gt;
+
+&lt;h2&gt;
+&lt;a name="user-content-applying-differential-synchronization" class="anchor" href="#applying-differential-synchronization" aria-hidden="true"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;Applying Differential Synchronization&lt;/h2&gt;
+
+&lt;p&gt;Creating patches requires that you have both before and after instances of an object from which to calculate the difference. Although it doesn't refer to them as "before" and "after", the &lt;a href="https://neil.fraser.name/writing/sync/eng047-fraser.pdf"&gt;Differential Synchronization&lt;/a&gt; algorithm described in a paper by Neil Fraser essentially defines a controller manner by which patches can be created, shared, and applied between two or more network nodes (perhaps client and server, but not necessarily applicable only to client-server scenarios).&lt;/p&gt;
+
+&lt;p&gt;When applying Differential Synchronization, each node maintains two copies of a resource: &lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The local node's own working copy that it may change.&lt;/li&gt;
+&lt;li&gt;A shadow copy which is the local node's understanding of what a remote node's working copy looks like.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The node may make any changes it needs to it's local copy of the resource. Periodically, the node will produce a patch by comparing the local node with the shadow copy it maintains for the remote node. It then sends the patch to the remote node. Once the patch is sent, the node copies its local copy over the shadow, assuming that the remote node will apply the patch and therefore its understanding of the remote node's resource is in sync with the local resource.&lt;/p&gt;
+
+&lt;p&gt;Upon receiving a patch, a node must apply the patch to the shadow that it keeps for the node that sent the patch and to its own local copy (which may have had changes itself).&lt;/p&gt;
+
+&lt;p&gt;Spring Sync supports Differential Synchronization through its &lt;code&gt;DiffSync&lt;/code&gt; class. To create a &lt;code&gt;DiffSync&lt;/code&gt;, you must supply it with a &lt;code&gt;ShadowStore&lt;/code&gt; and the object type that it can apply patches for:&lt;/p&gt;
+
+&lt;div class="highlight highlight-java"&gt;&lt;pre&gt;&lt;span class="n"&gt;ShadowStore&lt;/span&gt; &lt;span class="n"&gt;shadowStore&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nf"&gt;MapBasedShadowStore&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;span class="n"&gt;shadowStore&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setRemoteNodeId&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"remoteNode"&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;DiffSync&lt;/span&gt; &lt;span class="n"&gt;diffSync&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nf"&gt;DiffSync&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;shadowStore&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Todo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Once you have a &lt;code&gt;DiffSync&lt;/code&gt; in hand, you can use it to apply a &lt;code&gt;Patch&lt;/code&gt; to an object:&lt;/p&gt;
+
+&lt;div class="highlight highlight-java"&gt;&lt;pre&gt;&lt;span class="n"&gt;Todo&lt;/span&gt; &lt;span class="n"&gt;patched&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;diffSync&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;apply&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;patch&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;todo&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The &lt;code&gt;apply()&lt;/code&gt; method will apply the patch to both the given object as well as the shadow copy of that same object. If no shadow copy has yet been created, it will create one by deep-cloning the given object.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;ShadowStore&lt;/code&gt; is where &lt;code&gt;DiffSync&lt;/code&gt; maintains its copy of shadow copies for a remote node. For any given node, there may be multiple shadow stores, one for each remote node it deals with. As you can see in the example, its &lt;code&gt;remoteNodeId&lt;/code&gt; property is set to uniquely identify the remote node. In a client-server topology, the server may use the session ID to identify the remote node. Meanwhile, the clients (which are probably only sharing the resource with one central server) may use any identifier they want to identify the server node.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;DiffSync&lt;/code&gt; can also be used to create a &lt;code&gt;Patch&lt;/code&gt; from a stored shadow copy:&lt;/p&gt;
+
+&lt;div class="highlight highlight-java"&gt;&lt;pre&gt;&lt;span class="n"&gt;Patch&lt;/span&gt; &lt;span class="n"&gt;patch&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;diffSync&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;diff&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;todo&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;When creating a patch, the stored shadow will be retrieved from the &lt;code&gt;ShadowStore&lt;/code&gt; and compared with the given object. In keeping with the Differential Synchronization flow, the given object will be copied over the shadow once the patch is produced.&lt;/p&gt;
+
+&lt;p&gt;It's worth noting that &lt;code&gt;DiffSync&lt;/code&gt; works with &lt;code&gt;Patch&lt;/code&gt; objects which are decoupled from any particular patch representation. Therefore, &lt;code&gt;DiffSync&lt;/code&gt; itself is decoupled from the patch representation as well.&lt;/p&gt;
+
+&lt;h2&gt;
+&lt;a name="user-content-taking-diffsync-to-the-web" class="anchor" href="#taking-diffsync-to-the-web" aria-hidden="true"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;Taking DiffSync to the web&lt;/h2&gt;
+
+&lt;p&gt;Creating and applying patches on a single node is somewhat pointless. Where Differential Synchronization really shines is when two or more nodes are sharing and manipulating the same resource and you need each node to remain in sync (as much as is reasonable). Therefore, Spring Sync also offers &lt;code&gt;DiffSyncController&lt;/code&gt; a Spring MVC controller that handles &lt;a href="http://tools.ietf.org/html/rfc5789"&gt;HTTP PATCH&lt;/a&gt; requests, applying Differential Synchronization to a resource.&lt;/p&gt;
+
+&lt;p&gt;The easiest way to configure &lt;code&gt;DiffSyncController&lt;/code&gt; is to create a Spring configuration class that is annotated with &lt;code&gt;@EnableDifferentialSynchronization&lt;/code&gt; and extend the &lt;code&gt;DiffSyncConfigurerAdapter&lt;/code&gt; class:&lt;/p&gt;
+
+&lt;div class="highlight highlight-java"&gt;&lt;pre&gt;&lt;span class="nd"&gt;@Configuration&lt;/span&gt;
+&lt;span class="nd"&gt;@EnableDifferentialSynchronization&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;DiffSyncConfig&lt;/span&gt; &lt;span class="kd"&gt;extends&lt;/span&gt; &lt;span class="n"&gt;DiffSyncConfigurerAdapter&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@Autowired&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;PagingAndSortingRepository&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Todo&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Long&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;repo&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@Override&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;addPersistenceCallbacks&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;PersistenceCallbackRegistry&lt;/span&gt; &lt;span class="n"&gt;registry&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;registry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;addPersistenceCallback&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;JpaPersistenceCallback&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Todo&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;(&lt;/span&gt;&lt;span class="n"&gt;repo&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Todo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Among other things, &lt;code&gt;@EnableDifferentialSynchronization&lt;/code&gt; declares a &lt;code&gt;DiffSyncController&lt;/code&gt; bean, providing it with a &lt;code&gt;PersistenceCallbackRegistry&lt;/code&gt; and a &lt;code&gt;ShadowStore&lt;/code&gt;. &lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;PersistenceCallbackRegistry&lt;/code&gt; is a registry of &lt;code&gt;PersistenceCallback&lt;/code&gt; objects through which &lt;code&gt;DiffSyncController&lt;/code&gt; will retrieve and persist resources it patches. The &lt;code&gt;PersistenceCallback&lt;/code&gt; interface enables &lt;code&gt;DiffSyncController&lt;/code&gt; to be decoupled from the application-specific persistence choices for the resource. As an example, here's an implementation of &lt;code&gt;PersistenceCallback&lt;/code&gt; that works with a &lt;a href="http://projects.spring.io/spring-data/"&gt;Spring Data&lt;/a&gt; &lt;code&gt;CrudRepository&lt;/code&gt; to persist &lt;code&gt;Todo&lt;/code&gt; objects:&lt;/p&gt;
+
+&lt;div class="highlight highlight-java"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="n"&gt;org&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;springframework&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;sync&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;diffsync&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;web&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.util.List&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;org.springframework.data.repository.CrudRepository&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;org.springframework.sync.diffsync.PersistenceCallback&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+&lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;JpaPersistenceCallback&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="kd"&gt;implements&lt;/span&gt; &lt;span class="n"&gt;PersistenceCallback&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;CrudRepository&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Long&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;repo&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;Class&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;entityType&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="nf"&gt;JpaPersistenceCallback&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;CrudRepository&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Long&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;repo&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Class&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;entityType&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;repo&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;repo&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;entityType&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;entityType&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@Override&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nf"&gt;findAll&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;)&lt;/span&gt; &lt;span class="n"&gt;repo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;findAll&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@Override&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;T&lt;/span&gt; &lt;span class="nf"&gt;findOne&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;repo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;findOne&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Long&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;valueOf&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@Override&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;persistChange&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt; &lt;span class="n"&gt;itemToSave&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;repo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;save&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;itemToSave&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@Override&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;persistChanges&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;itemsToSave&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;itemsToDelete&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;repo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;save&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;itemsToSave&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;repo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;delete&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;itemsToDelete&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@Override&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;Class&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nf"&gt;getEntityType&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;entityType&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;As for the &lt;code&gt;ShadowStore&lt;/code&gt; given to &lt;code&gt;DiffSyncController&lt;/code&gt;, it will be a &lt;code&gt;MapBasedShadowStore&lt;/code&gt; by default. But you can override the &lt;code&gt;getShadowStore()&lt;/code&gt; method from &lt;code&gt;DiffSyncConfigurerAdapter&lt;/code&gt; to specify a different shadow store implementation.  For example, you may configure a Redis-based shadow store like this:&lt;/p&gt;
+
+&lt;div class="highlight highlight-java"&gt;&lt;pre&gt;&lt;span class="nd"&gt;@Autowired&lt;/span&gt;
+&lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;RedisOperations&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;redisTemplate&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+&lt;span class="nd"&gt;@Override&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;ShadowStore&lt;/span&gt; &lt;span class="nf"&gt;getShadowStore&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nf"&gt;RedisShadowStore&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;redisTemplate&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Regardless of which implementation of &lt;code&gt;ShadowStore&lt;/code&gt; you choose, a session-scoped bean will be declared, ensuring that each client will receive their own instance of the shadow store.&lt;/p&gt;
+
+&lt;p&gt;As it handles PATCH requests, &lt;code&gt;DiffSyncController&lt;/code&gt; will apply one cycle of the Differential Sychronization flow:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;It will apply the patch to the server copy of the resource and to the shadow copy for the client who sent the PATCH.&lt;/li&gt;
+&lt;li&gt;It will create a new patch by comparing its local resource with the shadow copy.&lt;/li&gt;
+&lt;li&gt;It will replace the shadow copy with the local copy of the resource.&lt;/li&gt;
+&lt;li&gt;It will send the new patch on the response to the client.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Just like &lt;code&gt;Patch&lt;/code&gt; and &lt;code&gt;DiffSync&lt;/code&gt;, &lt;code&gt;DiffSyncController&lt;/code&gt; is decoupled from any particular patch format. Spring Sync does provide &lt;code&gt;JsonPatchHttpMessageConverter&lt;/code&gt;, however, so that &lt;code&gt;DiffSyncController&lt;/code&gt; can receive and response with JSON Patch-formated patches, given "application/json-patch+json" as the content type. &lt;/p&gt;
+
+&lt;h2&gt;
+&lt;a name="user-content-conclusion" class="anchor" href="#conclusion" aria-hidden="true"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;As you've seen here, Spring Sync aims to provide a means of efficient communication and synchronization between a client and a server (or any set of nodes that share a resource). It provides low-level support for producing and applying patches as well as higher-level support for working with Differential Synchronization. Although it comes with support for JSON Patch, it is largely independent of any specific patch format.&lt;/p&gt;
+
+&lt;p&gt;This is just the beginning. Among other things, we're looking to...&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Complement &lt;code&gt;DiffSyncController&lt;/code&gt;'s HTTP-based Differential Synchronization with WebSocket/STOMP for full-duplex patch communication.&lt;/li&gt;
+&lt;li&gt;Continued refinement of the Differential Synchronization implementation to support resource versioning and other techniques to avoid patching conflicts.&lt;/li&gt;
+&lt;li&gt;Support for using Spring Sync in client-side Android applications.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Keep an eye on the project and let us know what you think. Feel free to &lt;a href="https://github.com/spring-projects/spring-sync/issues"&gt;submit bug reports and improvements&lt;/a&gt; and we certainly welcome you to &lt;a href="https://github.com/spring-projects/spring-sync"&gt;fork the code&lt;/a&gt; and submit pull requests.&lt;/p&gt;
+
+&lt;p&gt;If you'd like to read more about Spring Sync, then have a look at these resources:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="http://www.slideshare.net/briancavalier/differential-sync-and-json-patch-s2-gx-2014"&gt;Differential Sychronization and JSON Patch&lt;/a&gt; : The presentation that Brian Cavalier and I gave at SpringOne/2GX in September.&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="https://spring.io/blog/2014/10/08/streaming-json-patch-from-spring-to-a-react-ui"&gt;Streaming JSON Patch from Spring to a React UI&lt;/a&gt; : An article by Brian Cavalier that leverages Spring Sync on the server-side for producing patches.&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="https://github.com/spring-projects/spring-sync-samples/tree/master/spring-rest-todos"&gt;Spring REST Todos&lt;/a&gt; : An Todos list example employing Spring Sync on the server with &lt;a href="https://github.com/cujojs/jiff"&gt;jiff.js&lt;/a&gt; and &lt;a href="https://github.com/briancavalier/fabulous"&gt;fabulous.js&lt;/a&gt; on the client.&lt;/li&gt;
+&lt;/ul&gt;</content>
+  </entry>
+  <entry>
+    <title>Spring Sync 1.0.0 Milestone 1 Released</title>
+    <link rel="alternate" href="https://spring.io/blog/2014/10/22/spring-sync-1-0-0-milestone-1-released" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Craig Walls</name>
+    </author>
+    <id>tag:spring.io,2014-10-22:1792</id>
+    <updated>2014-10-22T09:00:00Z</updated>
+    <content type="html">&lt;p&gt;Dear Spring Community,&lt;/p&gt;
+
+&lt;p&gt;I am pleased to announce the first milestone release of Spring Sync 1.0.0.&lt;/p&gt;
+
+&lt;p&gt;Spring Sync enables efficient communication and synchronization of data between clients and Spring-based servers.&lt;/p&gt;
+
+&lt;p&gt;The release dependency is available in the &lt;a href="http://repo.spring.io/libs-milestone-local"&gt;repo.spring.io milestone repository&lt;/a&gt; at the dependency coordinates of "org.springframework.sync:spring-sync:1.0.0.M1". &lt;/p&gt;
+
+&lt;p&gt;This release includes:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A patch abstraction for calculating differences and applying patches between Java objects.&lt;/li&gt;
+&lt;li&gt;Support for representing patches as &lt;a href="https://tools.ietf.org/html/rfc6902"&gt;JSON Patch&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;An implementation of &lt;a href="https://neil.fraser.name/writing/sync/eng047-fraser.pdf"&gt;Differential Synchronization&lt;/a&gt; for creating and applying patches in a controlled manner.&lt;/li&gt;
+&lt;li&gt;DiffSyncController, a Spring MVC controller that handles HTTP request of type application/patch-json+patch and performing Differential Synchronization against a resource.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The &lt;a href="https://github.com/spring-projects/spring-sync"&gt;code for Spring Sync&lt;/a&gt; is available in GitHub. Contributions in the form of pull requests are most certainly welcome. You may also submit bug reports and improvement suggestions via &lt;a href="https://github.com/spring-projects/spring-sync/issues"&gt;GitHub issue tracking&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Keep an eye on this blog for an introductory article on Spring Sync to be published later today. In the meantime, have a look at a few &lt;a href="https://github.com/spring-projects/spring-sync-samples"&gt;Spring Sync examples&lt;/a&gt; to see Spring Sync in action.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>This Week in Spring - October 21st, 2014</title>
+    <link rel="alternate" href="https://spring.io/blog/2014/10/22/this-week-in-spring-october-21st-2014" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Josh Long</name>
+    </author>
+    <id>tag:spring.io,2014-10-22:1793</id>
+    <updated>2014-10-22T04:27:16Z</updated>
+    <content type="html">&lt;p&gt; 
+Welcome to another installment of 
+&lt;em&gt;This Week in Spring&lt;/em&gt;! 
+This week I'm talking to developers at the Neo4j &lt;b&gt; GraphConnect&lt;/b&gt; conference with my pal 
+(and Neo4j evangelist) &lt;a href="http://twitter.com/kennybastani"&gt;Kenny Bastani&lt;/a&gt;, and then on
+     Thursday I'll  be doing a webinar with my one of my pals on the Vaadin team, Peter Lehto, on how to build
+      &lt;em&gt;Bootiful&lt;/em&gt; Vaadin applications - don't miss it! &lt;/p&gt;
+ &lt;p&gt; Next week, I'll be doing a string of appearances at &lt;a href="http://www.meetup.com/Cloud-Foundry-Toronto/events/212074602/"&gt;Toronto&lt;/a&gt;, &lt;a href="http://www.meetup.com/nyc-cloud-foundry/events/200768002/"&gt;New York City&lt;/a&gt;, and &lt;a href="http://www.meetup.com/Boston-Area-Cloud-Foundry-Meetup/events/203305332/"&gt;Boston&lt;/a&gt; meetups helping people better build microservices with &lt;a href="http://spring.io/projects/spring-boot"&gt;Spring Boot&lt;/a&gt;, &lt;a href="http://spring.io/projects/spring-cloud"&gt;Spring Cloud&lt;/a&gt; and &lt;a href="http://cloudfoundry.org"&gt;Cloud Foundry&lt;/a&gt;. 
+  Register now, come for the code, conversations, pizza and beer! Microservices are a big thing these days, and I'm sure there'll be a lot to talk about so don't miss these events!
+&lt;/p&gt;
+
+&lt;p&gt;
+ As usual, we've got a lot to cover so  let's get to it! 
+&lt;/p&gt;
+ 
+
+&lt;ul&gt;
+&lt;li&gt;
+ Reactor project lead Jon Brisbin giddily announced the &lt;a href="https://spring.io/blog/2014/10/21/reactor-2-0-0-m1-released-with-reactive-streams-integration"&gt;first milestone for Reactor 2.0&lt;/a&gt; which has as its headline feature the Reactive Streams API. The Reactive Streams API is a collaborative effort between Netflix, Typesafe, Pivotal, RedHat, and others that makes easier the task of handling &lt;em&gt;backpressure&lt;/em&gt;  in a reactive pipeline. 
+&lt;/li&gt;
+&lt;li&gt;
+ Spring Data ninja Christoph Strobl has put together a nice look at &lt;a href="https://spring.io/blog/2014/10/15/whats-new-in-spring-data-evans"&gt;what’s new in the latest and greatest Spring Data Evans release train&lt;/a&gt;. 
+&lt;/li&gt;
+&lt;li&gt;
+ I hope you’ll join me this Thursday as Vaadin’s Peter Lehto and I introduce &lt;a href="https://spring.io/blog/2014/10/01/webinar-building-bootful-uis-with-spring-boot-and-vaadin"&gt;how to build &lt;em&gt;Bootiful&lt;/em&gt; Vaadin rich UI applicatons&lt;/a&gt;. 
+&lt;/li&gt;
+&lt;li&gt;
+ Then, mark your calendars for the good &lt;a href="http://twitter.com/david_syer"&gt;Dr. Syer&lt;/a&gt;'s webinar introducing  &lt;a href="https://spring.io/blog/2014/10/01/webinar-architecting-for-continuous-delivery-microservices-with-pivotal-cf-and-spring-cloud?utm_content=bufferebf5a&amp;amp;utm_medium=social&amp;amp;utm_source=twitter.com&amp;amp;utm_campaign=buffer"&gt;&lt;em&gt;Security for Microservices with Spring and OAuth2&lt;/em&gt;&lt;/a&gt; 
+&lt;/li&gt;
+&lt;li&gt;
+ Spring’s the most productive Java technology, but who wouldn’t like to squeeze more productivity out of the Java language itself by eliminating restarts and instead simply &lt;em&gt;reloading&lt;/em&gt; changed byte code? JRebel can help! Adam Koblentz has put together two very cool posts looking at how  JRebel &lt;a href="http://zeroturnaround.com/blog/using-spring-mvc-with-jrebel-refactoring-xml-config-files"&gt;can reload Spring XML  configuration&lt;/a&gt; and how it  &lt;a href="http://zeroturnaround.com/blog/using-spring-mvc-with-jrebel-changing-requestmappings-without-restarting/"&gt;can reload Spring MVC &lt;code&gt;@Controller&lt;/code&gt; and &lt;code&gt;@RestController&lt;/code&gt;-based &lt;code&gt;@RequestMapping&lt;/code&gt; metadata&lt;/a&gt;. 
+&lt;/li&gt;
+&lt;li&gt;
+ Speaking of Neo4j, they've just published some handy new guides (which they tell me were at least in part inspired by the &lt;a href="http://spring.io/guides"&gt;Spring guides&lt;/a&gt; - &lt;em&gt;blush&lt;/em&gt;!) that detail how to &lt;a href="http://neo4j.com/developer/java/#_using_spring_data_neo4j"&gt;get started with Spring Data Neo4j and Spring Boot&lt;/a&gt; 
+&lt;/li&gt;
+&lt;li&gt;
+ Comsysto Gmbh has put together &lt;a href="http://java.dzone.com/articles/spring-boot-my-favorite"&gt;a &lt;em&gt;very&lt;/em&gt; nice look at Spring Boot&lt;/a&gt; and a Spring Boot applications lifecycle. He  describes as, "his favorite timesaving,  convention-enabling, autoconfig-creating, bean-making classpath-shaking microcontainer!" 
+&lt;/li&gt;
+&lt;li&gt;
+ Readers of this roundup will know that &lt;a href="https://twitter.com/java_hipster/status/524439966495944705"&gt;we love JHipster, the Yeoman-based Spring Boot and Angular.js-code generator&lt;/a&gt;. JHipster   just celebrated its first birthday! Joyeux anniversairre, JHipster! 
+&lt;/li&gt;
+&lt;li&gt;
+ Nieraj Singh put together a detailed look at  &lt;a href="http://blog.pivotal.io/cloud-foundry-pivotal/products/service-management-through-cloud-foundry-eclipse"&gt;how to manage Cloud Foundry services in Eclipse with our Cloud Foundry plugin&lt;/a&gt;. 
+&lt;/li&gt;
+&lt;li&gt;
+ Phillip Verheyden (from Broadleaf Commerce, the makers of a Spring-based e-commerce engine) &lt;a href="http://www.broadleafcommerce.com/blog/spring-one-2gx-2014-postmortem"&gt;wrote  up his thoughts on  SpringOne2GX 2014&lt;/a&gt;. Thanks, Phillip! 
+&lt;/li&gt;
+&lt;li&gt;
+ You &lt;strong&gt;are&lt;/strong&gt; following Groovy-language project lead &lt;a href="http://glaforge.appspot.com/article/groovy-weekly-41"&gt;Guillaume LaForge’s weekly roundup&lt;/a&gt; of all that’s awesome in the Groovy ecosystem, &lt;em&gt;aren’t you&lt;/em&gt;? 
+&lt;/li&gt;
+&lt;li&gt;
+ Check out &lt;a href="http://thespringway.info/spring-web/map-to-list-of-objects-from-json-array-with-resttemplate/"&gt;this post  on &lt;em&gt;The Spring Way&lt;/em&gt; blog  if you’re trying to marshall arrays of complex types&lt;/a&gt; back and forth with Spring’s &lt;code&gt;RestTemplate&lt;/code&gt;. 
+&lt;/li&gt;
+&lt;li&gt;
+ I always love reading Adrian Colyer’s blogs. Recently, he’s been reviewing one interesting academic paper per week. This last week he looked at a paper that offers that there’s &lt;a href="http://blog.acolyer.org/2014/10/21/coverage-is-not-strongly-correlated-with-test-suite-effectiveness/"&gt;not so strong a link between code-coverage and what that implies for (assurances about) code quality&lt;/a&gt;. 
+&lt;/li&gt;
+&lt;/ul&gt;</content>
+  </entry>
+  <entry>
+    <title>Reactor 2.0.0.M1 released with Reactive Streams integration!</title>
+    <link rel="alternate" href="https://spring.io/blog/2014/10/21/reactor-2-0-0-m1-released-with-reactive-streams-integration" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Jon Brisbin</name>
+    </author>
+    <id>tag:spring.io,2014-10-21:1790</id>
+    <updated>2014-10-21T15:29:00Z</updated>
+    <content type="html">&lt;p&gt;The &lt;a href="https://github.com/reactor/reactor"&gt;Reactor&lt;/a&gt; team is frankly a little giddy at finally being able to announce an initial milestone release of Reactor 2.0! This update includes a fully-compliant &lt;a href="http://www.reactive-streams.org/"&gt;Reactive Streams&lt;/a&gt; implementation in the completely re-written &lt;code&gt;Stream&lt;/code&gt; and &lt;code&gt;Promise&lt;/code&gt; APIs! This is a huge step for Reactor users. It opens up integration with other Reactive Streams implementations like &lt;a href="http://www.typesafe.com/activator/template/akka-stream-scala"&gt;Akka Streams&lt;/a&gt;, &lt;a href="http://ratpack.io/"&gt;Ratpack&lt;/a&gt;, &lt;a href="https://github.com/ReactiveX/RxJava"&gt;RxJava&lt;/a&gt; and others. Reactor provides a solid foundation upon which to build modern &lt;code&gt;#uberfastdata&lt;/code&gt; applications with demanding high-throughput and low-latency requirements.&lt;/p&gt;
+
+&lt;h3&gt;
+&lt;a name="user-content-stream-and-promise" class="anchor" href="#stream-and-promise" aria-hidden="true"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;Stream and Promise&lt;/h3&gt;
+
+&lt;p&gt;The headline change in Reactor 2.0 is the Stream API. In fact, most other parts of the codebase were either just lightly refined or remain untouched between 1.1 and 2.0. Not so with &lt;code&gt;Stream&lt;/code&gt; and &lt;code&gt;Promise&lt;/code&gt;. These components have been completely rewritten from the ground up to take advantage of the Reactive Streams specification to provide fully-non-blocking backpressure in functional reactive streaming pipelines. &lt;/p&gt;
+
+&lt;h3&gt;
+&lt;a name="user-content-what-is-backpressure-in-a-reactive-system" class="anchor" href="#what-is-backpressure-in-a-reactive-system" aria-hidden="true"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;What is backpressure in a reactive system?&lt;/h3&gt;
+
+&lt;p&gt;Dr. Roland Kuhn, of Akka fame, has spoken on the topic quite eloquently and if you're interested in exploring the reasoning behind non-blocking backpressure, we encourage you to watch his conference presentations on the topic, &lt;a href="https://www.google.com/search?q=site%3Ayoutube.com%20%22reactive%20streams%22%20%22roland%20kuhn%22&amp;amp;rct=j"&gt;most of which are available on YouTube&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;TL;DR&lt;/p&gt;
+
+&lt;p&gt;Backpressure is an inversion of the publisher and subscriber relationship where the &lt;code&gt;Subscriber&lt;/code&gt; says to the &lt;code&gt;Publisher&lt;/code&gt; "give me the next N available items" rather than a &lt;code&gt;Publisher&lt;/code&gt; saying to a &lt;code&gt;Subscriber&lt;/code&gt; "take all these items I have whether you can handle them or not". Since the &lt;code&gt;Publisher&lt;/code&gt; is passively providing elements of data to the &lt;code&gt;Subscriber&lt;/code&gt; rather than the other way around, it's not necessary (in a fully Reactive Streams pipeline) to buffer data since you'll never have more data inflight than what you can handle. In reality, some buffering or queueing is necessary but libraries like Reactor take away your need to worry about how this is accomplished so you can write fully reactive code that responds to data as it becomes available rather than trying to figure out what magic combination of &lt;code&gt;BlockingQueue&lt;/code&gt; or other kinds of inefficient schemes must be employed to ensure asynchronous components are properly segregated from one another.&lt;/p&gt;
+
+&lt;h3&gt;
+&lt;a name="user-content-reactor-implements-reactive-streams" class="anchor" href="#reactor-implements-reactive-streams" aria-hidden="true"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;Reactor implements Reactive Streams&lt;/h3&gt;
+
+&lt;p&gt;The Reactor team has put in the depressingly large number of hours necessary to implement a comprehensive implementation of the Reactive Streams specification. Reactor's &lt;code&gt;Stream&lt;/code&gt; component provides you with useful and understandable hooks on which to hang your business logic so that you only have to concern yourself with writing the appropriately-scoped functional component that will respond to a single element of data rather than having to dirty your code with a lot of boilerplate logistics to handle passing data from one Thread to another, performing bounded queueing and buffering, and the sundry other tasks usually necessary in working with reactive, asynchronous components.&lt;/p&gt;
+
+&lt;p&gt;An example of how this looks in your code can be found in the &lt;a href="https://github.com/SpringOne2GX-2014/reactive-geocoder"&gt;Reactive Geocoder Demo&lt;/a&gt; which the Reactor team discussed at this year's SpringOne in Dallas, Texas (&lt;a href="http://www.infoq.com/presentations/reactive-streams-reactor"&gt;replays&lt;/a&gt; are available on InfoQ for SpringOne2GX 2014 attendees and will become public some time later). &lt;/p&gt;
+
+&lt;p&gt;Following is a little snippet that shows how to create a new &lt;code&gt;Stream&lt;/code&gt;, attach business logic to it, then publish data into it. &lt;/p&gt;
+
+&lt;div class="highlight highlight-java"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// by default Streams use the Disruptor RingBufferDispatcher&lt;/span&gt;
+&lt;span class="n"&gt;HotStream&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;helloStream&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Streams&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;defer&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+
+&lt;span class="n"&gt;helloStream&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;map&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="s"&gt;"Hello "&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;"!"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+           &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;consume&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nl"&gt;log:&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+
+&lt;span class="n"&gt;helloStream&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;broadcastNext&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"World"&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;When you run this, you will see the text "Hello World!" logged. You should also notice that the logging has taken place from the RingBuffer thread and not from your main thread. In other words, you've just submitted a task to another Thread to be executed asynchronously, have the result transformed into something else, and then responded to the result using Reactive Streams non-blocking, demand-based backpressure without any kind of noisy Future-based, blocking code!&lt;/p&gt;
+
+&lt;p&gt;You can create "cold" streams as well, which are very similar to using RxJava's &lt;code&gt;Observable&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class="highlight highlight-java"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// stream contains the single value "Hello World!"&lt;/span&gt;
+&lt;span class="n"&gt;Stream&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;helloStream&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Streams&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;just&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"World"&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+
+&lt;span class="n"&gt;helloStream&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;map&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="s"&gt;"Hello "&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;"!"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+           &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;consume&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nl"&gt;log:&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;When you run this, you will see the text "Hello World!" logged, similarly to the previous example. The difference here is that we never had to call the &lt;code&gt;broadcastNext(String)&lt;/code&gt; method because that was handled for us when we attached our &lt;code&gt;Consumer&amp;lt;String&amp;gt;&lt;/code&gt;. You can create streams out of any value or collection of values just like creating an RxJava &lt;code&gt;Observable&lt;/code&gt;. This lets you mix standard Java Collection APIs with the reactive, streaming API.&lt;/p&gt;
+
+&lt;h3&gt;
+&lt;a name="user-content-stream-is-the-new-black" class="anchor" href="#stream-is-the-new-black" aria-hidden="true"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;Stream is the new Black&lt;/h3&gt;
+
+&lt;p&gt;Streaming APIs like Spark, Storm, and other Big Data libraries prove that working with data in a more functional and reactive way is more efficient when running on systems without unlimited resources (which is basically anything we run on in the cloud) as well as being more understandable (in many cases) owing to the declarative, self-documentating nature of the DSL used to build up the processing pipeline. When you boil your business logic down to its essence, you really do notice that not many things exist that can't be expressed as a transformation or consumer function. You either take input and produce output or you simply take input. Reactor's Stream API is steeped in this paradigm so provides you with a plethora (who can tell me this movie reference: "would you say I have a plethora of pinatas?") of options for processing data as it passes through your pipeline. Beyond simple functions like &lt;code&gt;map(Function&amp;lt;T,V&amp;gt;)&lt;/code&gt; and &lt;code&gt;filter(Predicate&amp;lt;T&amp;gt;)&lt;/code&gt; are the more sophisticated options like &lt;code&gt;buffer(int)&lt;/code&gt; or &lt;code&gt;buffer(int, long, TimeUnit)&lt;/code&gt;. The latter provides extrememly useful length and time-based "microbatching". For example, to microbatch a set of database updates that are expensive to send across a WAN connection, you might want to buffer them until you either have a set amount or a certain timeout has elapsed.&lt;/p&gt;
+
+&lt;div class="highlight highlight-java"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// create a stream backed by a load-balanced, round-robin assigned Dispatcher&lt;/span&gt;
+&lt;span class="n"&gt;Stream&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Update&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;updateStream&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Streams&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;defer&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getDefaultDispatcherFactory&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="o"&gt;());&lt;/span&gt;
+
+&lt;span class="n"&gt;updateStream&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;buffer&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1024&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;350&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;TimeUnit&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;MILLISECONDS&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+            &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;consume&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nl"&gt;driver:&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;batchUpdate&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This will collect streaming updates until either 1024 of them have been collected or 350 milliseconds have expired, whichever comes first. It will then trigger the downstream processing by passing a &lt;code&gt;List&amp;lt;Update&amp;gt;&lt;/code&gt; of either 1024 elements or however many were collected in 350ms. This allows you to write very, very efficient systems that deal with high volumes of data in batches to minimize network bandwidth usage and maximize throughput (while still maintaing a predicatble latency).&lt;/p&gt;
+
+&lt;p&gt;Along with microbatching &lt;code&gt;Stream&lt;/code&gt; provides facilities like &lt;code&gt;filter&lt;/code&gt;, &lt;code&gt;flatMap&lt;/code&gt;, &lt;code&gt;movingBuffer&lt;/code&gt;, &lt;code&gt;join&lt;/code&gt;, &lt;code&gt;merge&lt;/code&gt;, &lt;code&gt;sample&lt;/code&gt;, &lt;code&gt;sort&lt;/code&gt;, and many other operations which are largely self-explanatory. Much like Scala's collection API or RxJava's Observable, Reactor's &lt;code&gt;Stream&lt;/code&gt; provides functional and reactive ways to process data quickly, efficiently, and at extremely high volume while maintaining predictable, low latencies. It's not an exaggeration to say that you could write your entire application using the &lt;code&gt;Stream&lt;/code&gt; as a foundational component that is used to submit asynchronous tasks for execution and also to process traditional collections of data in a reactive way--and then mix the two approaches by combining live data with historical data.&lt;/p&gt;
+
+&lt;h3&gt;
+&lt;a name="user-content-parallel-processing" class="anchor" href="#parallel-processing" aria-hidden="true"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;Parallel processing&lt;/h3&gt;
+
+&lt;p&gt;It's sometimes necessary to split up a stream of data into parallel pipelines for doing concurrent processing. Reactor's &lt;code&gt;Stream&lt;/code&gt; provides an extremely convenient way to do this with the &lt;code&gt;parallel(int)&lt;/code&gt; operation. You simply attach your business logic to the &lt;code&gt;Stream&lt;/code&gt; provided after the &lt;code&gt;parallel&lt;/code&gt; call and data will be round-robined between the downstream pipelines for concurrent processing.&lt;/p&gt;
+
+&lt;div class="highlight highlight-java"&gt;&lt;pre&gt;&lt;span class="n"&gt;HotStream&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;stream&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Streams&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;defer&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+
+&lt;span class="c1"&gt;// by default uses number of CPUs as thread count&lt;/span&gt;
+&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;parallel&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;substream&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;substream&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;map&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;greeting&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="s"&gt;"Hello "&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;greeting&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;"!"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+                                      &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;consume&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nl"&gt;log:&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Here's an interesting example of the Reactive Streams implementation showing itself in your code: when you run this you won't get any output. The &lt;code&gt;.parallel()&lt;/code&gt; operation doesn't create "demand" on the pipeline. In a Reactive Streams system, it's the end of the pipeline that pulls data into the operations rather than the producer that pushes it. Since there's no terminal operation at the end of this pipeline, there's no way for the data to get pulled through. In reality that's not usually a problem because you actually want to handle the data in a real application. In this example, we can just add a &lt;code&gt;.drain()&lt;/code&gt; call after &lt;code&gt;.parallel()&lt;/code&gt; to produce demand and pull data through. We likely wouldn't do this in a production system but for tests and demos we can take the easy out with a drain.&lt;/p&gt;
+
+&lt;div class="highlight highlight-java"&gt;&lt;pre&gt;&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;parallel&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;substream&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;substream&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;map&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;greeting&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="s"&gt;"Hello "&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;greeting&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;"!"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+                                      &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;consume&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nl"&gt;log:&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt;
+      &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;drain&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;
+&lt;a name="user-content-whats-going-on-and-why-dont-i-see-what-i-expect" class="anchor" href="#whats-going-on-and-why-dont-i-see-what-i-expect" aria-hidden="true"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;What's going on and why don't I see what I expect?&lt;/h3&gt;
+
+&lt;p&gt;With reactive systems it's sometimes frustrating to understand why things aren't working like you expect. While there's not a lot that a library can do to make the process of live debugging an asynchronous stream inside an IDE better, there's always the tried-and-true method of copious logging. Reactor adds a couple of somewhat hidden methods called &lt;code&gt;.debug()&lt;/code&gt; and &lt;code&gt;.log()&lt;/code&gt; that should help you figure out how your streams are constructed and what they're doing. The &lt;code&gt;.debug()&lt;/code&gt; method will provide you with an output of how a stream is wired. It will show what actions are connected to what and what capacities are currently available in each. The &lt;code&gt;.log()&lt;/code&gt; method attaches a logging action to your stream and outputs subscribe and publish events.&lt;/p&gt;
+
+&lt;p&gt;If we add a &lt;code&gt;.log()&lt;/code&gt; call before our &lt;code&gt;.parallel()&lt;/code&gt; from the above example, we'll get additional logging to tell us what's happening:&lt;/p&gt;
+
+&lt;div class="highlight highlight-java"&gt;&lt;pre&gt;&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;log&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt;
+      &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;parallel&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;substream&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;substream&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;map&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;greeting&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="s"&gt;"Hello "&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;greeting&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;"!"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+                                      &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;consume&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nl"&gt;log:&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt;
+      &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;drain&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Will produce:&lt;/p&gt;
+
+&lt;pre&gt;
+[ringBuffer-1] INFO  r.r.a.LoggerAction - onSubscribe: {capacity=0/8188 [0%], current=0, pending=0, waiting=0}
+[main] INFO  r.r.a.LoggerAction - subscribe: ConcurrentAction-{dispatcher=RingBuffer:8192, max-capacity=8188}
+[ringBuffer-1] INFO  r.r.a.LoggerAction - request: 9223372036854775807
+[ringBuffer-1] INFO  r.r.a.LoggerAction - onNext: World
+[ringBufferGroup-2] INFO  r.r.StreamTests - Hello World!
+&lt;/pre&gt;
+
+&lt;h3&gt;
+&lt;a name="user-content-artifacts" class="anchor" href="#artifacts" aria-hidden="true"&gt;&lt;span class="octicon octicon-link"&gt;&lt;/span&gt;&lt;/a&gt;Artifacts&lt;/h3&gt;
+
+&lt;p&gt;To upgrade an existing application to Reactor 2.0, you'll likely only need to tweak a few things. If you are using streams in Reactor 1.1, you'll find that Reactor 2.0 streams differ in their publication of values. The &lt;code&gt;.broadcastNext()&lt;/code&gt; method is defined on &lt;code&gt;Action&lt;/code&gt; subclasses and &lt;code&gt;HotStream&lt;/code&gt; but not some other operations. Reactor 1.1 used a &lt;code&gt;Deferred&lt;/code&gt; to publish values so your code will need to be tweaked to change the publisher type to something that has access to the &lt;code&gt;.broadcastNext()&lt;/code&gt; method. If you're using a plain &lt;code&gt;Reactor&lt;/code&gt; or the Spring and annotation-based event handling, you won't have to change hardly anything.&lt;/p&gt;
+
+&lt;p&gt;To access the milestone artifacts, use the &lt;code&gt;http://repo.spring.io/libs-milestone&lt;/code&gt; repository in your build system of choice. For example, if using Gradle (of course you're using Gradle, right?) just configure your &lt;code&gt;repositories&lt;/code&gt; block like so:&lt;/p&gt;
+
+&lt;div class="highlight highlight-groovy"&gt;&lt;pre&gt;&lt;span class="n"&gt;repositories&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="n"&gt;maven&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt; &lt;span class="s1"&gt;'http://repo.spring.io/libs-milestone'&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+  &lt;span class="n"&gt;mavenCentral&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;To report bugs, follow the development of Reactor 2.0, read the wiki, or otherwise get involved in the Reactor community, visit the GitHub home of Reactor at &lt;a href="https://github.com/reactor/reactor"&gt;https://github.com/reactor/reactor&lt;/a&gt;. You can also read the JavaDoc online here: &lt;a href="http://reactor.github.io/docs/api/2.0.0.M1/index.html"&gt;http://reactor.github.io/docs/api/2.0.0.M1/index.html&lt;/a&gt;&lt;/p&gt;</content>
+  </entry>
   <entry>
     <title>Whats new in Spring Data Evans?</title>
     <link rel="alternate" href="https://spring.io/blog/2014/10/15/whats-new-in-spring-data-evans" />
@@ -658,159 +1204,6 @@ Both tool suites ship on top of the latest Eclipse Luna 4.4 SR1 release as 64bit
 &lt;p&gt;Thursday, October 23, 2014, 2014 3:00PM BST (London GMT+01:00) &lt;a href="http://connect.pivotal.io/OSS_Webinar_BuildingBootfulUIswithSpringBootandVaadin7AM_Register.html"&gt;Register&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;Thursday, October 23, 2014 10:00AM PDT (San Francisco GMT-07:00) &lt;a href="http://connect.pivotal.io/OSS_Webinar_BuildingBootfulUIswithSpringBootandVaadin10AM_Register.html"&gt;Register&lt;/a&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Webinar: Security for Microservices with Spring and OAuth2</title>
-    <link rel="alternate" href="https://spring.io/blog/2014/10/01/webinar-security-for-microservices-with-spring-and-oauth2" />
-    <category term="news" label="News and Events" />
-    <author>
-      <name>Pieter Humphrey</name>
-    </author>
-    <id>tag:spring.io,2014-10-01:1778</id>
-    <updated>2014-10-01T01:10:00Z</updated>
-    <content type="html">&lt;p&gt;Speaker: Dave Syer&lt;/p&gt;
-
-&lt;p&gt;Security for Microservices with Spring and OAuth2 OAuth2 is a lightweight security protocol that is well-suited for use with HTTP, the protocol at the heart of many modern architectures. Spring Security OAuth2 has a load of new features, not the least of which being the `@Configuration` support in version 2.0. Combine these with Spring Boot and you have a platform which can get you a secure HTTP service application in about 20 lines of code. This presentation shows how the combination of rapid development and production-ready features in the modern Spring stack are a perfect mixture for developing secure components in a system composed of microservices. We explore the new features in Spring OAuth2, guide you through the choice of which to use and when, and show how easy they are to enable quickly.&lt;/p&gt;
-
-&lt;p&gt;Tuesday, November 4, 2014 3:00PM GMT (London GMT) &lt;a href="http://connect.pivotal.io/OSS_Webinar_SecurityforMicroserviceswithSpringandOAuth2_7AM_Register.html"&gt;Register&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Tuesday, November 4, 2014 10:00AM PST (San Francisco GMT-08:00)  &lt;a href="http://connect.pivotal.io/OSS_Webinar_SecurityforMicroserviceswithSpringandOAuth2_10AM_Register.html"&gt;Register&lt;/a&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Webinar Replay: Why I Recommend Spring</title>
-    <link rel="alternate" href="https://spring.io/blog/2014/09/26/webinar-replay-why-i-recommend-spring" />
-    <category term="news" label="News and Events" />
-    <author>
-      <name>Pieter Humphrey</name>
-    </author>
-    <id>tag:spring.io,2014-09-26:1773</id>
-    <updated>2014-09-26T14:03:00Z</updated>
-    <content type="html">&lt;p&gt;Speaker: Michael Plod&lt;/p&gt;
-
-&lt;p&gt;Slides: &lt;a href="https://speakerdeck.com/mploed/pivotal-webinar-why-do-i-recommend-spring"&gt;https://speakerdeck.com/mploed/pivotal-webinar-why-do-i-recommend-spring&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Is Spring the new legacy as quite a few people tell you on their blogs? I disagree on many levels. Throughout this session I will holistically detail without any polemics why I do recommend using the Spring Framework and its ecosystem. Aspects that will be covered include: operational impacts, ecosystem, coding and road maps. This presentation is aimed at IT managers, Architects and Developers alike.&lt;/p&gt;
-
-&lt;p&gt;Learn more about Spring IO: &lt;a href="http://spring.io"&gt;http://spring.io&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Learn more about Spring IO Platform: &lt;a href="http://spring.io/platform"&gt;http://spring.io/platform&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;&lt;iframe width="420" height="315" src="//www.youtube.com/embed/z1rpWpSKtT8" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;</content>
-  </entry>
-  <entry>
-    <title>Webinar Replay: Process Driven Spring Applications with Activiti</title>
-    <link rel="alternate" href="https://spring.io/blog/2014/09/26/webinar-replay-process-driven-spring-applications-with-activiti" />
-    <category term="news" label="News and Events" />
-    <author>
-      <name>Pieter Humphrey</name>
-    </author>
-    <id>tag:spring.io,2014-09-26:1772</id>
-    <updated>2014-09-26T13:56:00Z</updated>
-    <content type="html">&lt;p&gt;Speakers: Josh Long and Joram Barrez, Activiti &lt;/p&gt;
-
-&lt;p&gt;Slides: &lt;a href="https://speakerdeck.com/joshlong/process-driven-applications-with-spring-boot"&gt;https://speakerdeck.com/joshlong/process-driven-applications-with-spring-boot&lt;/a&gt; &lt;/p&gt;
-
-&lt;p&gt;Today's applications are complex, distributed systems that - taken together - produce results. Tracking the flow of work through that system, however, becomes increasingly more painful as automated- and human-driven tasks are integrated into business processes. Business can't react to what it can't see. Business can't measure what it can't see. "Workflow" describes the sequence of processes through which a piece of work passes from initiation to completion. Workflow systems, like Activiti, describe and then execute these processes. Activiti is an open-source, Apache 2-licensed workflow engine that works with Spring and Spring Boot. In this webinar, join Spring Developer Advocate Josh Long and Activiti-ninja Joram Barrez for a look at how to distill, describe and reuse complex business processes using Spring (and Spring Boot) and Activiti. &lt;/p&gt;
-
-&lt;p&gt;Learn more about Spring Boot: &lt;a href="http://projects.spring.io/spring-boot"&gt;http://projects.spring.io/spring-boot&lt;/a&gt; &lt;/p&gt;
-
-&lt;p&gt;Learn more about Activiti below! &lt;/p&gt;
-
-&lt;p&gt;Activiti project page: &lt;a href="http://activiti.org/"&gt;http://activiti.org/&lt;/a&gt; &lt;/p&gt;
-
-&lt;p&gt;Joram's blog: &lt;a href="http://jorambarrez.com/blog"&gt;http://jorambarrez.com/blog&lt;/a&gt; &lt;/p&gt;
-
-&lt;p&gt;Activiti documentation: &lt;a href="http://activiti.org/userguide/index.html"&gt;http://activiti.org/userguide/index.html&lt;/a&gt; &lt;/p&gt;
-
-&lt;p&gt;Activiti Github: &lt;a href="https://github.com/Activiti/Activiti"&gt;https://github.com/Activiti/Activiti&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;&lt;iframe width="420" height="315" src="//www.youtube.com/embed/0PV_8Lew3vg" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;</content>
-  </entry>
-  <entry>
-    <title>Pivotal at JavaOne 2014</title>
-    <link rel="alternate" href="https://spring.io/blog/2014/09/26/pivotal-at-javaone-2014" />
-    <category term="news" label="News and Events" />
-    <author>
-      <name>Pieter Humphrey</name>
-    </author>
-    <id>tag:spring.io,2014-09-25:1770</id>
-    <updated>2014-09-26T05:56:00Z</updated>
-    <content type="html">&lt;p&gt;Are  you heading to JavaOne 2014?   If you  are, we invite all of the Java community members to stop by the Pivotal Booth  (Booth Number 5201) and talk to Pivotal engineers about the latest innovations  in Java SE, in Spring, Groovy, Grails, Redis, RabbitMQ, Tomcat, Cloud Foundry  and Hadoop. The exhibit space is open Monday, Tuesday from 9:30am – 5:30pm, and  Wednesday from 9:30am to 4:30pm, so there should be plenty of time to get your  questions answered.  See below for a map  and booth details about our giveaways - come  find us!  Lots of great stuff  at the booth.&lt;/p&gt;
-
-&lt;p&gt;Pivotal technologists  are also presenting a lot of sessions as well so be sure to add the following  talks to your session builder and reserve a seat:&lt;br&gt;
-            &lt;br&gt;
-Josh Long — Spring  advocate at Pivotal&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://oracleus.activeevents.com/2014/connect/sessionDetail.ww?SESSION_ID=3868&amp;amp;tclass=popup" target="_blank"&gt;The Spring BOF  [BOF3868]&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://oracleus.activeevents.com/2014/connect/sessionDetail.ww?SESSION_ID=3693&amp;amp;tclass=popup" target="_blank"&gt;Spring 4TW! [CON3693]&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;p&gt;Cornelia Davis —  Platform Engineer at Pivotal&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://oracleus.activeevents.com/2014/connect/sessionDetail.ww?SESSION_ID=4327&amp;amp;tclass=popup" target="_blank"&gt;Running Your Spring  Apps in the Cloud [CON4327]&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;p&gt;John Field — Solutions  Architect at Pivotal&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://oracleus.activeevents.com/2014/connect/sessionDetail.ww?SESSION_ID=3478&amp;amp;tclass=popup" target="_blank"&gt;Open Source Identity  and Access Management Expert Panel, Part 3 [BOF3478]&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://oracleus.activeevents.com/2014/connect/sessionDetail.ww?SESSION_ID=3479&amp;amp;tclass=popup" target="_blank"&gt;The Anatomy of a  Secure Web Application Using Java [CON3479]&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;p&gt;Guillaume Laforge —  Groovy project manager at Pivotal&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://oracleus.activeevents.com/2014/connect/sessionDetail.ww?SESSION_ID=2939&amp;amp;tclass=popup" target="_blank"&gt;Script Bowl 2014: The  Battle Rages On [CON2939]&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://oracleus.activeevents.com/2014/connect/sessionDetail.ww?SESSION_ID=5996&amp;amp;tclass=popup" target="_blank"&gt;Groovy in 2014 and  Beyond [CON5996]&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://oracleus.activeevents.com/2014/connect/sessionDetail.ww?SESSION_ID=5839&amp;amp;tclass=popup" target="_blank"&gt;Groovy in the Light  of Java 8 [CON5839]&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;p&gt;Martin Lippert -  Principal Software Engineer at Pivotal&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://oracleus.activeevents.com/2014/connect/sessionDetail.ww?SESSION_ID=1739&amp;amp;tclass=popup" target="_blank"&gt;Connecting the Eclipse  IDE to the Cloud-Based Era of Developer Tooling [CON1739]&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;p&gt;Oliver Gierke - Spring  Data Project Lead at Pivotal&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://oracleus.activeevents.com/2014/connect/sessionDetail.ww?SESSION_ID=6071&amp;amp;tclass=popup" target="_blank"&gt;REST Assured:  Hypermedia APIs with Spring MVC [CON6071]&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;p&gt;Cédric Champeau —  Senior software engineer in the Groovy team at Pivotal&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://oracleus.activeevents.com/2014/connect/sessionDetail.ww?SESSION_ID=2425&amp;amp;tclass=popup" target="_blank"&gt;Rethinking API Design  with Groovy Traits [CON2425]&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;p&gt;Interesting  non-Pivotal Sessions&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://oracleus.activeevents.com/2014/connect/sessionDetail.ww?SESSION_ID=1764" target="_blank"&gt;Groovy  and Grails Puzzlers: As Usual—Traps, Pitfalls, and End Cases[CON1764]&lt;/a&gt; &lt;br&gt;&lt;a href="https://oracleus.activeevents.com/2014/connect/sessionDetail.ww?SESSION_ID=4952" target="_blank"&gt;Microservices on the  JVM: A Practical Overview [CON4952]&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://oracleus.activeevents.com/2014/connect/sessionDetail.ww?SESSION_ID=9447" target="_blank"&gt;Use Java, the Spring Framework, and Oracle Tuxedo to Extend Existing C/C++/COBOL Apps[HOL9447]&lt;/a&gt; &lt;br&gt;&lt;/p&gt;&lt;p&gt;Visit us at the booth for technical expert conversations on Cloud Foundry, Spring, Groovy, Grails, Redis, RabbitMQ, Tomcat,   Hadoop and much more. We'll have great demos in the booth about:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt; Java EE and PaaS with &lt;a href="http://www.pivotal.io/platform-as-a-service/pivotal-cf"&gt;Cloud Foundry&lt;/a&gt; via JBoss  and WebLogic Buildpack demos&lt;/li&gt;
-  
-  &lt;li&gt;Internet of Things, Hadoop with &lt;a href="http://projects.spring.io/spring-xd"&gt;Spring  XD&lt;/a&gt; Demos&lt;/li&gt;
-  &lt;li&gt;
-&lt;a href="http://microservices.io"&gt;Microservice Architecture&lt;/a&gt; and &lt;a href="http://www.pivotal.io/platform-as-a-service/pivotal-cf"&gt;PaaS&lt;/a&gt; with &lt;a href="http://projects.spring.io/spring-boot"&gt;Spring  Boot&lt;/a&gt;, &lt;a href="http://projects.spring.io/spring-cloud"&gt;Spring Cloud&lt;/a&gt; Demos&lt;/li&gt;
-&lt;/ul&gt;&lt;p&gt;&lt;a href="http://run.pivotal.io"&gt;Pivotal Web Services&lt;/a&gt; Hoodie Push!  &lt;a href="https://spring.io/guides/gs/rest-service/"&gt;Build a REST service with Spring Boot&lt;/a&gt;, push it live to  run.pivotal.io and get a hoodie!  You can  do it ahead of time, and show it running to us, or use our laptops at the  booth. &lt;/p&gt;
-&lt;p&gt;&lt;a href="https://raw.githubusercontent.com/pieterhumphrey/springio_website_images/master/hoodie.PNG" target="_blank"&gt;&lt;img border="0" width="215" height="254" src="https://raw.githubusercontent.com/pieterhumphrey/springio_website_images/master/hoodie.PNG" style="max-width:100%;"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;Save the date for SpringOne2GX 2015!  We hope you will mark your calendar and join  us again! SpringOne2GX 2015 will be held September 14 - 17, 2015 at the  Marriott Marquis in Washington DC.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://raw.githubusercontent.com/pieterhumphrey/springio_website_images/master/javaone_booth_pivotal.PNG" target="_blank"&gt;&lt;img border="0" width="624" height="398" src="https://raw.githubusercontent.com/pieterhumphrey/springio_website_images/master/javaone_booth_pivotal.PNG" style="max-width:100%;"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://github.com/pieterhumphrey/springio_website_images/blob/master/javaone_booth_pivotal2.PNG" target="_blank"&gt;&lt;img src="https://github.com/pieterhumphrey/springio_website_images/raw/master/javaone_booth_pivotal2.PNG" width="577" height="441" style="max-width:100%;"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Boot 1.1.7 released</title>
-    <link rel="alternate" href="https://spring.io/blog/2014/09/26/spring-boot-1-1-7-released" />
-    <category term="releases" label="Releases" />
-    <author>
-      <name>Phil Webb</name>
-    </author>
-    <id>tag:spring.io,2014-09-26:1771</id>
-    <updated>2014-09-26T04:56:15Z</updated>
-    <content type="html">&lt;p&gt;Spring Boot 1.1.7 has been released and is available now from &lt;a href="http://repo.spring.io/release"&gt;repo.spring.io&lt;/a&gt; and &lt;a href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.springframework.boot%22"&gt;Maven Central&lt;/a&gt;. &lt;/p&gt;
-
-&lt;p&gt;This maintenance release is a recommended upgrade for all Spring Boot users. For a complete list of changes please refer to the &lt;a href="https://github.com/spring-projects/spring-boot/issues?q=milestone%3A1.1.7"&gt;issue tracker&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href="http://projects.spring.io/spring-boot/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-boot"&gt;GitHub&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-boot/issues"&gt;Issues&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-boot/docs/1.1.7.RELEASE/reference/htmlsingle"&gt;Documentation&lt;/a&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Demo: IoT Realized with Spring XD - The Connected Car</title>
-    <link rel="alternate" href="https://spring.io/blog/2014/09/24/demo-iot-realized-with-spring-xd-the-connected-car" />
-    <category term="engineering" label="Engineering" />
-    <author>
-      <name>Pieter Humphrey</name>
-    </author>
-    <id>tag:spring.io,2014-09-25:1769</id>
-    <updated>2014-09-24T20:59:00Z</updated>
-    <content type="html">&lt;p&gt;Speaker: Derek Beauregard
-Contributors: Phil Berman, Darrel Sharpe, Michael Minella
-In this demo we will explore the power of Spring XD in the context of the Internet of Things (IoT). We will look at a solution developed with Spring XD to stream real time analytics from a moving car using open standards. Ingestion of the real time data (location, speed, engine diagnostics, etc), analyzing it to provide highly accurate MPG and vehicle range prediction, as well as providing real time dashboards will all be covered. Watch this demo to get a sense of how Spring XD can serve as a critical building block for the IoT.&lt;/p&gt;
-
-&lt;iframe width="420" height="315" src="//www.youtube.com/embed/qkm2GV57hzY" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;</content>
   </entry>
 </feed>
 

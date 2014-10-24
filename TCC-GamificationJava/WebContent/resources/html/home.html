@@ -33,7 +33,7 @@
 						<div class="panel-heading">
 							<h4 class="panel-title text-center">Classificação</h4>
 						</div>
-						<div class="barra-lateral">
+						<div class="ng-class: {barralateral: usuariosTop.length > 5}; panel-body">
 							<table class="table">
 								<tr
 									ng-repeat="usuarioTop in usuariosTop | orderBy:'pontos':true"
@@ -81,7 +81,7 @@
 						<div class="panel-heading">
 							<h4 class="panel-title text-center">Conquistas</h4>
 						</div>
-						<div class="panel-body barra-lateral">
+						<div class="ng-class: {barralateral: usuario.badges.length > 8}; panel-body">
 							<div class="col-md-3 badges"
 								ng-repeat="conquista in usuario.badges | orderBy:'id':true">
 								<img ng-src="../{{conquista.badge.nomeImagem}}"
