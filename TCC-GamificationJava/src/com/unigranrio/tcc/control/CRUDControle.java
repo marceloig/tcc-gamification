@@ -66,14 +66,14 @@ public class CRUDControle {
 		dicas.add("E se ultrapassar o número de tentativas perde 20 pontos do exercicio.");
 
 		ExercicioJava exJava = new ExercicioJava();
-		exJava.setNome("Exercicio 1: Olá Mundo");
-		exJava.setDescricao(" O seu primeiro programa é bem simples,"
-				+ " digite dentro dos parênteses no comando Java ao lado a frase junto com as aspas duplas \"Olá Mundo\"."
-				+ " Clique no botão “Enviar” e veja o resultado da execução do seu primeiro programa");
+		exJava.setNome("Exercicio 1: Método Main");
+		exJava.setDescricao("Agora digite alguma frase na instrução System.out.println(); "
+				+ "e coloque o método main dentro da classe MetodoMain e a instrução dentro do método main");
 		exJava.setTentativas(3);
 		exJava.setPontos(130);
 		exJava.setDicas(dicas);
-		exJava.setCodigoReferencia("System.out.println();");
+		exJava.setCodigoReferencia("class MetodoMain{ \n public static void main(String[] args) { "
+				+ "\n System.out.println();  \n } \n }");
 		exJava.setAssunto(assuntoDAO.buscarAssuntoById(9999));
 		exJava.setRespostaJava("Olá Mundo");
 

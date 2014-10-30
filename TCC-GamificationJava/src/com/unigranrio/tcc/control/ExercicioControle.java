@@ -120,27 +120,35 @@ public class ExercicioControle {
 	public @ResponseBody RespostaBean atualizarBadgeUsuario(
 			@PathVariable String login, @RequestBody ConquistaBean conquistaBean) {
 
-		Conquista conquista = conquistaDAO.buscarConquista(conquistaBean.getId());
+		Conquista conquista = conquistaDAO.buscarConquista(conquistaBean
+				.getId());
 		Usuario usuario = usuarioDAO.buscarUsuarioByLogin(login);
-		
-		Conquista novaConquista = new Conquista();
-		novaConquista.setAssunto(conquista.getAssunto());
-		novaConquista.setBadge(conquista.getBadge());
-		novaConquista.setUsuario(usuario);
-		conquistaDAO.gravarConquista(novaConquista);
+
+		Collection<Usuario> usuarios = conquista.getUsuarios();
+		if (usuarios != null) {
+			if (!usuarios.contains(usuario)) {
+				usuarios.add(usuario);
+			}
+		} else {
+			usuarios = new HashSet<Usuario>();
+			usuarios.add(usuario);
+		}
+		conquista.setUsuarios(usuarios);
+		conquistaDAO.gravarConquista(conquista);
 
 		Collection<Conquista> conquistas = usuario.getBadges();
-		if (conquistas == null) {
-			conquistas = new ArrayList<Conquista>();
-			conquistas.add(novaConquista);
 
+		if (conquistas != null) {
+
+			if (!usuario.getBadges().contains(conquista)) {
+				conquistas.add(conquista);
+			}
 		} else {
-			// if (!usuario.getBadges().contains(conquistaUsuario)) {
-			conquistas.add(novaConquista);
-			// }
+			conquistas = new HashSet<Conquista>();
+			conquistas.add(conquista);
 		}
-
 		usuario.setBadges(conquistas);
+		
 		usuarioDAO.atualizarProgressoUsuario(usuario);
 
 		return null;

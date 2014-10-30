@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -47,7 +48,7 @@ public class Usuario {
 
 	private int posicao;
 
-	@OneToMany(mappedBy = "usuario")
+	@ManyToMany(mappedBy = "usuarios")
 	private Collection<Conquista> badges;
 
 	@OneToMany

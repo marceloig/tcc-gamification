@@ -1,8 +1,11 @@
 package com.unigranrio.tcc.model.entity;
 
+import java.util.Collection;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -13,6 +16,7 @@ import com.unigranrio.tcc.model.ConquistaBean;
 @NamedQueries({
 	@NamedQuery(name = "Conquista.allBadges", query = "SELECT c FROM Conquista c WHERE c.assunto = :assunto"),
 	@NamedQuery(name = "Conquista.getConquista", query = "SELECT c FROM Conquista c WHERE c.id = :id"),
+	@NamedQuery(name = "Conquista.getConquistaByUsuario", query = "SELECT c FROM Conquista c WHERE c.usuarios = :usuarios ORDER BY c.id DESC"),
 })
 public class Conquista {
 
@@ -23,8 +27,8 @@ public class Conquista {
 	@OneToOne(optional = false)
 	private Badge badge;
 	
-	@ManyToOne
-	private Usuario usuario;
+	@ManyToMany
+	private Collection<Usuario> usuarios;
 	
 	@ManyToOne(optional = false)
 	private Assunto assunto;
@@ -46,14 +50,13 @@ public class Conquista {
 	public void setBadge(Badge badge) {
 		this.badge = badge;
 	}
-
 	
-	public Usuario getUsuario() {
-		return usuario;
+	public Collection<Usuario> getUsuarios() {
+		return usuarios;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setUsuarios(Collection<Usuario> usuarios) {
+		this.usuarios = usuarios;
 	}
 
 	public Assunto getAssunto() {

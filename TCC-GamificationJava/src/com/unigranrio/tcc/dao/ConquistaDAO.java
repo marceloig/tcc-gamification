@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.unigranrio.tcc.model.entity.Assunto;
 import com.unigranrio.tcc.model.entity.Conquista;
+import com.unigranrio.tcc.model.entity.Usuario;
 
 @Repository
 public class ConquistaDAO {
@@ -46,6 +47,15 @@ public class ConquistaDAO {
 	public Conquista buscarConquista(long id) {
 		Query query = manager.createNamedQuery("Conquista.getConquista");
 		query.setParameter("id", id);
+		Conquista badge = (Conquista) query.getSingleResult();
+		return badge;
+
+	}
+	
+	public Conquista buscarConquistaByUsuario(Usuario usuario) {
+		Query query = manager.createNamedQuery("Conquista.getConquistaByUsuario");
+		query.setParameter("usuario", usuario);
+		query.setMaxResults(1);
 		Conquista badge = (Conquista) query.getSingleResult();
 		return badge;
 

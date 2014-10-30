@@ -83,7 +83,7 @@
 						</div>
 						<div class="ng-class: {barralateral: usuario.badges.length > 8}; panel-body">
 							<div class="col-md-3 badges"
-								ng-repeat="conquista in usuario.badges | orderBy:'id':true">
+								ng-repeat="conquista in usuario.badges | orderBy:'badge.id':true">
 								<img ng-src="../{{conquista.badge.nomeImagem}}"
 									class="img-responsive" alt="">
 							</div>

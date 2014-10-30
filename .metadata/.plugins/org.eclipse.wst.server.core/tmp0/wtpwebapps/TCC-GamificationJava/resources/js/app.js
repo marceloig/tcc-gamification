@@ -160,7 +160,16 @@ appModule.controller('ModuloController', function ($rootScope, $location, $scope
 				}
 			}
 			$scope.badges = badges;
-			$scope.conquistas = conquistas.reverse();
+			$scope.badgesConquistados = [];
+			for(var b in badges){
+				var badge = badges[b];
+				$scope.badgesConquistados[badge.id] = true;
+				for(var c in conquistas){
+					if(conquistas[c].badge.id == badge.badge.id)
+						$scope.badgesConquistados[badge.id] = false;
+				}
+			}
+			
 		});
 	});	
       
@@ -187,21 +196,23 @@ appModule.controller('ModuloController', function ($rootScope, $location, $scope
 
 });
 
-appModule.controller('CadastroController', function ($scope, $http, Usuario, breadcrumbs) {
+appModule.controller('CadastroController', function ($scope, $http, $location, Usuario, breadcrumbs) {
 	$scope.breadcrumbs = breadcrumbs;
 	$scope.usuario = {
         "nome": "",
         "login": "",
         "senha": ""
     };
-    $scope.mensagem = "";
-    $scope.status = "";
 
     $scope.cadastrarUsuario = function () {
         var data = $scope.usuario;
         Usuario.getUsuario().save(data, function (response) {
-            //data saved. do something here.
-        }); //saves an entry. Ass
+            if(response.retorno == true){
+            	$location.path("/home/");
+            }else{
+            	$scope.mensagem = "Usuario já cadastrado";
+            }
+        });
     };
 
 });

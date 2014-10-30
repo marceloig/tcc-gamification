@@ -95,9 +95,9 @@ public class UsuarioControle {
 	}
 
 	@RequestMapping(value = "/usuario", method = RequestMethod.POST)
-	public @ResponseBody boolean CadastrarUsuario(
+	public @ResponseBody RespostaBean CadastrarUsuario(
 			@RequestBody UsuarioBean usuarioBean) {
-		boolean mensagem;
+		RespostaBean mensagem = new RespostaBean();
 
 		if (usuarioDAO.buscarUsuarioByLogin(usuarioBean.getLogin()) == null) {
 			Nivel nivel = nivelDAO.buscarNivelByNome("Novato");
@@ -107,9 +107,9 @@ public class UsuarioControle {
 			usuario.setNivel(nivel);
 			usuario.setPontos(usuarioBean.getPontos());
 			usuarioDAO.gravarUsuario(usuario);
-			mensagem = true;
+			mensagem.setRetorno(true);
 		} else {
-			mensagem = false;
+			mensagem.setRetorno(false);
 		}
 
 		return mensagem;

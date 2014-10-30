@@ -24,10 +24,10 @@
 				</div>
 				<div class="ng-class: {barralateral: badges.length > 8}; panel-body">
 					<div class="col-md-3 badges"
-						ng-repeat="badge in badges | orderBy:'id':reverse">
+						ng-repeat="b in badges | orderBy:'badge.id':true">
 
-						<img ng-src="../{{badge.badge.nomeImagem}}"
-							class="ng-class: {gray: badge.id !== conquistas[$index].id}; img-responsive"
+						<img ng-src="../{{b.badge.nomeImagem}}"
+							class="ng-class: {gray: badgesConquistados[b.id]}; img-responsive"
 							alt="">
 
 					</div>

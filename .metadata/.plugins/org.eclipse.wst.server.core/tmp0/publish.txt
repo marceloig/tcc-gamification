@@ -1,3 +1,3 @@
 #Tomcat publish data
-#Thu Oct 23 23:39:11 BRST 2014
-org.eclipse.jst.jee.server\:/binary\:C\:\\Users\\Igor\\git\\tcc-gamification\\TCC-GamificationJava\\WebContent\\WEB-INF\\lib\\spring-web-3.2.2.RELEASE.jar=WEB-INF/lib/spring-web-3.2.2.RELEASE.jar
+#Wed Oct 29 20:15:15 BRST 2014
+org.eclipse.jst.jee.server\:/binary\:C\:\\Users\\Igor\\git\\tccgamification\\TCC-GamificationJava\\WebContent\\WEB-INF\\lib\\spring-web-3.2.2.RELEASE.jar=WEB-INF/lib/spring-web-3.2.2.RELEASE.jar

@@ -4,7 +4,6 @@
 <fullyQualifiedTypeName name="com.unigranrio.tcc.model.entity.Modulo"/>
 <fullyQualifiedTypeName name="com.unigranrio.tcc.model.ModuloBean"/>
 <fullyQualifiedTypeName name="com.unigranrio.tcc.model.AssuntoBean"/>
-<fullyQualifiedTypeName name="com.unigranrio.tcc.model.RespostaBean"/>
 <fullyQualifiedTypeName name="javax.persistence.Transient"/>
 <fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonIgnoreType"/>
 <fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonBackReference"/>
@@ -32,4 +31,5 @@
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="com.unigranrio.tcc.model.ExercicioBean"/>
 <fullyQualifiedTypeName name="com.unigranrio.tcc.model.entity.Conquista"/>
+<fullyQualifiedTypeName name="com.unigranrio.tcc.model.RespostaBean"/>
 </qualifiedTypeNameHistroy>

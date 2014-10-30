@@ -1,0 +1,38 @@
+
+<div id="content">
+	<div class="row">
+		<div class="col-md-8">
+			<a popover="Exercicios Completados" popover-trigger="mouseenter"><progressbar
+					max="100" value="progresso.porcentagem.toFixed(0)"></progressbar></a>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-8">
+			<accordion close-others="true"> <accordion-group
+				ng-repeat="modulo in modulos | orderBy:'id'"> <accordion-heading>{{modulo.nome}}
+			<span class="badge pull-right">{{moduloProgresso[modulo.id].toFixed(0)}}%</span></accordion-heading>
+			<a href="" ng-repeat="assunto in modulo.assuntos | orderBy:'id'"
+				ng-click="escolherAssunto(assunto, $index)"
+				class="list-group-item text-center">{{assunto.nome}}<span
+				class="badge">{{assuntoProgresso[assunto.id].toFixed(0)}}%</span></a></accordion-group> </accordion>
+		</div>
+
+		<div class="col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title text-center">Badges</h4>
+				</div>
+				<div class="ng-class: {barralateral: badges.length > 8}; panel-body">
+					<div class="col-md-3 badges"
+						ng-repeat="badge in badges | orderBy:'id':reverse">
+
+						<img ng-src="../{{badge.badge.nomeImagem}}"
+							class="ng-class: {gray: badgesConquistados[badge.id]}; img-responsive"
+							alt="">
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
